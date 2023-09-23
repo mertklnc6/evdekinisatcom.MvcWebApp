@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ProductViewModel>
+
+@{
+    Layout = "_LayoutProducts";
+    ViewData["Title"] = "Index";
+}
+
+
+<h2 class="mb-4">Ürünler</h2>
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+
+                <div class="card-header text-center">
+                    <img src="@product.HeaderImageUrl" class="card-img-top" alt="@product.Title">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Title</h5>
+                        <p class="card-text">@product.Description</p>
+                        <a href="/Product/Details/@product.Id" class="btn btn-primary">Detaylar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

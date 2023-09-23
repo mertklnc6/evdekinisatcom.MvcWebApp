@@ -1,0 +1,32 @@
+﻿@model ProductViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-5">
+            <img src="@Model.HeaderImageUrl" class="img-fluid rounded-start" alt="@Model.Id" title="@Model.Id">
+        </div>
+        <div class="col-md-7">
+            <div class="card-body">
+                <h3 class="card-title">@Model.Id</h3>
+                <p class="card-text">@Model.Description</p>
+                <p>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-body-secondary">Fiyat : @string.Format("{0:C2}",@Model.Price)</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
