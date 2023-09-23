@@ -5,40 +5,45 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using evdekinisatcom.MvcWebApp.DataAccess.Identity.Models;
 using evdekinisatcom.MvcWebApp_App.Entity.Entities;
-using evdekinisatcom.MvcWebApp_App.Entity.Interfaces;
 using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
+using evdekinisatcom.MvcWebApp.Entity.Repositories;
+using evdekinisatcom.MvcWebApp.Entity.UnitOfWorks;
 
 namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 {
     public class ProductController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly IRepository<Product> _productRepo;
+		private readonly IMapper _mapper;        
         private readonly IRepository<Category> _categoryRepo;
-        private readonly IMapper _mapper;
+        private readonly IRepository<Product> _productRepo;
+        private readonly IUnitOfWork _uow;
 
-        public ProductController(IRepository<Product> productRepo, IRepository<Category> categoryRepo, UserManager<AppUser> userManager, IMapper mapper)
-        {
-            _userManager = userManager;
-            _productRepo = productRepo;
+		public ProductController(IRepository<Category> categoryRepo, IMapper mapper, UserManager<AppUser> userManager,IUnitOfWork uow, IRepository<Product> productRepo)
+		{
+			_categoryRepo = categoryRepo;
             _mapper = mapper;
-            _categoryRepo = categoryRepo;
-        }
+            _userManager = userManager;
+            _uow = uow;
+            _productRepo = productRepo;
+           
+		}
 
-        public IActionResult Index()
+		public async Task<IActionResult> Index()
         {
-            var products = _productRepo.GetAll();
-            if (products != null)
-            {
-                return View(_mapper.Map<IEnumerable<ProductViewModel>>(products));
-            }
-            return View();
-        }
+
+			var products = await _productRepo.GetAllAsync();
+			if (products != null)
+			{
+				return View(_mapper.Map<IEnumerable<ProductViewModel>>(products));
+			}
+			return View();
+		}
 
         [Authorize]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewBag.Categories = new SelectList(_categoryRepo.GetAll(), "Id", "Name");
+            ViewBag.Categories = new SelectList(await _categoryRepo.GetAllAsync(), "Id", "Name");
             return View();
         }
 
@@ -97,7 +102,8 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                     Images = model.Images
                 };
 
-                _productRepo.Add(product);
+
+                _uow.GetRepository<Product>().Add(product);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -110,9 +116,9 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
             return View(model);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            Product product = _productRepo.GetById(id); //Mapping olayları yapılacak
+            Product product = await _productRepo.GetById(id); //Mapping olayları yapılacak
             return View(product);
         }
     }

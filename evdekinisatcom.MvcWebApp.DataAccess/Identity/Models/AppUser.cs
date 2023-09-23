@@ -9,7 +9,7 @@ using evdekinisatcom.MvcWebApp_App.Entity.Entities;
 namespace evdekinisatcom.MvcWebApp.DataAccess.Identity.Models
 {
     public class AppUser : IdentityUser<int>
-    {
+    {       
         public string FirstName { get; set; }
         public string LastName { get; set; }
 

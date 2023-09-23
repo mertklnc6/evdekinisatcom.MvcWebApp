@@ -18,7 +18,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
         }
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
             var roles = await _roleManager.Roles.ToListAsync();
@@ -30,14 +30,14 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
             });
             return View(model);
         }
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> Create(RoleViewModel model)
         {
             var role = new AppRole()
@@ -60,7 +60,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
             return View(model);
         }
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
@@ -81,7 +81,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                     usersOutRole.Add(user); //Rolde olmayanlarını getirir
                 }
             }
-
+            
             UsersInOrOutRoleViewModel model = new UsersInOrOutRoleViewModel()
             {
                 Role = role,
@@ -92,7 +92,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(string id, List<string> UserIdsToDelete, List<string> UserIdsToAdd)
         {
             var role = await _roleManager.FindByIdAsync(id);

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using evdekinisatcom.MvcWebApp.DataAccess.Identity.Models;
 using evdekinisatcom.MvcWebApp_App.Entity.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace evdekinisatcom.MvcWebApp.DataAccess.Data
 {
@@ -29,64 +30,100 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
-            //modelBuilder
-            //    .Entity<Product>()
-            //    .HasOne(e => e.Seller)                       //ilişki tanımı, delete davranışı
-            //    .WithMany(e => e.ProductsToSell)
-            //    .OnDelete(DeleteBehavior.ClientCascade);
 
-            //modelBuilder
-            //    .Entity<Category>()
-            //    .HasOne(c => c.ParentCategory)                       //ilişki tanımı
-            //    .WithMany(c => c.subCategories)
-            //    .HasForeignKey(c => c.ParentCategoryId);
+			//base.OnModelCreating(modelBuilder);
+			//modelBuilder
+			//    .Entity<Product>()
+			//    .HasOne(e => e.Seller)                       //ilişki tanımı, delete davranışı
+			//    .WithMany(e => e.ProductsToSell)
+			//    .OnDelete(DeleteBehavior.ClientCascade);
 
-            modelBuilder.Entity<AppUser>().Property(p => p.Balance).HasDefaultValue(0);
+			//modelBuilder
+			//    .Entity<Category>()
+			//    .HasOne(c => c.ParentCategory)                       //ilişki tanımı
+			//    .WithMany(c => c.subCategories)
+			//    .HasForeignKey(c => c.ParentCategoryId);
+
+			modelBuilder.Entity<IdentityUserLogin<int>>().HasKey(p => new { p.LoginProvider, p.ProviderKey });
+			modelBuilder.Entity<IdentityUserRole<int>>().HasKey(p => new { p.UserId, p.RoleId });
+			modelBuilder.Entity<IdentityUserToken<int>>().HasKey(p => new { p.UserId, p.LoginProvider, p.Name });
+
+			modelBuilder.Entity<AppUser>().Property(p => p.Balance).HasDefaultValue(0);
             modelBuilder.Entity<AppUser>().Property(p => p.ProfilePicUrl).HasDefaultValue("/userImages/defaultProfilePic.webp"); //default profil fotoğrafı
 
             modelBuilder.Entity<Category>().HasData(
-    // Elektronik
-    new Category { Id = 1, Name = "Elektronik" },
-    new Category { Id = 2, Name = "Bilgisayarlar & Tabletler", ParentCategoryId = 1 },
-    new Category { Id = 3, Name = "Telefonlar", ParentCategoryId = 1 },
-    new Category { Id = 4, Name = "Oyun & Konsollar", ParentCategoryId = 1 },
-    new Category { Id = 5, Name = "TV & Ses Sistemleri", ParentCategoryId = 1 },
-    new Category { Id = 6, Name = "Kamera & Fotoğraf Makineleri", ParentCategoryId = 1 },
+            // Elektronik
+            new Category { Id = 1, Name = "Elektronik" },
+            new Category { Id = 2, Name = "Bilgisayarlar & Tabletler", ParentCategoryId = 1 },
+            new Category { Id = 3, Name = "Telefonlar", ParentCategoryId = 1 },
+            new Category { Id = 4, Name = "Oyun & Konsollar", ParentCategoryId = 1 },
+            new Category { Id = 5, Name = "TV & Ses Sistemleri", ParentCategoryId = 1 },
+            new Category { Id = 6, Name = "Kamera & Fotoğraf Makineleri", ParentCategoryId = 1 },
 
-    // Giyim ve Aksesuar
-    new Category { Id = 7, Name = "Giyim & Aksesuar" },
-    new Category { Id = 8, Name = "Erkek Giyim", ParentCategoryId = 7 },
-    new Category { Id = 9, Name = "Kadın Giyim", ParentCategoryId = 7 },
-    new Category { Id = 10, Name = "Çocuk Giyim", ParentCategoryId = 7 },
-    new Category { Id = 11, Name = "Ayakkabılar", ParentCategoryId = 7 },
-    new Category { Id = 12, Name = "Çantalar", ParentCategoryId = 7 },
+            // Giyim ve Aksesuar
+            new Category { Id = 7, Name = "Giyim & Aksesuar" },
+            new Category { Id = 8, Name = "Erkek Giyim", ParentCategoryId = 7 },
+            new Category { Id = 9, Name = "Kadın Giyim", ParentCategoryId = 7 },
+            new Category { Id = 10, Name = "Çocuk Giyim", ParentCategoryId = 7 },
+            new Category { Id = 11, Name = "Ayakkabılar", ParentCategoryId = 7 },
+            new Category { Id = 12, Name = "Çantalar", ParentCategoryId = 7 },
 
-    // Ev ve Yaşam
-    new Category { Id = 13, Name = "Ev & Yaşam" },
-    new Category { Id = 14, Name = "Mobilya", ParentCategoryId = 13 },
-    new Category { Id = 15, Name = "Dekorasyon", ParentCategoryId = 13 },
-    new Category { Id = 16, Name = "Ev Aletleri", ParentCategoryId = 13 },
+            // Ev ve Yaşam
+            new Category { Id = 13, Name = "Ev & Yaşam" },
+            new Category { Id = 14, Name = "Mobilya", ParentCategoryId = 13 },
+            new Category { Id = 15, Name = "Dekorasyon", ParentCategoryId = 13 },
+            new Category { Id = 16, Name = "Ev Aletleri", ParentCategoryId = 13 },
 
-    // Kitap, Müzik ve Film
-    new Category { Id = 17, Name = "Kitap & Müzik & Film" },
-    new Category { Id = 18, Name = "Kitaplar", ParentCategoryId = 17 },
-    new Category { Id = 19, Name = "Müzik Albümleri", ParentCategoryId = 17 },
-    new Category { Id = 20, Name = "Filmler & Diziler", ParentCategoryId = 17 },
+            // Kitap, Müzik ve Film
+            new Category { Id = 17, Name = "Kitap & Müzik & Film" },
+            new Category { Id = 18, Name = "Kitaplar", ParentCategoryId = 17 },
+            new Category { Id = 19, Name = "Müzik Albümleri", ParentCategoryId = 17 },
+            new Category { Id = 20, Name = "Filmler & Diziler", ParentCategoryId = 17 },
 
-    // Spor ve Outdoor
-    new Category { Id = 21, Name = "Spor & Outdoor" },
-    new Category { Id = 22, Name = "Spor Giyim", ParentCategoryId = 21 },
-    new Category { Id = 23, Name = "Spor Aletleri", ParentCategoryId = 21 },
-    new Category { Id = 24, Name = "Kamp & Outdoor", ParentCategoryId = 21 },
+            // Spor ve Outdoor
+            new Category { Id = 21, Name = "Spor & Outdoor" },
+            new Category { Id = 22, Name = "Spor Giyim", ParentCategoryId = 21 },
+            new Category { Id = 23, Name = "Spor Aletleri", ParentCategoryId = 21 },
+            new Category { Id = 24, Name = "Kamp & Outdoor", ParentCategoryId = 21 },
 
-    // Kozmetik ve Sağlık
-    new Category { Id = 25, Name = "Kozmetik & Sağlık" },
-    new Category { Id = 26, Name = "Makyaj", ParentCategoryId = 25 },
-    new Category { Id = 27, Name = "Cilt Bakımı", ParentCategoryId = 25 },
-    new Category { Id = 28, Name = "Saç Bakımı", ParentCategoryId = 25 },
-    new Category { Id = 29, Name = "Parfümler", ParentCategoryId = 25 }
-);
+            // Kozmetik ve Sağlık
+            new Category { Id = 25, Name = "Kozmetik & Sağlık" },
+            new Category { Id = 26, Name = "Makyaj", ParentCategoryId = 25 },
+            new Category { Id = 27, Name = "Cilt Bakımı", ParentCategoryId = 25 },
+            new Category { Id = 28, Name = "Saç Bakımı", ParentCategoryId = 25 },
+            new Category { Id = 29, Name = "Parfümler", ParentCategoryId = 25 }
+            );
+
+            modelBuilder.Entity<Product>().HasData(
+				
+				new()
+				{
+					Id = 1,
+					Title = "Iphone 15",
+					Description = "Kutusu Açılmadı",
+					Price = 100,
+					Condition = "Yeni & Etiketli",
+					HeaderImageUrl = "~/wwwroot/userUploads/resize.png",
+					CategoryId = 1, 
+					SellerId = 1,   
+					BuyerId = null
+				},
+				new()
+				{
+					Id = 2,
+					Title = "S23 Plus",
+					Description = "Sıfıra yakın",
+					Price = 150,
+					Condition = "Az Kullanılmış",
+					HeaderImageUrl = "~/wwwroot/userUploads/tel1.jpg",
+					CategoryId = 1, 
+					SellerId = 1,   
+					BuyerId = null    
+				}
+			
+			
+                );
+
         }
     }
 }

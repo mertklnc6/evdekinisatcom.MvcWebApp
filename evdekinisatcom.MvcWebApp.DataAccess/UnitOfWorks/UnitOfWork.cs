@@ -1,7 +1,7 @@
 ﻿using evdekinisatcom.MvcWebApp.DataAccess.Data;
 using evdekinisatcom.MvcWebApp.DataAccess.Repositories;
+using evdekinisatcom.MvcWebApp.Entity.Repositories;
 using evdekinisatcom.MvcWebApp.Entity.UnitOfWorks;
-using evdekinisatcom.MvcWebApp_App.Entity.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +13,9 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.UnitOfWorks
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _context;
+		private bool disposed = false;
 
-        public UnitOfWork(AppDbContext context)
+		public UnitOfWork(AppDbContext context)
         {
             _context = context;
         }
@@ -33,10 +34,24 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.UnitOfWorks
             await _context.SaveChangesAsync();
         }
 
-        public void Dispose()
+		public virtual void Dispose(bool disposing)
+		{
+			if (!this.disposed)
+			{
+				if (disposing)
+				{
+					_context.Dispose();
+				}
+
+			}
+			this.disposed = true;
+		}
+
+		public void Dispose()
         {
-            throw new NotImplementedException();
-            
-        }
+			Dispose(true);
+			GC.SuppressFinalize(this);
+
+		}
     }
 }

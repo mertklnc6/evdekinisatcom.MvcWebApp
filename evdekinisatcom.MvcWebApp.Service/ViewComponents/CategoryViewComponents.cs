@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using evdekinisatcom.MvcWebApp_App.Entity.Entities;
-using evdekinisatcom.MvcWebApp_App.Entity.Interfaces;
 using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
+using evdekinisatcom.MvcWebApp.Entity.Repositories;
 
 namespace evdekinisatcom.MvcWebApp_App.Service.ViewComponents
 {
@@ -25,7 +25,7 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             ViewBag.SelectedCategoryId = RouteData?.Values["id"];
-            var categories = _categoryRepo.GetAll();
+            var categories = await _categoryRepo.GetAllAsync();
             return View(_mapper.Map<List<CategoryViewModel>>(categories));
         }
     }

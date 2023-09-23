@@ -20,7 +20,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
 
         }
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -104,7 +104,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
             {
                 TempData["message"] = "Login işlemi başarılı.";
                 //return RedirectToAction("Login");
-                return Redirect(model.ReturnUrl ?? "~/Account/Login");
+                return Redirect(model.ReturnUrl ?? "~/Home/Index");
 
             }
             if (signInResult.IsLockedOut)

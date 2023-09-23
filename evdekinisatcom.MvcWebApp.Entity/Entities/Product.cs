@@ -26,7 +26,7 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
         public int SellerId { get; set; } //Seller           
 
         public int? BuyerId { get; set; } //Buyer
-                                          //
+                                          
         //Navigation Property
 
         public virtual Category Category { get; set; }

@@ -1,4 +1,4 @@
-﻿using evdekinisatcom.MvcWebApp_App.Entity.Interfaces;
+﻿using evdekinisatcom.MvcWebApp.Entity.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

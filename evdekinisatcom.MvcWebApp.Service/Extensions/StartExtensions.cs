@@ -1,8 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Identity.Core;
+using Microsoft.AspNetCore.Identity;
 using evdekinisatcom.MvcWebApp.DataAccess.Data;
 using evdekinisatcom.MvcWebApp.DataAccess.Identity.Models;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
+using Microsoft.AspNetCore.Http;
 
 namespace evdekinisatcom.MvcWebApp_App.Service.Extensions
 {
