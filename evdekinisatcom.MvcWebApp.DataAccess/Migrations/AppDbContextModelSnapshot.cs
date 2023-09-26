@@ -41,7 +41,9 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoleClaims");
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -63,7 +65,9 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserClaims");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
@@ -82,7 +86,9 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.ToTable("UserLogins");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
@@ -95,7 +101,9 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.ToTable("UserRoles");
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -114,7 +122,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens");
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("evdekinisatcom.MvcWebApp.DataAccess.Identity.Models.AppRole", b =>
@@ -126,20 +134,28 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("evdekinisatcom.MvcWebApp.DataAccess.Identity.Models.AppUser", b =>
@@ -159,10 +175,12 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         .HasDefaultValue(0m);
 
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -182,10 +200,12 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -209,11 +229,20 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("evdekinisatcom.MvcWebApp_App.Entity.Entities.Cart", b =>
@@ -288,7 +317,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ParentCategoryId")
+                    b.Property<int>("ParentCategoryId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -301,228 +330,242 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6521),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1167),
                             IsDeleted = false,
-                            Name = "Elektronik"
+                            Name = "BaseCategory",
+                            ParentCategoryId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6530),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1179),
                             IsDeleted = false,
-                            Name = "Bilgisayarlar & Tabletler",
-                            ParentCategoryId = 1
+                            Name = "Elektronik",
+                            ParentCategoryId = 2
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6531),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1180),
                             IsDeleted = false,
-                            Name = "Telefonlar",
-                            ParentCategoryId = 1
+                            Name = "Bilgisayarlar & Tabletler",
+                            ParentCategoryId = 2
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6532),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1181),
                             IsDeleted = false,
-                            Name = "Oyun & Konsollar",
-                            ParentCategoryId = 1
+                            Name = "Telefonlar",
+                            ParentCategoryId = 2
                         },
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6533),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1182),
                             IsDeleted = false,
-                            Name = "TV & Ses Sistemleri",
-                            ParentCategoryId = 1
+                            Name = "Oyun & Konsollar",
+                            ParentCategoryId = 2
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6534),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1183),
                             IsDeleted = false,
-                            Name = "Kamera & Fotoğraf Makineleri",
-                            ParentCategoryId = 1
+                            Name = "TV & Ses Sistemleri",
+                            ParentCategoryId = 2
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6535),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1184),
                             IsDeleted = false,
-                            Name = "Giyim & Aksesuar"
+                            Name = "Kamera & Fotoğraf Makineleri",
+                            ParentCategoryId = 2
                         },
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6536),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1185),
                             IsDeleted = false,
-                            Name = "Erkek Giyim",
-                            ParentCategoryId = 7
+                            Name = "Giyim & Aksesuar",
+                            ParentCategoryId = 1
                         },
                         new
                         {
                             Id = 9,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6537),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1186),
                             IsDeleted = false,
-                            Name = "Kadın Giyim",
-                            ParentCategoryId = 7
+                            Name = "Erkek Giyim",
+                            ParentCategoryId = 8
                         },
                         new
                         {
                             Id = 10,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6538),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1186),
                             IsDeleted = false,
-                            Name = "Çocuk Giyim",
-                            ParentCategoryId = 7
+                            Name = "Kadın Giyim",
+                            ParentCategoryId = 8
                         },
                         new
                         {
                             Id = 11,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6539),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1187),
                             IsDeleted = false,
-                            Name = "Ayakkabılar",
-                            ParentCategoryId = 7
+                            Name = "Çocuk Giyim",
+                            ParentCategoryId = 8
                         },
                         new
                         {
                             Id = 12,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6540),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1188),
                             IsDeleted = false,
-                            Name = "Çantalar",
-                            ParentCategoryId = 7
+                            Name = "Ayakkabılar",
+                            ParentCategoryId = 8
                         },
                         new
                         {
                             Id = 13,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6541),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1189),
                             IsDeleted = false,
-                            Name = "Ev & Yaşam"
+                            Name = "Çantalar",
+                            ParentCategoryId = 8
                         },
                         new
                         {
                             Id = 14,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6542),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1190),
                             IsDeleted = false,
-                            Name = "Mobilya",
-                            ParentCategoryId = 13
+                            Name = "Ev & Yaşam",
+                            ParentCategoryId = 1
                         },
                         new
                         {
                             Id = 15,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6543),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1191),
                             IsDeleted = false,
-                            Name = "Dekorasyon",
-                            ParentCategoryId = 13
+                            Name = "Mobilya",
+                            ParentCategoryId = 14
                         },
                         new
                         {
                             Id = 16,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6544),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1192),
                             IsDeleted = false,
-                            Name = "Ev Aletleri",
-                            ParentCategoryId = 13
+                            Name = "Dekorasyon",
+                            ParentCategoryId = 14
                         },
                         new
                         {
                             Id = 17,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6545),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1193),
                             IsDeleted = false,
-                            Name = "Kitap & Müzik & Film"
+                            Name = "Ev Aletleri",
+                            ParentCategoryId = 14
                         },
                         new
                         {
                             Id = 18,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6546),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1194),
                             IsDeleted = false,
-                            Name = "Kitaplar",
-                            ParentCategoryId = 17
+                            Name = "Kitap & Müzik & Film",
+                            ParentCategoryId = 1
                         },
                         new
                         {
                             Id = 19,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6547),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1195),
                             IsDeleted = false,
-                            Name = "Müzik Albümleri",
-                            ParentCategoryId = 17
+                            Name = "Kitaplar",
+                            ParentCategoryId = 18
                         },
                         new
                         {
                             Id = 20,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6548),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1196),
                             IsDeleted = false,
-                            Name = "Filmler & Diziler",
-                            ParentCategoryId = 17
+                            Name = "Müzik Albümleri",
+                            ParentCategoryId = 18
                         },
                         new
                         {
                             Id = 21,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6549),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1196),
                             IsDeleted = false,
-                            Name = "Spor & Outdoor"
+                            Name = "Filmler & Diziler",
+                            ParentCategoryId = 18
                         },
                         new
                         {
                             Id = 22,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6550),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1197),
                             IsDeleted = false,
-                            Name = "Spor Giyim",
-                            ParentCategoryId = 21
+                            Name = "Spor & Outdoor",
+                            ParentCategoryId = 1
                         },
                         new
                         {
                             Id = 23,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6551),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1198),
                             IsDeleted = false,
-                            Name = "Spor Aletleri",
-                            ParentCategoryId = 21
+                            Name = "Spor Giyim",
+                            ParentCategoryId = 22
                         },
                         new
                         {
                             Id = 24,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6552),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1199),
                             IsDeleted = false,
-                            Name = "Kamp & Outdoor",
-                            ParentCategoryId = 21
+                            Name = "Spor Aletleri",
+                            ParentCategoryId = 22
                         },
                         new
                         {
                             Id = 25,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6553),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1200),
                             IsDeleted = false,
-                            Name = "Kozmetik & Sağlık"
+                            Name = "Kamp & Outdoor",
+                            ParentCategoryId = 22
                         },
                         new
                         {
                             Id = 26,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6553),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1201),
                             IsDeleted = false,
-                            Name = "Makyaj",
-                            ParentCategoryId = 25
+                            Name = "Kozmetik & Sağlık",
+                            ParentCategoryId = 1
                         },
                         new
                         {
                             Id = 27,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6554),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1202),
                             IsDeleted = false,
-                            Name = "Cilt Bakımı",
-                            ParentCategoryId = 25
+                            Name = "Makyaj",
+                            ParentCategoryId = 26
                         },
                         new
                         {
                             Id = 28,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6555),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1203),
                             IsDeleted = false,
-                            Name = "Saç Bakımı",
-                            ParentCategoryId = 25
+                            Name = "Cilt Bakımı",
+                            ParentCategoryId = 26
                         },
                         new
                         {
                             Id = 29,
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6556),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1204),
+                            IsDeleted = false,
+                            Name = "Saç Bakımı",
+                            ParentCategoryId = 26
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1205),
                             IsDeleted = false,
                             Name = "Parfümler",
-                            ParentCategoryId = 25
+                            ParentCategoryId = 26
                         });
                 });
 
@@ -697,9 +740,9 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Condition = "Yeni & Etiketli",
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6723),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1491),
                             Description = "Kutusu Açılmadı",
-                            HeaderImageUrl = "~/wwwroot/userUploads/resize.png",
+                            HeaderImageUrl = "C:\\projects\\evdekinisatcom.MvcWebApp\\evdekinisatcom.MvcWebApp.WebMvc\\wwwroot\\userUploads\\users\\ali\\137425-1_large.webp",
                             IsDeleted = false,
                             Price = 100m,
                             SellerId = 1,
@@ -710,9 +753,9 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                             Id = 2,
                             CategoryId = 1,
                             Condition = "Az Kullanılmış",
-                            CreatedDate = new DateTime(2023, 9, 23, 22, 18, 14, 156, DateTimeKind.Local).AddTicks(6725),
+                            CreatedDate = new DateTime(2023, 9, 26, 20, 57, 27, 291, DateTimeKind.Local).AddTicks(1494),
                             Description = "Sıfıra yakın",
-                            HeaderImageUrl = "~/wwwroot/userUploads/tel1.jpg",
+                            HeaderImageUrl = "C:\\projects\\evdekinisatcom.MvcWebApp\\evdekinisatcom.MvcWebApp.WebMvc\\wwwroot\\userUploads\\users\\ali\\137425-1_large.webp",
                             IsDeleted = false,
                             Price = 150m,
                             SellerId = 1,
@@ -748,6 +791,57 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                     b.ToTable("ProductImages");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.HasOne("evdekinisatcom.MvcWebApp.DataAccess.Identity.Models.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.HasOne("evdekinisatcom.MvcWebApp.DataAccess.Identity.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.HasOne("evdekinisatcom.MvcWebApp.DataAccess.Identity.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.HasOne("evdekinisatcom.MvcWebApp.DataAccess.Identity.Models.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("evdekinisatcom.MvcWebApp.DataAccess.Identity.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.HasOne("evdekinisatcom.MvcWebApp.DataAccess.Identity.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("evdekinisatcom.MvcWebApp_App.Entity.Entities.CartItem", b =>
                 {
                     b.HasOne("evdekinisatcom.MvcWebApp_App.Entity.Entities.Cart", "Cart")
@@ -771,7 +865,9 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 {
                     b.HasOne("evdekinisatcom.MvcWebApp_App.Entity.Entities.Category", "ParentCategory")
                         .WithMany("subCategories")
-                        .HasForeignKey("ParentCategoryId");
+                        .HasForeignKey("ParentCategoryId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
 
                     b.Navigation("ParentCategory");
                 });

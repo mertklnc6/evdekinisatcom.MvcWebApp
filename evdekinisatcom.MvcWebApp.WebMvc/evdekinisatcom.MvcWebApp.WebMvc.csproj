@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Admin\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\evdekinisatcom.MvcWebApp.Service\evdekinisatcom.MvcWebApp.Service.csproj" />
   </ItemGroup>
 

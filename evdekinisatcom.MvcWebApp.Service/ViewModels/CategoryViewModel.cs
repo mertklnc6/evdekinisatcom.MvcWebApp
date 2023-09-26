@@ -10,14 +10,13 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
     public class CategoryViewModel
     {
         public int Id { get; set; }
-
         public string Name { get; set; }
+        public int? ParentCategoryId { get; set; }
+        public List<Category> subCategories { get; set; }
 
         public List<Product> Products { get; set; }
 
-        public int? ParentCategoryId { get; set; }
 
-        public List<Category> subCategories { get; set; }
 
 
 

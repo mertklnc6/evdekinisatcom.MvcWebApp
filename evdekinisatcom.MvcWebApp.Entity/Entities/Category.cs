@@ -12,7 +12,7 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
 
         public string Name { get; set; }
 
-        public int? ParentCategoryId { get; set; }
+        public int ParentCategoryId { get; set; }
 
         //Navigation Property
         public virtual List<Product> Products { get; set; }

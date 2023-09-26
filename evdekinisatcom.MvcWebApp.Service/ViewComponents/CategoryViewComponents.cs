@@ -24,7 +24,7 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            ViewBag.SelectedCategoryId = RouteData?.Values["id"];
+            //ViewBag.SelectedCategoryId = RouteData?.Values["id"];
             var categories = await _categoryRepo.GetAllAsync();
             return View(_mapper.Map<List<CategoryViewModel>>(categories));
         }

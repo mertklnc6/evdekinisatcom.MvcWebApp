@@ -58,36 +58,53 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
             try
             {
                 var currentUser = await _userManager.GetUserAsync(User);
-                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\userUploads");
+
+                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\userUploads\\users");
+                var userPath = Path.Combine(uploadPath, currentUser.UserName);
+                uploadPath = userPath;
+
                 if (!Directory.Exists(uploadPath))
                 {
                     Directory.CreateDirectory(uploadPath);
                 }
 
                 var headerPath = Path.Combine(uploadPath, headerImage.FileName);
-                using (var stream1 = new FileStream(headerPath, FileMode.Create))
-                {
-                    headerImage.CopyTo(stream1);
-                }
-                model.HeaderImageUrl = "/userUploads/" + headerImage.FileName;
+                var stream1 = new FileStream(headerPath, FileMode.Create);
+                headerImage.CopyTo(stream1);
+
+                model.HeaderImageUrl = "/userUploads/users/" + currentUser.UserName + "/" + headerImage.FileName;
 
                 List<string> imagePaths = new List<string>();
                 foreach (var image in images)
                 {
-                    var imagePath = Path.Combine(uploadPath, image.FileName);
-                    using (var stream = new FileStream(imagePath, FileMode.Create))
-                    {
-                        await image.CopyToAsync(stream);
-                    }
-                    imagePaths.Add("/userUploads/" + image.FileName);
-                }
 
-                List<ProductImage> productImages = new List<ProductImage>();
-                foreach (var imageUrl in imagePaths)
-                {
-                    productImages.Add(new ProductImage { ImageUrl = imageUrl });
+
+                    var imagePath = Path.Combine(uploadPath, image.FileName);
+                    if (imagePath != null)
+                    {
+                        List<ProductImage> productImages = new List<ProductImage>();
+                        foreach (var imageUrl in imagePaths)
+                        {
+                            productImages.Add(new ProductImage { ImageUrl = imageUrl });
+                        }
+                        model.Images = productImages;
+                    }
+                    else
+                    {
+                        var stream = new FileStream(imagePath, FileMode.Create);
+                        await image.CopyToAsync(stream);
+
+                        imagePaths.Add("/userUploads/users/" + currentUser.UserName + "/" + image.FileName);
+                        List<ProductImage> productImages = new List<ProductImage>();
+                        foreach (var imageUrl in imagePaths)
+                        {
+                            productImages.Add(new ProductImage { ImageUrl = imageUrl });
+                        }
+                        model.Images = productImages;
+
+                    }
+
                 }
-                model.Images = productImages;
 
                 Product product = new Product()
                 {
@@ -102,8 +119,9 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                     Images = model.Images
                 };
 
-
-                _uow.GetRepository<Product>().Add(product);
+                _productRepo.Add(product);
+                _uow.GetRepository<Product>();
+                _uow.Commit();
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
