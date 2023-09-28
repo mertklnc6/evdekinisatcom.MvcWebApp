@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using evdekinisatcom.MvcWebApp_App.Entity.Entities;
-using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
 using evdekinisatcom.MvcWebApp.Entity.Repositories;
+using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
 
 namespace evdekinisatcom.MvcWebApp_App.Service.ViewComponents
 {

@@ -282,19 +282,12 @@
                                                     <div class="product-box">
                                                         <div class="img-wrapper">
                                                             <div class="front">
-                                                                <a href="#">
-                                                                    <img width="238px" src="@product.HeaderImageUrl"
+                                                                <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Id">
+                                                                    <img src="@product.HeaderImageUrl"
                                                                          class="img-fluid blur-up lazyload bg-img"
                                                                          alt="">
                                                                 </a>
-                                                            </div>
-                                                            <div class="back">
-                                                                <a href="#">
-                                                                    <img width ="238px" src="@product.Images"
-                                                                         class="img-fluid blur-up lazyload bg-img"
-                                                                         alt="">
-                                                                </a>
-                                                            </div>
+                                                            </div>                                                            
                                                             <div class="cart-info cart-wrap">
                                                                 <button data-bs-toggle="modal"
                                                                         data-bs-target="#addtocart" title="Sepete Ekle">
@@ -314,7 +307,7 @@
                                                                 <div class="rating">
                                                                     <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
                                                                 </div>
-                                                                <a href="product-page(no-sidebar).html">
+                                                                <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Id">
                                                                     <h6>@product.Title</h6>
                                                                 </a>
                                                                 <p>

@@ -8,59 +8,56 @@ using evdekinisatcom.MvcWebApp_App.Entity.Entities;
 using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
 using evdekinisatcom.MvcWebApp.Entity.Repositories;
 using evdekinisatcom.MvcWebApp.Entity.UnitOfWorks;
+using evdekinisatcom.MvcWebApp.Entity.Services;
 
 namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
+        private readonly IAccountService _accountService;
 		private readonly IMapper _mapper;        
-        private readonly IRepository<Category> _categoryRepo;
-        private readonly IRepository<Product> _productRepo;
-        private readonly IUnitOfWork _uow;
+        private readonly ICategoryService _categoryService;
+        private readonly IProductService _productService;
 
-		public ProductController(IRepository<Category> categoryRepo, IMapper mapper, UserManager<AppUser> userManager,IUnitOfWork uow, IRepository<Product> productRepo)
+		public ProductController(IMapper mapper, IProductService productService, IAccountService accountService, ICategoryService categoryService)
 		{
-			_categoryRepo = categoryRepo;
-            _mapper = mapper;
-            _userManager = userManager;
-            _uow = uow;
-            _productRepo = productRepo;
-           
+
+			_mapper = mapper;
+			_productService = productService;
+			_accountService = accountService;
+			_categoryService = categoryService;
 		}
 
 		public async Task<IActionResult> Index()
         {
 
-			var products = await _productRepo.GetAllAsync();
-			if (products != null)
-			{
-				return View(_mapper.Map<IEnumerable<ProductViewModel>>(products));
-			}
-			return View();
+            var list = await _productService.GetAll();
+			return View(list);
 		}
 
         [Authorize]
         public async Task<IActionResult> Create()
         {
-            ViewBag.Categories = new SelectList(await _categoryRepo.GetAllAsync(), "Id", "Name");
+            ViewBag.Categories = new SelectList(await _categoryService.GetAll(), "Id", "Name","ParentCategoryId");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create(ProductViewModel model, IFormFile headerImage, List<IFormFile> images)
+        public async Task<IActionResult> Create(IFormFile headerImage, List<IFormFile> images)
         {
 
-            //if (ModelState.IsValid)
-            //{
-            try
+			//if (ModelState.IsValid)
+			//{
+			ProductViewModel model = new ProductViewModel();
+			try
             {
-                var currentUser = await _userManager.GetUserAsync(User);
+                var currentUser = await _accountService.Find(User.Identity.Name);
+                
 
                 var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\userUploads\\users");
-                var userPath = Path.Combine(uploadPath, currentUser.UserName);
+                var userPath = Path.Combine(uploadPath, currentUser.Username);
                 uploadPath = userPath;
 
                 if (!Directory.Exists(uploadPath))
@@ -72,7 +69,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                 var stream1 = new FileStream(headerPath, FileMode.Create);
                 headerImage.CopyTo(stream1);
 
-                model.HeaderImageUrl = "/userUploads/users/" + currentUser.UserName + "/" + headerImage.FileName;
+                model.HeaderImageUrl = "/userUploads/users/" + currentUser.Username + "/" + headerImage.FileName;
 
                 List<string> imagePaths = new List<string>();
                 foreach (var image in images)
@@ -94,7 +91,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                         var stream = new FileStream(imagePath, FileMode.Create);
                         await image.CopyToAsync(stream);
 
-                        imagePaths.Add("/userUploads/users/" + currentUser.UserName + "/" + image.FileName);
+                        imagePaths.Add("/userUploads/users/" + currentUser.Username + "/" + image.FileName);
                         List<ProductImage> productImages = new List<ProductImage>();
                         foreach (var imageUrl in imagePaths)
                         {
@@ -106,22 +103,9 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
                 }
 
-                Product product = new Product()
-                {
-                    Title = model.Title,
-                    CategoryId = model.CategoryId,
-                    Description = model.Description,
-                    Price = model.Price,
-                    Condition = model.Condition,
-                    SellerId = currentUser.Id,
-                    CreatedDate = DateTime.Now,
-                    HeaderImageUrl = model.HeaderImageUrl,
-                    Images = model.Images
-                };
+                
 
-                _productRepo.Add(product);
-                _uow.GetRepository<Product>();
-                _uow.Commit();
+               await _productService.CreateAsync(model);                
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -136,7 +120,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            Product product = await _productRepo.GetById(id); //Mapping olayları yapılacak
+            ProductViewModel product = await _productService.GetById(id);
             return View(product);
         }
     }

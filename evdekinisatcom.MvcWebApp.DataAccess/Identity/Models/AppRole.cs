@@ -9,7 +9,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Identity.Models
 {
     public class AppRole : IdentityRole<int>
     {
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public string Description { get; set; }
 
     }
 }

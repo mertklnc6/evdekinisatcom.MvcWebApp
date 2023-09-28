@@ -58,6 +58,8 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
 
             modelBuilder.Entity<AppUser>().Property(p => p.Balance).HasDefaultValue(0);
             modelBuilder.Entity<AppUser>().Property(p => p.ProfilePicUrl).HasDefaultValue("/userImages/defaultProfilePic.webp"); //default profil fotoğrafı
+            //Seed Data          
+                
 
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "BaseCategory", ParentCategoryId = 1 },
@@ -111,8 +113,10 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
                     Title = "Iphone 15",
                     Description = "Kutusu Açılmadı",
                     Price = 100,
+					Brand = "Apple",
+                    Color = "Siyah",
                     Condition = "Yeni & Etiketli",
-                    HeaderImageUrl = "C:\\projects\\evdekinisatcom.MvcWebApp\\evdekinisatcom.MvcWebApp.WebMvc\\wwwroot\\userUploads\\users\\ali\\137425-1_large.webp",
+                    HeaderImageUrl = "~/userUploads/users/ali/137425-1_large.webp",
                     CategoryId = 1,
                     SellerId = 1,
                     BuyerId = null
@@ -120,11 +124,13 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
                 new()
                 {
                     Id = 2,
-                    Title = "S23 Plus",
+                    Title = "S23 Ultra",
                     Description = "Sıfıra yakın",
                     Price = 150,
+                    Brand = "Samsung",
+                    Color = "Siyah",
                     Condition = "Az Kullanılmış",
-                    HeaderImageUrl = "C:\\projects\\evdekinisatcom.MvcWebApp\\evdekinisatcom.MvcWebApp.WebMvc\\wwwroot\\userUploads\\users\\ali\\137425-1_large.webp",
+                    HeaderImageUrl = "~/userUploads/users/ali/137425-1_large.webp",
                     CategoryId = 1,
                     SellerId = 1,
                     BuyerId = null

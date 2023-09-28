@@ -26,6 +26,13 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
         [Required(ErrorMessage = "Lütfen Ürünün Durumunu Belirtin! ")]
         public string Condition { get; set; }
 
+		[Required(ErrorMessage = "Lütfen Ürünün Markasını Belirtin! ")]
+
+		public string Brand { get; set; }
+        [Required(ErrorMessage = "Lütfen Ürünün Rengini Belirtin! ")]
+
+        public string Color { get; set; }
+
         public string HeaderImageUrl { get; set; }
 
         public List<ProductImage> Images { get; set; }

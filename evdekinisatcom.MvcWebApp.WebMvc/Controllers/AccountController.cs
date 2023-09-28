@@ -5,80 +5,44 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using evdekinisatcom.MvcWebApp.DataAccess.Identity.Models;
 using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
+using evdekinisatcom.MvcWebApp.Entity.Services;
 
 namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
+        private readonly IAccountService _service;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(IAccountService service)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-
-
+            _service = service;
         }
-        //[Authorize(Roles = "admin")]
-        public async Task<IActionResult> Index()
+        [Authorize]
+        public async Task< IActionResult> Index()
         {
-            var users = await _userManager.Users.ToListAsync();
-            var model = users.Select(u => new UserViewModel()
-            {
-                Id = u.Id,
-                Username = u.UserName,
-                Email = u.Email,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                PhoneNumber = u.PhoneNumber
-            });
-            return View(model);
-
+            var currentUser = await _service.Find(User.Identity.Name);
+            return View(currentUser);
         }
-
         public IActionResult Register()
         {
             return View();
         }
-
         [HttpPost]
-
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            string msg = await _service.CreateUserAsync(model);
 
-
-            var user = new AppUser()
+            if (msg == "OK")
             {
-
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
-                PhoneNumber = model.PhoneNumber,
-                UserName = model.Username,
-
-            };
-
-
-
-
-            var identityResult = await _userManager.CreateAsync(user, model.ConfirmPassword);
-
-            if (identityResult.Succeeded)
-            {
-
-                TempData["message"] = "Kullanıcı kayıt işlemi başarıyla gerçekleşti.";
-                return RedirectToAction("Register");
-
+                return RedirectToAction("Login");
             }
-            foreach (var error in identityResult.Errors)
+            else
             {
-                ModelState.AddModelError("", error.Description);
+                ModelState.AddModelError("", msg);
             }
 
             return View(model);
         }
-
         public IActionResult Login(string? returnUrl)
         {
             LoginViewModel model = new LoginViewModel()
@@ -91,42 +55,28 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var msg = await _service.FindByNameAsync(model);
 
-            if (user == null)
+            if (msg == "user not found")
             {
                 ModelState.AddModelError("", "Kullanıcı bulunamadı.");
                 return View(model);
             }
-            var signInResult = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, true);  //sondaki lockout (kilitleme) özelliğini true yaptık.
-            //Aşağıdaki 3 şarttan sadece biri gerçekleşebilir.
-            if (signInResult.Succeeded)
+            else if (msg == "OK")
             {
-                TempData["message"] = "Login işlemi başarılı.";
-                //return RedirectToAction("Login");
-                return Redirect(model.ReturnUrl ?? "~/Home/Index");
-
+                return Redirect(model.ReturnUrl ?? "~/");
             }
-            if (signInResult.IsLockedOut)
-            {
-                TempData["message"] = "Login işlemi bir süreliğine kilitlenmiştir.";
-                return RedirectToAction("Login");
-            }
-            //if (signInResult.IsNotAllowed)
-            //{
-            //Email veya Telefon onayı istenmişse
-            //}
             else
             {
                 ModelState.AddModelError("", "Kullanıcı adı veya şifre hatalı");
             }
-
             return View(model);
         }
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await _service.LogoutAsync();
             return RedirectToAction("Index", "Home");
         }
     }
 }
+

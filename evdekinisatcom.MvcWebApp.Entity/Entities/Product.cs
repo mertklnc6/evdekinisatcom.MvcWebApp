@@ -19,11 +19,17 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
 
         public string Condition { get; set; }
 
+        public string Brand { get; set; }
+
+        public string Color { get; set; }
+
         public string HeaderImageUrl { get; set; }        
 
         public int CategoryId { get; set; }        
 
-        public int SellerId { get; set; } //Seller           
+        public int SellerId { get; set; } //Seller                                          
+
+        public bool IsOnSale { get; set; } = true;
 
         public int? BuyerId { get; set; } //Buyer
                                           

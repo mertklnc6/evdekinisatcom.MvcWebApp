@@ -1,39 +1,21 @@
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+
+
 using evdekinisatcom.MvcWebApp.DataAccess.Data;
-using evdekinisatcom.MvcWebApp.DataAccess.Repositories;
-using evdekinisatcom.MvcWebApp.DataAccess.Identity;
-using evdekinisatcom.MvcWebApp_App.Service.Extensions;
-using evdekinisatcom.MvcWebApp.Entity.Repositories;
-using evdekinisatcom.MvcWebApp_App.Service.Mapping;
-using evdekinisatcom.MvcWebApp.DataAccess.UnitOfWorks;
-using evdekinisatcom.MvcWebApp.Entity.UnitOfWorks;
+using evdekinisatcom.MvcWebApp.Service.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddIdentityExtensions();
-
 builder.Services.AddControllersWithViews();
 
-
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr"))
+);
 
-builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
-
-
-
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-
-
-
-
+builder.Services.AddExtensions();
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -48,11 +30,24 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();    //kimlik denetimi
-app.UseAuthorization();     //yetkilendirme
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+  name: "areas",
+  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+);
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{controller=Home}/{action=Index}/{area?}");
+
+app.MapControllerRoute(
+    name: "area",
+    pattern: "{controller=Home}/{action=Index}/{id}/{area=Admin}");
 
 app.Run();
