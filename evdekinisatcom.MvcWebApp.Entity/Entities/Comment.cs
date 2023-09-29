@@ -14,8 +14,10 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
 
         public int UserId { get; set; }        
 
-        public int ProducId { get; set; }
+        public int ProductId { get; set; }
         //Navigation Property
         public virtual Product Product { get; set; }
+
+        public string? ReturnUrl { get; set; }
     }
 }

@@ -9,6 +9,8 @@ using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
 using evdekinisatcom.MvcWebApp.Entity.Repositories;
 using evdekinisatcom.MvcWebApp.Entity.UnitOfWorks;
 using evdekinisatcom.MvcWebApp.Entity.Services;
+using evdekinisatcom.MvcWebApp.Entity.ViewModels;
+using evdekinisatcom.MvcWebApp.Service.Services;
 
 namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 {
@@ -18,6 +20,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 		private readonly IMapper _mapper;        
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
+        private readonly ICommentService _commentService;
 
 		public ProductController(IMapper mapper, IProductService productService, IAccountService accountService, ICategoryService categoryService)
 		{
@@ -45,16 +48,19 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create(IFormFile headerImage, List<IFormFile> images)
+        public async Task<IActionResult> Create(ProductViewModel model,IFormFile headerImage, List<IFormFile> images)
         {
 
 			//if (ModelState.IsValid)
 			//{
-			ProductViewModel model = new ProductViewModel();
+			
 			try
             {
                 var currentUser = await _accountService.Find(User.Identity.Name);
-                
+                if (currentUser != null)
+                {
+                   model.SellerId = currentUser.Id;
+                }
 
                 var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\userUploads\\users");
                 var userPath = Path.Combine(uploadPath, currentUser.Username);
@@ -74,9 +80,10 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                 List<string> imagePaths = new List<string>();
                 foreach (var image in images)
                 {
-
+                    
 
                     var imagePath = Path.Combine(uploadPath, image.FileName);
+                    imagePaths.Add(imagePath);
                     if (imagePath != null)
                     {
                         List<ProductImage> productImages = new List<ProductImage>();
@@ -122,6 +129,24 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
         {
             ProductViewModel product = await _productService.GetById(id);
             return View(product);
+        }
+        [Authorize]
+        public async Task<IActionResult> CreateComment(int Id, string Message)
+        {           
+            var user = await _accountService.Find(User.Identity.Name);
+            CommentViewModel model = new CommentViewModel()
+            {
+                ProductId = Id,
+                Content = Message,
+                UserId = user.Id
+                
+            };            
+                await _commentService.Add(model);
+                return RedirectToAction("Index");
+            
+            
+            
+            
         }
     }
 }

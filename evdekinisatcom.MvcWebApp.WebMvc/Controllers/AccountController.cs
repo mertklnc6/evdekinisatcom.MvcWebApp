@@ -15,7 +15,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
         public AccountController(IAccountService service)
         {
-            _service = service;   //zdfxgchjfhgfsdfg
+            _service = service;   
         }
         [Authorize]
         public async Task< IActionResult> Index()

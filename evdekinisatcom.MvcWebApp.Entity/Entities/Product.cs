@@ -38,6 +38,7 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
         public virtual Category Category { get; set; }
         public virtual List<ProductImage> Images { get; set; }
         public virtual List<OrderDetail> OrderDetails { get; set; }
+        public virtual List<Comment> Comments { get; set; }
 
 
 

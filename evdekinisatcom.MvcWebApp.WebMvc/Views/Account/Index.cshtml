@@ -52,7 +52,7 @@
                                 <a data-bs-toggle="tab" data-bs-target="#security"
                                    class="nav-link">Güvenlik</a>
                             </li>
-                            <li class="nav-item"><a href="" class="nav-link">Çıkış Yap</a> </li>
+                            <li class="nav-item"><a href="/Account/Logout" class="nav-link">Çıkış Yap</a> </li>
                         </ul>
                     </div>
                 </div>
@@ -334,48 +334,48 @@
                                                 <h4>Satıcı Profili</h4>
 
                                             </div>
-                                            <div class="dashboard-detail">                                               
-                                                        <div class="details">
-                                                            <table class="table cart-table wishlist-table">
-                                                                <thead>
-                                                                    <tr class="table-head">
-                                                                        <th scope="col">Toplam Satış</th>
-                                                                        <th scope="col">Toplam Kazanç</th>
-                                                                        <th scope="col">Bakiye</th>
-                                                                        <th scope="col">Son Yapılan Ödeme</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>
-                                                                            1(test)
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="mt-0">300(test)</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span>@Model.Balance</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span class="theme-color fs-6">28.09.2023(test)</span>
-                                                                        </td>
-                                                                    </tr>
+                                            <div class="dashboard-detail">
+                                                <div class="details">
+                                                    <table class="table cart-table wishlist-table">
+                                                        <thead>
+                                                            <tr class="table-head">
+                                                                <th scope="col">Toplam Satış</th>
+                                                                <th scope="col">Toplam Kazanç</th>
+                                                                <th scope="col">Bakiye</th>
+                                                                <th scope="col">Son Yapılan Ödeme</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    1(test)
+                                                                </td>
+                                                                <td>
+                                                                    <span class="mt-0">300(test)</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span>@Model.Balance</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="theme-color fs-6">28.09.2023(test)</span>
+                                                                </td>
+                                                            </tr>
 
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                             <div class="dashboard-detail">
                                                 <div class="details">
                                                     <a asp-action="Create" asp-controller="Product">
-                                                    <button type="button"
-                                                            class="btn btn-solid btn-xs">
-                                                        Yeni Ürün Oluştur
-                                                    </button>
+                                                        <button type="button"
+                                                                class="btn btn-solid btn-xs">
+                                                            Yeni Ürün Oluştur
+                                                        </button>
                                                     </a>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                         <div class="dashboard-title mt-lg-5 mt-3">
                                             <h4>Giriş Detayları</h4>
@@ -479,8 +479,9 @@
                 Çıkış Yapmak İstiyor Musunuz ?
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-dark btn-custom" data-bs-dismiss="modal">Hayır</a>
-                <a href="index.html" class="btn btn-solid btn-custom">Evet</a>
+                <a href="/Account/Index" class="btn btn-dark btn-custom" data-bs-dismiss="modal">Hayır</a>
+                <a href="/Account/Logout" class="btn btn-solid btn-custom">Evet
+                </a>                
             </div>
         </div>
     </div>

@@ -15,6 +15,7 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
 	{
 		private readonly IUnitOfWork _uow;
 		private readonly IMapper _mapper;
+		
 
 		public ProductService(IUnitOfWork uow, IMapper mapper)
 		{
@@ -24,7 +25,20 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
 
 		public async Task CreateAsync(ProductViewModel model)
 		{
-			Product product = new Product();
+			
+			Product product = new Product()
+			{
+                Title = model.Title,
+                CategoryId = model.CategoryId,
+                Description = model.Description,
+                Price = model.Price,
+                Condition = model.Condition,
+                SellerId = model.SellerId,
+				Color = model.Color,
+                CreatedDate = DateTime.Now,
+                HeaderImageUrl = model.HeaderImageUrl,
+                Images = model.Images
+            };
 			product = _mapper.Map<Product>(model);
 			await _uow.GetRepository<Product>().Add(product);
 			await _uow.CommitAsync();

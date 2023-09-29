@@ -13,6 +13,7 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
         public int Id { get; set; }
 
         public int CategoryId { get; set; }
+        public int SellerId { get; set; }
 
         [Required(ErrorMessage = "Ürün Başlığı Yazmalısınız! ")]
         public string Title { get; set; }
@@ -36,6 +37,8 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
         public string HeaderImageUrl { get; set; }
 
         public List<ProductImage> Images { get; set; }
+
+        public string? ReturnUrl { get; set; }
 
 
 

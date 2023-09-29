@@ -23,7 +23,7 @@
                     <div class="theme-card">
                     <form class="theme-form" asp-controller="Account" asp-action="Login" method="post">
                             <div class="form-group">
-
+                            <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
                                 <label asp-for="Email" class="form-label">Email :</label>
                             <input asp-for="Email" class="form-control" placeholder="Email" />
                                 <span asp-validation-for="Email" class="text-danger"></span>
