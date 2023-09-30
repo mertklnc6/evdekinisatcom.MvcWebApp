@@ -64,7 +64,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "BaseCategory", ParentCategoryId = 1 },
             // Elektronik
-            new Category { Id = 2, Name = "Elektronik", ParentCategoryId = 2 },
+            new Category { Id = 2, Name = "Elektronik", ParentCategoryId = 1 },
             new Category { Id = 3, Name = "Bilgisayarlar & Tabletler", ParentCategoryId = 2 },
             new Category { Id = 4, Name = "Telefonlar", ParentCategoryId = 2 },
             new Category { Id = 5, Name = "Oyun & Konsollar", ParentCategoryId = 2 },
@@ -117,7 +117,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
                     Color = "Siyah",
                     Condition = "Yeni & Etiketli",
                     HeaderImageUrl = "~/userUploads/users/ali/137425-1_large.webp",
-                    CategoryId = 1,
+                    CategoryId = 4,
                     SellerId = 1,
                     BuyerId = null
                 },
@@ -131,7 +131,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
                     Color = "Siyah",
                     Condition = "Az Kullanılmış",
                     HeaderImageUrl = "~/userUploads/users/ali/137425-1_large.webp",
-                    CategoryId = 1,
+                    CategoryId = 4,
                     SellerId = 1,
                     BuyerId = null
                 }

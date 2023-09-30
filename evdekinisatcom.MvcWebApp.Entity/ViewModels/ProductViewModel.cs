@@ -40,6 +40,8 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
 
         public string? ReturnUrl { get; set; }
 
+        
+
 
 
 

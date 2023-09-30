@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using evdekinisatcom.MvcWebApp.DataAccess.Data;
 using evdekinisatcom.MvcWebApp.Entity.Repositories;
+using evdekinisatcom.MvcWebApp_App.Entity.Entities;
 
 namespace evdekinisatcom.MvcWebApp.DataAccess.Repositories
 {
@@ -85,6 +86,8 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Repositories
 		{
 			_dbSet.Update(entity);
 		}
+
+		
 	}
 }
 

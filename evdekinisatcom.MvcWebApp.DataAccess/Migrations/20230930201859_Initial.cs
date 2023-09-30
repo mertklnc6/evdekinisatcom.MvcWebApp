@@ -311,8 +311,8 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    ProducId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
+                    ReturnUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -384,18 +384,36 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 columns: new[] { "Id", "CreatedDate", "IsDeleted", "Name", "ParentCategoryId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2489), false, "BaseCategory", 1 },
-                    { 2, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2501), false, "Elektronik", 2 },
-                    { 3, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2502), false, "Bilgisayarlar & Tabletler", 2 },
-                    { 4, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2503), false, "Telefonlar", 2 },
-                    { 5, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2504), false, "Oyun & Konsollar", 2 },
-                    { 6, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2505), false, "TV & Ses Sistemleri", 2 },
-                    { 7, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2506), false, "Kamera & Fotoğraf Makineleri", 2 },
-                    { 8, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2507), false, "Giyim & Aksesuar", 1 },
-                    { 14, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2512), false, "Ev & Yaşam", 1 },
-                    { 18, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2523), false, "Kitap & Müzik & Film", 1 },
-                    { 22, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2533), false, "Spor & Outdoor", 1 },
-                    { 26, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2544), false, "Kozmetik & Sağlık", 1 }
+                    { 1, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3442), false, "BaseCategory", 1 },
+                    { 2, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3458), false, "Elektronik", 1 },
+                    { 8, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3463), false, "Giyim & Aksesuar", 1 },
+                    { 14, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3469), false, "Ev & Yaşam", 1 },
+                    { 18, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3472), false, "Kitap & Müzik & Film", 1 },
+                    { 22, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3476), false, "Spor & Outdoor", 1 },
+                    { 26, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3479), false, "Kozmetik & Sağlık", 1 },
+                    { 3, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3458), false, "Bilgisayarlar & Tabletler", 2 },
+                    { 4, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3459), false, "Telefonlar", 2 },
+                    { 5, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3460), false, "Oyun & Konsollar", 2 },
+                    { 6, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3461), false, "TV & Ses Sistemleri", 2 },
+                    { 7, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3462), false, "Kamera & Fotoğraf Makineleri", 2 },
+                    { 9, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3464), false, "Erkek Giyim", 8 },
+                    { 10, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3465), false, "Kadın Giyim", 8 },
+                    { 11, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3466), false, "Çocuk Giyim", 8 },
+                    { 12, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3467), false, "Ayakkabılar", 8 },
+                    { 13, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3468), false, "Çantalar", 8 },
+                    { 15, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3470), false, "Mobilya", 14 },
+                    { 16, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3470), false, "Dekorasyon", 14 },
+                    { 17, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3471), false, "Ev Aletleri", 14 },
+                    { 19, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3473), false, "Kitaplar", 18 },
+                    { 20, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3474), false, "Müzik Albümleri", 18 },
+                    { 21, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3475), false, "Filmler & Diziler", 18 },
+                    { 23, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3477), false, "Spor Giyim", 22 },
+                    { 24, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3478), false, "Spor Aletleri", 22 },
+                    { 25, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3479), false, "Kamp & Outdoor", 22 },
+                    { 27, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3480), false, "Makyaj", 26 },
+                    { 28, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3481), false, "Cilt Bakımı", 26 },
+                    { 29, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3482), false, "Saç Bakımı", 26 },
+                    { 30, new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3483), false, "Parfümler", 26 }
                 });
 
             migrationBuilder.InsertData(
@@ -403,33 +421,8 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 columns: new[] { "Id", "AppUserId", "AppUserId1", "Brand", "BuyerId", "CartId", "CategoryId", "Color", "Condition", "CreatedDate", "Description", "HeaderImageUrl", "IsDeleted", "IsOnSale", "Price", "SellerId", "Title" },
                 values: new object[,]
                 {
-                    { 1, null, null, "Apple", null, null, 1, "Siyah", "Yeni & Etiketli", new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2883), "Kutusu Açılmadı", "~/userUploads/users/ali/137425-1_large.webp", false, true, 100m, 1, "Iphone 15" },
-                    { 2, null, null, "Samsung", null, null, 1, "Siyah", "Az Kullanılmış", new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2886), "Sıfıra yakın", "~/userUploads/users/ali/137425-1_large.webp", false, true, 150m, 1, "S23 Ultra" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "CreatedDate", "IsDeleted", "Name", "ParentCategoryId" },
-                values: new object[,]
-                {
-                    { 9, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2508), false, "Erkek Giyim", 8 },
-                    { 10, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2509), false, "Kadın Giyim", 8 },
-                    { 11, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2510), false, "Çocuk Giyim", 8 },
-                    { 12, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2510), false, "Ayakkabılar", 8 },
-                    { 13, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2511), false, "Çantalar", 8 },
-                    { 15, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2516), false, "Mobilya", 14 },
-                    { 16, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2518), false, "Dekorasyon", 14 },
-                    { 17, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2520), false, "Ev Aletleri", 14 },
-                    { 19, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2525), false, "Kitaplar", 18 },
-                    { 20, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2527), false, "Müzik Albümleri", 18 },
-                    { 21, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2530), false, "Filmler & Diziler", 18 },
-                    { 23, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2534), false, "Spor Giyim", 22 },
-                    { 24, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2539), false, "Spor Aletleri", 22 },
-                    { 25, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2543), false, "Kamp & Outdoor", 22 },
-                    { 27, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2545), false, "Makyaj", 26 },
-                    { 28, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2546), false, "Cilt Bakımı", 26 },
-                    { 29, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2547), false, "Saç Bakımı", 26 },
-                    { 30, new DateTime(2023, 9, 28, 17, 52, 21, 979, DateTimeKind.Local).AddTicks(2548), false, "Parfümler", 26 }
+                    { 1, null, null, "Apple", null, null, 4, "Siyah", "Yeni & Etiketli", new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3812), "Kutusu Açılmadı", "~/userUploads/users/ali/137425-1_large.webp", false, true, 100m, 1, "Iphone 15" },
+                    { 2, null, null, "Samsung", null, null, 4, "Siyah", "Az Kullanılmış", new DateTime(2023, 9, 30, 23, 18, 59, 309, DateTimeKind.Local).AddTicks(3816), "Sıfıra yakın", "~/userUploads/users/ali/137425-1_large.webp", false, true, 150m, 1, "S23 Ultra" }
                 });
 
             migrationBuilder.CreateIndex(

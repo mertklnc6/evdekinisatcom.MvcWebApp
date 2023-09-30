@@ -11,7 +11,7 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
     public interface IProductService
     {
         Task<IEnumerable<ProductViewModel>> GetAll();
-        Task<ProductViewModel> GetById(int id);
+        Task<ProductViewModel> GetById(int id);       
         Task CreateAsync(ProductViewModel model);
     }
 }

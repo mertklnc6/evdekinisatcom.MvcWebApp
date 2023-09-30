@@ -6,15 +6,15 @@
     @if (category.Id != 1)
     {
         <li>
-            <a href="@Url.Action("Index", "Products", new { categoryId = category.Id })">@category.Name</a>
+            <a asp-action="Index" asp-controller="Product" asp-route-id="@category.Id">@category.Name</a>
 
             <ul>
                 @foreach (var subCategory in Model)
                 {
                     @if (category.Id == subCategory.ParentCategoryId)
                     {
-                        <li>
-                            <a href="@Url.Action("Index", "Products", new { categoryId = subCategory.Id })">
+                        <li style="flex-grow:inherit">
+                            <a style="padding-inline-end" asp-action="Index" asp-controller="Product" asp-route-id="@subCategory.Id">                              
                                 @subCategory.Name
                             </a>
                         </li>

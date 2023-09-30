@@ -11,55 +11,111 @@ using evdekinisatcom.MvcWebApp.Entity.UnitOfWorks;
 using evdekinisatcom.MvcWebApp.Entity.Services;
 using evdekinisatcom.MvcWebApp.Entity.ViewModels;
 using evdekinisatcom.MvcWebApp.Service.Services;
+using System.Collections.Generic;
 
 namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 {
     public class ProductController : Controller
     {
         private readonly IAccountService _accountService;
-		private readonly IMapper _mapper;        
+        private readonly IMapper _mapper;
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
         private readonly ICommentService _commentService;
 
-		public ProductController(IMapper mapper, IProductService productService, IAccountService accountService, ICategoryService categoryService)
-		{
-
-			_mapper = mapper;
-			_productService = productService;
-			_accountService = accountService;
-			_categoryService = categoryService;
-		}
-
-		public async Task<IActionResult> Index()
+        public ProductController(IMapper mapper, IProductService productService, IAccountService accountService, ICategoryService categoryService)
         {
 
-            var list = await _productService.GetAll();
-			return View(list);
-		}
+            _mapper = mapper;
+            _productService = productService;
+            _accountService = accountService;
+            _categoryService = categoryService;
+        }
+
+        public async Task<IActionResult> Index(string? id)
+        {
+            if (id == null)
+            {
+                var list = await _productService.GetAll();
+                return View(list);
+            }
+            else
+            {
+                var list = new List<ProductViewModel>();
+                var products = await _productService.GetAll();
+                var categories = await _categoryService.GetAll();
+                foreach (var product in products)
+                {
+                    if (product.CategoryId.ToString() == id)
+                    {
+                        list.Add(product);
+                        
+                    }
+                }
+                foreach (var category in categories)
+                {
+                    if (category.Id.ToString() == id && category.ParentCategoryId == 1)
+                    {
+                        foreach (var subCategory in categories)
+                        {
+                            if(subCategory.ParentCategoryId == category.Id)
+                            {
+                                foreach(var product in products)
+                                {
+                                    if(product.CategoryId == subCategory.Id)
+                                    {
+                                        list.Add(product);
+                                    }
+                                }
+                            }
+                        }
+                                
+                    }
+                }
+
+                return View(list);
+
+            }
+
+
+
+
+        }
 
         [Authorize]
         public async Task<IActionResult> Create()
         {
-            ViewBag.Categories = new SelectList(await _categoryService.GetAll(), "Id", "Name","ParentCategoryId");
+            
+            var categoryList = await _categoryService.GetAll();
+            var subCategoryList = new List<CategoryViewModel>();
+            foreach (var sCategory in categoryList)
+            {
+                
+                if (sCategory.ParentCategoryId != 1)
+                {
+                    subCategoryList.Add(sCategory);
+                    
+                };
+            }
+            ViewBag.Categories = new SelectList(subCategoryList, "Id", "Name");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create(ProductViewModel model,IFormFile headerImage, List<IFormFile> images)
+        public async Task<IActionResult> Create(ProductViewModel model, IFormFile headerImage, List<IFormFile> images)
         {
 
-			//if (ModelState.IsValid)
-			//{
-			
-			try
+            //if (ModelState.IsValid)
+            //{
+
+            try
             {
                 var currentUser = await _accountService.Find(User.Identity.Name);
                 if (currentUser != null)
                 {
-                   model.SellerId = currentUser.Id;
+                    model.SellerId = currentUser.Id;
                 }
 
                 var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\userUploads\\users");
@@ -80,7 +136,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                 List<string> imagePaths = new List<string>();
                 foreach (var image in images)
                 {
-                    
+
 
                     var imagePath = Path.Combine(uploadPath, image.FileName);
                     imagePaths.Add(imagePath);
@@ -110,9 +166,9 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
                 }
 
-                
 
-               await _productService.CreateAsync(model);                
+
+                await _productService.CreateAsync(model);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -132,21 +188,21 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
         }
         [Authorize]
         public async Task<IActionResult> CreateComment(int Id, string Message)
-        {           
+        {
             var user = await _accountService.Find(User.Identity.Name);
             CommentViewModel model = new CommentViewModel()
             {
                 ProductId = Id,
                 Content = Message,
                 UserId = user.Id
-                
-            };            
-                await _commentService.Add(model);
-                return RedirectToAction("Index");
-            
-            
-            
-            
+
+            };
+            await _commentService.Add(model);
+            return RedirectToAction("Index");
+
+
+
+
         }
     }
 }

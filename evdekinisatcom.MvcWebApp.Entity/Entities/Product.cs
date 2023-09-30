@@ -27,7 +27,8 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
 
         public int CategoryId { get; set; }        
 
-        public int SellerId { get; set; } //Seller                                          
+        public int SellerId { get; set; } //Seller                  
+                                           
 
         public bool IsOnSale { get; set; } = true;
 
@@ -36,6 +37,7 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
         //Navigation Property
 
         public virtual Category Category { get; set; }
+        
         public virtual List<ProductImage> Images { get; set; }
         public virtual List<OrderDetail> OrderDetails { get; set; }
         public virtual List<Comment> Comments { get; set; }

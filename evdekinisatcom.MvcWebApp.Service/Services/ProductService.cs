@@ -29,7 +29,7 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
 			Product product = new Product()
 			{
                 Title = model.Title,
-                CategoryId = model.CategoryId,
+                CategoryId = model.CategoryId,                
                 Description = model.Description,
                 Price = model.Price,
                 Condition = model.Condition,
@@ -61,5 +61,6 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
 
 			return _mapper.Map<ProductViewModel>(product);
 		}
+		
 	}
 }
