@@ -23,17 +23,19 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
         private readonly IProductService _productService;
         private readonly ICommentService _commentService;
 
-        public ProductController(IMapper mapper, IProductService productService, IAccountService accountService, ICategoryService categoryService)
+        public ProductController(IMapper mapper, IProductService productService, IAccountService accountService, ICategoryService categoryService, ICommentService commentService)
         {
 
             _mapper = mapper;
             _productService = productService;
             _accountService = accountService;
             _categoryService = categoryService;
+            _commentService = commentService;
         }
 
         public async Task<IActionResult> Index(string? id)
         {
+            
             if (id == null)
             {
                 var list = await _productService.GetAll();
@@ -116,6 +118,9 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                 if (currentUser != null)
                 {
                     model.SellerId = currentUser.Id;
+                    model.SellerUsername = currentUser.Username;
+
+
                 }
 
                 var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\userUploads\\users");
@@ -183,22 +188,39 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
+            ViewBag.Comments = await _commentService.GetAllByProductId(id);
             ProductViewModel product = await _productService.GetById(id);
             return View(product);
         }
+
+        public async Task<IActionResult> Edit(ProductViewModel model)
+        {
+            return View();
+        }
+
         [Authorize]
         public async Task<IActionResult> CreateComment(int Id, string Message)
         {
-            var user = await _accountService.Find(User.Identity.Name);
-            CommentViewModel model = new CommentViewModel()
+            if(Message != null && Id != 0)
             {
-                ProductId = Id,
-                Content = Message,
-                UserId = user.Id
+                var user = await _accountService.Find(User.Identity.Name);
+                CommentViewModel model = new CommentViewModel()
+                {
+                    ProductId = Id,
+                    Content = Message,
+                    UserId = user.Id,
+                    Username = user.Username,
+                    UserProfilePic = user.ProfilePicUrl
 
-            };
-            await _commentService.Add(model);
-            return RedirectToAction("Index");
+                };
+                await _commentService.Add(model);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            
 
 
 

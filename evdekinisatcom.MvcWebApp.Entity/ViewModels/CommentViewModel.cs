@@ -11,8 +11,10 @@ namespace evdekinisatcom.MvcWebApp.Entity.ViewModels
         public int Id { get; set; }
         public string Content { get; set; }
         public int UserId { get; set; }
+        public string Username { get; set; }
+        public string UserProfilePic { get; set; }
         public int ProductId { get; set; }
 
-        public string? ReturnUrl { get; set; }
+       
     }
 }

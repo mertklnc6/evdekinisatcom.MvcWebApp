@@ -12,7 +12,11 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
         
         public string Content { get; set; }        
 
-        public int UserId { get; set; }        
+        public int UserId { get; set; }
+
+        public string Username { get; set; }
+
+        public  string UserProfilePic { get; set; }
 
         public int ProductId { get; set; }
         //Navigation Property

@@ -57,6 +57,7 @@ namespace evdekinisatcom.MvcWebApp.Service.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICommentService, CommentService>();
             services.AddScoped(typeof(IAccountService), typeof(AccountService));
 
             services.AddAutoMapper(typeof(MappingProfile));

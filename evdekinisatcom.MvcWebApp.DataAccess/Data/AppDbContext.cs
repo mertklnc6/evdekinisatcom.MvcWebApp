@@ -116,9 +116,10 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
 					Brand = "Apple",
                     Color = "Siyah",
                     Condition = "Yeni & Etiketli",
-                    HeaderImageUrl = "~/userUploads/users/ali/137425-1_large.webp",
+                    HeaderImageUrl = "/userUploads/users/ali/137425-1_large.webp",
                     CategoryId = 4,
                     SellerId = 1,
+                    SellerUsername = "ali",
                     BuyerId = null
                 },
                 new()
@@ -130,9 +131,10 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
                     Brand = "Samsung",
                     Color = "Siyah",
                     Condition = "Az Kullanılmış",
-                    HeaderImageUrl = "~/userUploads/users/ali/137425-1_large.webp",
+                    HeaderImageUrl = "/userUploads/users/ali/137425-1_large.webp",
                     CategoryId = 4,
                     SellerId = 1,
+                    SellerUsername = "ali",
                     BuyerId = null
                 }
 
