@@ -14,6 +14,11 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
 
         public int CategoryId { get; set; }
         public int SellerId { get; set; }
+        public int? BuyerId { get; set; }
+
+        public int StockQuantity { get; set; } = 1;
+
+        public bool IsSold { get; set; } = false;
 
         public string SellerUsername { get; set; }
 
@@ -29,9 +34,9 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
         [Required(ErrorMessage = "Lütfen Ürünün Durumunu Belirtin! ")]
         public string Condition { get; set; }
 
-		[Required(ErrorMessage = "Lütfen Ürünün Markasını Belirtin! ")]
+        [Required(ErrorMessage = "Lütfen Ürünün Markasını Belirtin! ")]
 
-		public string Brand { get; set; }
+        public string Brand { get; set; }
         [Required(ErrorMessage = "Lütfen Ürünün Rengini Belirtin! ")]
 
         public string Color { get; set; }
@@ -39,13 +44,13 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
         public string HeaderImageUrl { get; set; }
 
         public List<ProductImage> Images { get; set; }
-        
+
 
         public string? ReturnUrl { get; set; }
 
         public List<Comment> Comments { get; set; }
 
-        
+
 
 
 

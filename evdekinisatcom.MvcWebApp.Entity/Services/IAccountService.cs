@@ -17,9 +17,13 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
 
 		Task<List<RoleViewModel>> GetAllRoles();
 
-		Task<RoleViewModel> FindByIdAsync(string id);
+		Task<RoleViewModel> FindRoleByIdAsync(string id);
+		Task<UserViewModel> FindByIdAsync(string id);
 
-		Task<UsersInOrOutViewModel> GetAllUsersWithRole(string id);
+		Task<List<UserViewModel>> GetAllUsersAsync();
+
+
+        Task<UsersInOrOutViewModel> GetAllUsersWithRole(string id);
 
 		Task<string> EditRoleListAsync(EditRoleViewModel model);
 		Task<UserViewModel> Find(string username);

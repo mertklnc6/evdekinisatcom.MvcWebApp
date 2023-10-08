@@ -26,21 +26,24 @@
                         </div>
                         @*@foreach (var img in Model.Images)
                         {
-                            <div>
-                                <img src="@img.ImageUrl" alt="@Model.Title"
-                                     class="img-fluid blur-up lazyload image_zoom_cls-1">
-                            </div>
+                        <div>
+                        <img src="@img.ImageUrl" alt="@Model.Title"
+                        class="img-fluid blur-up lazyload image_zoom_cls-1">
+                        </div>
                         }*@
 
                     </div>
                     <div class="row">
                         <div class="col-12 p-0">
                             <div class="slider-nav">
-                                @foreach (var img in Model.Images)
+                                @if (Model.Images != null)
                                 {
-                                    <div>
-                                        <img src="@img.ImageUrl" class="img-fluid blur-up lazyload">
-                                    </div>
+                                    @foreach (var img in Model.Images)
+                                    {
+                                        <div>
+                                            <img src="@img.ImageUrl" class="img-fluid blur-up lazyload">
+                                        </div>
+                                    }
                                 }
                             </div>
                         </div>
@@ -50,7 +53,7 @@
                     <div class="product-right">
                         <h2>@Model.Title</h2>
                         <div class="label-section">
-                            <span class="badge badge-grey-color">Satıcı</span>                            
+                            <span class="badge badge-grey-color">Satıcı</span>
                         </div>
                         <h6>@Model.SellerUsername</h6>
                         <h3 class="price-detail">@Model.Price</h3>
@@ -58,11 +61,9 @@
                             <li>@Model.Color</li>
                         </ul>
                         <div class="product-buttons">
-                            <a href="javascript:void(0)" id="cartEffect"
-                               class="btn btn-solid hover-solid btn-animation">
-                                <i class="fa fa-shopping-cart me-1"
-                                   aria-hidden="true"></i> add to cart
-                            </a> <a href="#" class="btn btn-solid">
+                            <form asp-action="AddToCart" asp-controller="Cart" method="post" asp-route-id="@Model.Id">
+                                <input type="submit" value="Sepete Ekle" class="btn btn-primary" />
+                            </form> <a href="#" class="btn btn-solid">
                                 <i class="fa fa-bookmark fz-16 me-2" aria-hidden="true"></i>İstek Listesi
                             </a>
                         </div>
@@ -129,7 +130,7 @@
                     </div>
                     <div class="tab-pane fade" id="top-review" role="tabpanel" aria-labelledby="review-top-tab">
                         <div class="product-tab-discription">
-                            <div class="part">                                
+                            <div class="part">
                                 @foreach (var item in ViewBag.Comments)
                                 {
                                     <div class="media">

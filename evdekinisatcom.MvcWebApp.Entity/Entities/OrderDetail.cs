@@ -14,7 +14,11 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
 
         public int ProductId { get; set; }
 
-        public int Number { get; set; }
+        public int Quantity { get; set; }
+
+        public string ProductTitle { get; set; }
+
+        public int SellerId { get; set; }
 
         public decimal UnitPrice { get; set; }
 

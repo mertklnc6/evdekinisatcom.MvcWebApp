@@ -10,9 +10,11 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
     public class Cart : BaseEntity
     {        
 
-        public int UserId { get; set; }        
+        public int UserId { get; set; }
 
         //Navigation Property
-        public virtual List<Product> Products { get; set; }
+        public virtual ICollection<CartItem> CartItems { get; set; }
+
+
     }
 }

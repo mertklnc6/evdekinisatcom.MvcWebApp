@@ -1,8 +1,26 @@
-﻿
+﻿@using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
+@model List<UserViewModel>
 @{
     ViewData["Title"] = "UserList";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
 
 <h1>UserList</h1>
+
+@foreach(var user in Model)
+{
+    <ul></ul>
+    <div>
+        <p>@user.Name</p>
+        <p>@user.Surname</p>
+        <p>@user.Username</p>
+        <p>@user.Email</p>
+        <p>@user.PhoneNumber</p>        
+        <p>@user.Address</p>
+        <p>@user.Balance</p>
+        <a href="~/Admin/Home/UserBuyerActivity/@user.Id" type="submit" class="btn btn-primary">Alıcı Hareketleri</a>
+        <a href="~/Admin/Home/UserSellerActivity/@user.Id" type="submit" class="btn btn-primary">Satıcı Hareketleri</a>
+
+    </div>
+}
 

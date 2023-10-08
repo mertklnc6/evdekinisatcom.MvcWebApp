@@ -13,18 +13,20 @@ namespace evdekinisatcom.MvcWebApp.Entity.Repositories
 
 		Task<T> GetById(int id);
 
-		Task<T> Get(Expression<Func<T, bool>> predicate);
+		Task<T> Get(Expression<Func<T, bool>> predicate);		
 
 		Task Add(T entity);
 
 		void Update(T entity);
 
-		void Delete(int id);
+		void Delete(int id);		
+		void DeletePermanently(int id);		
 
 		void Delete(T entity);		
 
 		Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null, params Expression<Func<T, object>>[] includes);
 
+		Task<T> GetByIdAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null, params Expression<Func<T, object>>[] includes);
 
-	}
+    }
 }

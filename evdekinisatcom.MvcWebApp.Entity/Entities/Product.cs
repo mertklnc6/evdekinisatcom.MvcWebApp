@@ -19,6 +19,8 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
 
         public string Condition { get; set; }
 
+        public int StockQuantity { get; set; } = 1;
+
         public string Brand { get; set; }
 
         public string Color { get; set; }
@@ -30,6 +32,8 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
         public int SellerId { get; set; } //Seller
         public string SellerUsername { get; set; }
         public bool IsOnSale { get; set; } = true;
+
+        public bool IsSold { get; set; } = false;
 
         public int? BuyerId { get; set; } //Buyer
 

@@ -2,6 +2,7 @@
 using evdekinisatcom.MvcWebApp.DataAccess.Identity.Models;
 using evdekinisatcom.MvcWebApp.Entity.Services;
 using evdekinisatcom.MvcWebApp.Entity.ViewModels;
+using evdekinisatcom.MvcWebApp_App.Entity.Entities;
 using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +20,14 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
         private readonly RoleManager<AppRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IMapper _mapper;
-        public AccountService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager, IMapper mapper)
+        private readonly ICartService _cartService;
+        public AccountService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager, IMapper mapper, ICartService cartService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _mapper = mapper;
+            _cartService = cartService;
         }
 
         public async Task<string> CreateRoleAsync(RoleViewModel model)
@@ -61,12 +64,20 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber,
                 UserName = model.Username,
-                Address = model.Address
+                Address = model.Address,
+                
             };
-            var identityResult = await _userManager.CreateAsync(user, model.ConfirmPassword);
+            
 
+            var identityResult = await _userManager.CreateAsync(user, model.ConfirmPassword);
+            
             if (identityResult.Succeeded)
             {
+                await _cartService.CreateCartForUserAsync(user.Id);
+                var cart = await _cartService.GetCartByUserId(user.Id);
+                user.CartId = cart.Id;
+                await _userManager.UpdateAsync(user);
+                
                 message = "OK";
             }
             else
@@ -117,10 +128,16 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
 			return _mapper.Map<UserViewModel>(user);
 		}
 
-		public async Task<RoleViewModel> FindByIdAsync(string id)
+		public async Task<RoleViewModel> FindRoleByIdAsync(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
             return _mapper.Map<RoleViewModel>(role);
+        }
+        
+        public async Task<UserViewModel> FindByIdAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            return _mapper.Map<UserViewModel>(user);
         }
 
 
@@ -136,6 +153,7 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             var signInResult = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
             if (signInResult.Succeeded)
             {
+
                 message = "OK";
             }
             return message;
@@ -146,6 +164,12 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             return _mapper.Map<List<RoleViewModel>>(roles);
         }
 
+        public async Task<List<UserViewModel>> GetAllUsersAsync()
+        {
+            var users = await _userManager.Users.ToListAsync();
+
+            return _mapper.Map<List<UserViewModel>>(users);
+        }
         public async Task<UsersInOrOutViewModel> GetAllUsersWithRole(string id)
         {
             var role = await this.FindByIdAsync(id);

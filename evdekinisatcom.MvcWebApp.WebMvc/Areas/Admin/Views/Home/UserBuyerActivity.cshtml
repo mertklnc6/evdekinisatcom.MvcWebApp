@@ -1,0 +1,19 @@
+﻿@using evdekinisatcom.MvcWebApp.Entity.ViewModels;
+@model List<OrderActivityViewModel>
+@{
+    ViewData["Title"] = "UserBuyerActivity";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+
+<h1>UserBuyerActivity</h1>
+
+@foreach(var activity in Model)
+{
+    <div>
+        <p>@activity.OrderId</p>
+        <p>@activity.SellerId</p>
+        <p>@activity.Activity</p>
+        <p>@activity.TotalPrice</p>
+    </div>
+}
+

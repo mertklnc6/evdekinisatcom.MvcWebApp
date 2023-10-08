@@ -1,17 +1,58 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using evdekinisatcom.MvcWebApp.Entity.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace evdekinisatcom.MvcWebApp.WebMvc.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	public class HomeController : Controller
 	{
-		public IActionResult Index()
+		private readonly IOrderService _orderService;
+		private readonly IAccountService _accountService;
+        public HomeController(IOrderService orderService, IAccountService accountService)
+        {
+            _orderService = orderService;
+            _accountService = accountService;
+        }
+
+        public IActionResult Index()
 		{
+
 			return View();
 		}
-		public IActionResult UserList()
+		public async Task<IActionResult> UserList()
 		{
-			return View();
+			var users = await _accountService.GetAllUsersAsync();
+			return View(users);
 		}
-	}
+
+		public async Task<IActionResult> UserDetails(string id)
+		{
+			var user = await _accountService.FindByIdAsync(id);
+			var buyerActivity = await _orderService.GetAllBuyerActivityByUserId(user.Id);
+			var sellerActivity = await _orderService.GetAllSellerActivityByUserId(user.Id);
+            ViewBag.buyerActivity = new SelectList(buyerActivity);
+            ViewBag.sellerActivity = new SelectList(sellerActivity);
+            return View();
+		}
+
+        public async Task<IActionResult> UserBuyerActivity(int id)
+        {
+			
+            var user = await _accountService.FindByIdAsync(id.ToString());
+            var buyerActivity = await _orderService.GetAllBuyerActivityByUserId(user.Id);            
+            //ViewBag.buyerActivity = new SelectList(buyerActivity);            
+            return View(buyerActivity);
+        }
+        
+        public async Task<IActionResult> UserSellerActivity(int id)
+        {
+			
+            var user = await _accountService.FindByIdAsync(id.ToString());
+            var sellerActivity = await _orderService.GetAllSellerActivityByUserId(user.Id);            
+            //ViewBag.buyerActivity = new SelectList(buyerActivity);            
+            return View(sellerActivity);
+        }
+
+    }
 }

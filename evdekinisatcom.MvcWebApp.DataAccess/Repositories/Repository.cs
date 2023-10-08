@@ -50,7 +50,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Repositories
 
 		public async Task<T> Get(Expression<Func<T, bool>> predicate)
 		{
-			return await _dbSet.FirstOrDefaultAsync(predicate);
+			return await _dbSet.AsNoTracking().FirstOrDefaultAsync(predicate);
 		}
 
 		public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null, params Expression<Func<T, object>>[] includes)
@@ -69,7 +69,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Repositories
 				query = query.Include(table);
 			}
 
-			return await query.ToListAsync();
+			return await query.AsNoTracking().ToListAsync();
 		}
 
 		public async Task<IEnumerable<T>> GetAllAsync()
@@ -86,8 +86,33 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Repositories
 		{
 			_dbSet.Update(entity);
 		}
+        public async Task<T> GetByIdAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbSet;  //tabloyu alır filtreleri uygulayarak filtrelenmiş verileri dödürür
+            if (filter != null)  //filtre varsa
+            {
+                query = query.Where(filter);
+            }
+            if (orderby != null)  //sıralama istenmişse
+            {
+                query = orderby(query);
+            }
+            foreach (var table in includes)  //ilişkili tablolar istenmişse  Eager loadind
+            {
+                query = query.Include(table);
+            }
 
-		
-	}
+            return await query.AsNoTracking().FirstOrDefaultAsync();
+        }
+
+        public void DeletePermanently(int id)
+        {
+            var entity = _dbSet.Find(id);
+			if (entity != null)
+			{
+				_dbSet.Remove(entity);
+			}
+        }
+    }
 }
 

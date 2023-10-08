@@ -29,5 +29,8 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
 
         public string ProfilePicUrl { get; set; }
 
+        public int? CartId { get; set; }
+
+
     }
 }

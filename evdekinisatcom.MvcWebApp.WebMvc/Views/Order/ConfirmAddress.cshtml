@@ -1,0 +1,21 @@
+﻿@using evdekinisatcom.MvcWebApp.Entity.ViewModels;
+@model AddressConfirmationViewModel
+@{
+    ViewData["Title"] = "ConfirmAddress";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+
+
+
+<h2>Adres Onaylama</h2>
+
+<form asp-action="ConfirmAddress" method="post">
+    <div class="form-group">
+        <label for="Address">Adresiniz</label>
+        <p>@Model.Address</p>
+        
+    </div>
+    <a type="submit" class="btn btn-primary" asp-action="Checkout" asp-controller="Order">Adresi Onayla</a>
+</form>
+
+

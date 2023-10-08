@@ -19,11 +19,14 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Identity.Models
 
         public decimal Balance { get; set; }
 
+        public int? CartId { get; set; }
         //Navigation Property (Relation)
 
-        public List<Order> Orders { get; set; }
-        public List<Product> ProductsToSell { get; set; }
-        public List<Product> PurchasedProducts { get; set; }
+        public virtual Cart Cart { get; set; }
+
+        public virtual List<Order> Orders { get; set; }
+        public virtual List<Product> ProductsToSell { get; set; }
+        public virtual List<Product> PurchasedProducts { get; set; }
 
 
     }

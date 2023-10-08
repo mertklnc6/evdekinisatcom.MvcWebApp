@@ -6,16 +6,19 @@ using System.Data;
 using evdekinisatcom.MvcWebApp.DataAccess.Identity.Models;
 using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
 using evdekinisatcom.MvcWebApp.Entity.Services;
+using evdekinisatcom.MvcWebApp.Service.Services;
 
 namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 {
     public class AccountController : Controller
     {
         private readonly IAccountService _service;
+        private readonly ICartService _cartService;
 
-        public AccountController(IAccountService service)
+        public AccountController(IAccountService service, ICartService cartService)
         {
-            _service = service;   
+            _service = service;
+            _cartService = cartService;
         }
         [Authorize]
         public async Task< IActionResult> Index()
@@ -33,7 +36,8 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
             string msg = await _service.CreateUserAsync(model);
 
             if (msg == "OK")
-            {
+            {                
+                
                 return RedirectToAction("Login");
             }
             else
@@ -64,6 +68,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
             }
             else if (msg == "OK")
             {
+
                 return Redirect(model.ReturnUrl ?? "~/");
             }
             else

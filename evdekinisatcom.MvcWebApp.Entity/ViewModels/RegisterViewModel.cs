@@ -36,6 +36,8 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
+        public int CartId { get; set; }
+
 
     }
 }

@@ -22,7 +22,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.UnitOfWorks
 
         public IRepository<T> GetRepository<T>() where T : class, new()
         {
-            return new Repository<T>(_context);
+           return new Repository<T>(_context);
         }
         public void Commit()
         {

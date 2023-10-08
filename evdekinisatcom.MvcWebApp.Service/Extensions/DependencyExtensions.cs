@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace evdekinisatcom.MvcWebApp.Service.Extensions
@@ -20,7 +21,9 @@ namespace evdekinisatcom.MvcWebApp.Service.Extensions
     public static class DependencyExtensions
     {
         public static void AddExtensions(this IServiceCollection services)
-        {
+        {   
+            
+
             services.AddIdentity<AppUser, AppRole>(
             opt =>
             {
@@ -58,6 +61,8 @@ namespace evdekinisatcom.MvcWebApp.Service.Extensions
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<ICartService, CartService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped(typeof(IAccountService), typeof(AccountService));
 
             services.AddAutoMapper(typeof(MappingProfile));

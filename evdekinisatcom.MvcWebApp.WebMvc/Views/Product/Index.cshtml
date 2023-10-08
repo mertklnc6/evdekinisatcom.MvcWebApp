@@ -27,7 +27,7 @@
                                         <input type="checkbox" class="form-check-input" id="zara">
                                         <label class="form-check-label" for="zara">zara</label>
                                     </div>
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                                     <div class="form-check collection-filter-checkbox">
                                         <input type="checkbox" class="form-check-input" id="hundred">
                                         <label class="form-check-label" for="hundred">s</label>
-                                    </div>                                   
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -277,55 +277,57 @@
                                     <div class="product-wrapper-grid">
                                         <div class="row margin-res">
                                             @foreach (var product in Model)
-                                            {
-                                                <div class="col-xl-3 col-6 col-grid-box">
-                                                    <div class="product-box">
-                                                        <div class="img-wrapper">
-                                                            <div class="front">
-                                                                <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Id">
-                                                                    <img src="@product.HeaderImageUrl"
-                                                                         class="img-fluid blur-up lazyload bg-img"
-                                                                         alt="">
-                                                                </a>
-                                                            </div>                                                            
-                                                            <div class="cart-info cart-wrap">
-                                                                <button data-bs-toggle="modal"
-                                                                        data-bs-target="#addtocart" title="Sepete Ekle">
-                                                                    <i class="ti-shopping-cart"></i>
-                                                                </button> <a href="javascript:void(0)" title="İstek Listesine Ekle">
-                                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                                </a> <a href="#" data-bs-toggle="modal"
-                                                                        data-bs-target="#quick-view" title="Hızlı Bakış">
-                                                                    <i class="ti-search" aria-hidden="true"></i>
-                                                                </a> <a href="compare.html" title="Compare">
-                                                                    <i class="ti-reload" aria-hidden="true"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-detail">
-                                                            <div>
-                                                                <div class="rating">
-                                                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                            { @if (product.IsSold == false)
+                                                {
+                                                    <div class="col-xl-3 col-6 col-grid-box">
+                                                        <div class="product-box">
+                                                            <div class="img-wrapper">
+                                                                <div class="front">
+                                                                    <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Id">
+                                                                        <img src="@product.HeaderImageUrl"
+                                                                             class="img-fluid blur-up lazyload bg-img"
+                                                                             alt="">
+                                                                    </a>
                                                                 </div>
-                                                                <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Id">
-                                                                    <h6>@product.Title</h6>
-                                                                </a>
-                                                                <p>
-                                                                    @product.Description
-                                                                </p>
-                                                                <h4>@product.Price</h4>
-                                                                <ul class="color-variant">
-                                                                    <li class="bg-light0"></li>
-                                                                    <li class="bg-light1"></li>
-                                                                    <li class="bg-light2"></li>
-                                                                </ul>
+                                                                <div class="cart-info cart-wrap">
+                                                                    <button data-bs-toggle="modal"
+                                                                            data-bs-target="#addtocart" title="Sepete Ekle">
+                                                                        <i class="ti-shopping-cart"></i>
+                                                                    </button> <a href="javascript:void(0)" title="İstek Listesine Ekle">
+                                                                        <i class="ti-heart" aria-hidden="true"></i>
+                                                                    </a> <a href="#" data-bs-toggle="modal"
+                                                                            data-bs-target="#quick-view" title="Hızlı Bakış">
+                                                                        <i class="ti-search" aria-hidden="true"></i>
+                                                                    </a> <a href="compare.html" title="Compare">
+                                                                        <i class="ti-reload" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-detail">
+                                                                <div>
+                                                                    <div class="rating">
+                                                                        <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                                                    </div>
+                                                                    <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Id">
+                                                                        <h6>@product.Title</h6>
+                                                                    </a>
+                                                                    <p>
+                                                                        @product.Description
+                                                                    </p>
+                                                                    <h4>@product.Price</h4>
+                                                                    <ul class="color-variant">
+                                                                        <li class="bg-light0"></li>
+                                                                        <li class="bg-light1"></li>
+                                                                        <li class="bg-light2"></li>
+                                                                    </ul>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                }
                                             }
-                                            
-                                            
+
+
                                         </div>
                                     </div>
                                     <div class="product-pagination">

@@ -1,0 +1,54 @@
+﻿@using evdekinisatcom.MvcWebApp.Entity.ViewModels;
+@model CheckoutViewModel
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Sipariş Özeti</h3>
+            <ul class="list-group mb-4">
+                @foreach (var item in Model.CartItems)
+                {
+                    <li class="list-group-item">
+                        <span>@item.Title</span>
+                        <span class="float-right">@item.Price</span>
+                    </li>
+                }
+                <li class="list-group-item active">
+                    <strong>Toplam:</strong>
+                    <span class="float-right"><strong>@Model.TotalPrice</strong></span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h3>Ödeme Bilgileri</h3>
+            <form asp-action="Checkout" method="post">
+                <div class="form-group">
+                    <label for="cardName">Kart Üzerindeki İsim</label>
+                    <input type="text" class="form-control" id="cardName" name="CardName" required>
+                </div>
+                <div class="form-group">
+                    <label for="cardNumber">Kart Numarası</label>
+                    <input type="text" class="form-control" id="cardNumber" name="CardNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="expiryDate">Son Kullanma Tarihi</label>
+                    <input type="month" class="form-control" id="expiryDate" name="ExpiryDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" class="form-control" id="cvv" name="CVV" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Ödeme Yap</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using evdekinisatcom.MvcWebApp.DataAccess.Identity.Models;
 using evdekinisatcom.MvcWebApp_App.Entity.Entities;
 using Microsoft.AspNetCore.Identity;
+using evdekinisatcom.MvcWebApp.Entity.Entities;
 
 namespace evdekinisatcom.MvcWebApp.DataAccess.Data
 {
@@ -22,8 +23,8 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Cart> Carts { get; set; }
-
         public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<OrderActivity> OrderActivities { get; set; }
 
 
 
@@ -44,12 +45,14 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
                 .WithMany(c => c.subCategories)
                 .HasForeignKey(c => c.ParentCategoryId);
 
-            
+
             modelBuilder
                 .Entity<Category>()
                 .HasOne(e => e.ParentCategory)                       //ilişki tanımı, delete davranışı
                 .WithMany(e => e.subCategories)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.ClientCascade);            
+                
+
 
 
             modelBuilder.Entity<IdentityUserLogin<int>>().HasKey(p => new { p.LoginProvider, p.ProviderKey });
@@ -58,8 +61,8 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
 
             modelBuilder.Entity<AppUser>().Property(p => p.Balance).HasDefaultValue(0);
             modelBuilder.Entity<AppUser>().Property(p => p.ProfilePicUrl).HasDefaultValue("/userImages/defaultProfilePic.webp"); //default profil fotoğrafı
-            //Seed Data          
-                
+                                                                                                                                 //Seed Data          
+
 
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "BaseCategory", ParentCategoryId = 1 },
@@ -113,13 +116,13 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
                     Title = "Iphone 15",
                     Description = "Kutusu Açılmadı",
                     Price = 100,
-					Brand = "Apple",
+                    Brand = "Apple",
                     Color = "Siyah",
                     Condition = "Yeni & Etiketli",
                     HeaderImageUrl = "/userUploads/users/ali/137425-1_large.webp",
                     CategoryId = 4,
                     SellerId = 1,
-                    SellerUsername = "ali",
+                    SellerUsername = "aliucar",
                     BuyerId = null
                 },
                 new()
@@ -134,7 +137,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
                     HeaderImageUrl = "/userUploads/users/ali/137425-1_large.webp",
                     CategoryId = 4,
                     SellerId = 1,
-                    SellerUsername = "ali",
+                    SellerUsername = "aliucar",
                     BuyerId = null
                 }
 

@@ -9,6 +9,7 @@ using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
 using AutoMapper;
 using evdekinisatcom.MvcWebApp.DataAccess.Identity.Models;
 using evdekinisatcom.MvcWebApp.Entity.ViewModels;
+using evdekinisatcom.MvcWebApp.Entity.Entities;
 
 namespace evdekinisatcom.MvcWebApp_App.Service.Mapping
 {
@@ -23,6 +24,12 @@ namespace evdekinisatcom.MvcWebApp_App.Service.Mapping
             CreateMap<AppUser, UserViewModel>().ReverseMap();
             CreateMap<AppUser, LoginViewModel>().ReverseMap();
             CreateMap<Comment, CommentViewModel>().ReverseMap();
+            CreateMap<Cart, CartViewModel>().ReverseMap();
+            CreateMap<CartItem, CartItemViewModel>().ReverseMap();
+            CreateMap<Order, OrderViewModel>().ReverseMap();
+            CreateMap<OrderDetail, OrderDetailViewModel>().ReverseMap();
+            CreateMap<OrderActivity, OrderActivityViewModel>().ReverseMap();
+            
         }
 
     }
