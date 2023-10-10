@@ -9,7 +9,7 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
 {
     public class Category : BaseEntity
     {
-
+        
         public string Name { get; set; }
 
         public int ParentCategoryId { get; set; }

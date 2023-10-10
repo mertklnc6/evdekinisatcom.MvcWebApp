@@ -267,22 +267,59 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BuyerAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("BuyerId")
                         .HasColumnType("int");
+
+                    b.Property<string>("BuyerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BuyerSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("FeeAmount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<decimal>("NetAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SellerId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("TotalPrice")
+                    b.Property<string>("SellerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SellerSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -388,7 +425,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9580),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5431),
                             IsDeleted = false,
                             Name = "BaseCategory",
                             ParentCategoryId = 1
@@ -396,7 +433,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9591),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5441),
                             IsDeleted = false,
                             Name = "Elektronik",
                             ParentCategoryId = 1
@@ -404,7 +441,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9592),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5442),
                             IsDeleted = false,
                             Name = "Bilgisayarlar & Tabletler",
                             ParentCategoryId = 2
@@ -412,7 +449,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9593),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5442),
                             IsDeleted = false,
                             Name = "Telefonlar",
                             ParentCategoryId = 2
@@ -420,7 +457,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9594),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5443),
                             IsDeleted = false,
                             Name = "Oyun & Konsollar",
                             ParentCategoryId = 2
@@ -428,7 +465,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9595),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5444),
                             IsDeleted = false,
                             Name = "TV & Ses Sistemleri",
                             ParentCategoryId = 2
@@ -436,7 +473,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9596),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5445),
                             IsDeleted = false,
                             Name = "Kamera & Fotoğraf Makineleri",
                             ParentCategoryId = 2
@@ -444,7 +481,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9597),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5446),
                             IsDeleted = false,
                             Name = "Giyim & Aksesuar",
                             ParentCategoryId = 1
@@ -452,7 +489,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9598),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5447),
                             IsDeleted = false,
                             Name = "Erkek Giyim",
                             ParentCategoryId = 8
@@ -460,7 +497,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9599),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5448),
                             IsDeleted = false,
                             Name = "Kadın Giyim",
                             ParentCategoryId = 8
@@ -468,7 +505,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9600),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5449),
                             IsDeleted = false,
                             Name = "Çocuk Giyim",
                             ParentCategoryId = 8
@@ -476,7 +513,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9601),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5450),
                             IsDeleted = false,
                             Name = "Ayakkabılar",
                             ParentCategoryId = 8
@@ -484,7 +521,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9602),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5451),
                             IsDeleted = false,
                             Name = "Çantalar",
                             ParentCategoryId = 8
@@ -492,7 +529,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9602),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5451),
                             IsDeleted = false,
                             Name = "Ev & Yaşam",
                             ParentCategoryId = 1
@@ -500,7 +537,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9603),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5452),
                             IsDeleted = false,
                             Name = "Mobilya",
                             ParentCategoryId = 14
@@ -508,7 +545,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9604),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5453),
                             IsDeleted = false,
                             Name = "Dekorasyon",
                             ParentCategoryId = 14
@@ -516,7 +553,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 17,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9605),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5454),
                             IsDeleted = false,
                             Name = "Ev Aletleri",
                             ParentCategoryId = 14
@@ -524,7 +561,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 18,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9606),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5455),
                             IsDeleted = false,
                             Name = "Kitap & Müzik & Film",
                             ParentCategoryId = 1
@@ -532,7 +569,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 19,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9607),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5456),
                             IsDeleted = false,
                             Name = "Kitaplar",
                             ParentCategoryId = 18
@@ -540,7 +577,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 20,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9608),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5457),
                             IsDeleted = false,
                             Name = "Müzik Albümleri",
                             ParentCategoryId = 18
@@ -548,7 +585,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 21,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9609),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5458),
                             IsDeleted = false,
                             Name = "Filmler & Diziler",
                             ParentCategoryId = 18
@@ -556,7 +593,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 22,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9610),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5459),
                             IsDeleted = false,
                             Name = "Spor & Outdoor",
                             ParentCategoryId = 1
@@ -564,7 +601,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 23,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9611),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5459),
                             IsDeleted = false,
                             Name = "Spor Giyim",
                             ParentCategoryId = 22
@@ -572,7 +609,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 24,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9611),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5460),
                             IsDeleted = false,
                             Name = "Spor Aletleri",
                             ParentCategoryId = 22
@@ -580,7 +617,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 25,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9612),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5461),
                             IsDeleted = false,
                             Name = "Kamp & Outdoor",
                             ParentCategoryId = 22
@@ -588,7 +625,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 26,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9613),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5462),
                             IsDeleted = false,
                             Name = "Kozmetik & Sağlık",
                             ParentCategoryId = 1
@@ -596,7 +633,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 27,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9614),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5518),
                             IsDeleted = false,
                             Name = "Makyaj",
                             ParentCategoryId = 26
@@ -604,7 +641,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 28,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9615),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5519),
                             IsDeleted = false,
                             Name = "Cilt Bakımı",
                             ParentCategoryId = 26
@@ -612,7 +649,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 29,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9616),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5520),
                             IsDeleted = false,
                             Name = "Saç Bakımı",
                             ParentCategoryId = 26
@@ -620,7 +657,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                         new
                         {
                             Id = 30,
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9617),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5521),
                             IsDeleted = false,
                             Name = "Parfümler",
                             ParentCategoryId = 26
@@ -688,6 +725,10 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
@@ -831,7 +872,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                             CategoryId = 4,
                             Color = "Siyah",
                             Condition = "Yeni & Etiketli",
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9941),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5844),
                             Description = "Kutusu Açılmadı",
                             HeaderImageUrl = "/userUploads/users/ali/137425-1_large.webp",
                             IsDeleted = false,
@@ -850,7 +891,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                             CategoryId = 4,
                             Color = "Siyah",
                             Condition = "Az Kullanılmış",
-                            CreatedDate = new DateTime(2023, 10, 7, 23, 54, 1, 121, DateTimeKind.Local).AddTicks(9944),
+                            CreatedDate = new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5847),
                             Description = "Sıfıra yakın",
                             HeaderImageUrl = "/userUploads/users/ali/137425-1_large.webp",
                             IsDeleted = false,

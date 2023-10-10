@@ -9,7 +9,7 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
 {
     public class CartItem : BaseEntity
     {
-        
+       
         public int Quantity { get; set; }
 
         public string SellerUsername { get; set; }
@@ -26,7 +26,7 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
         public virtual Product Product { get; set; }
         public virtual Cart Cart { get; set; }
 
-
+        
 
     }
 }

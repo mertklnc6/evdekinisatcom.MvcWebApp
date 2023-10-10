@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
 {
-    public class OrderDetail :BaseEntity
+    public class OrderDetail : BaseEntity
     {
         
         public int OrderId { get; set; }

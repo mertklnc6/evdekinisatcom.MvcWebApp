@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using evdekinisatcom.MvcWebApp.DataAccess.Identity.Models;
+using evdekinisatcom.MvcWebApp.DataAccess.UnitOfWorks;
 using evdekinisatcom.MvcWebApp.Entity.Services;
+using evdekinisatcom.MvcWebApp.Entity.UnitOfWorks;
 using evdekinisatcom.MvcWebApp.Entity.ViewModels;
 using evdekinisatcom.MvcWebApp_App.Entity.Entities;
 using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
@@ -21,13 +23,15 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IMapper _mapper;
         private readonly ICartService _cartService;
-        public AccountService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager, IMapper mapper, ICartService cartService)
+        private readonly IUnitOfWork _uow;
+        public AccountService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager, IMapper mapper, ICartService cartService, IUnitOfWork uow)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _mapper = mapper;
             _cartService = cartService;
+            _uow = uow;
         }
 
         public async Task<string> CreateRoleAsync(RoleViewModel model)
@@ -65,19 +69,19 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
                 PhoneNumber = model.PhoneNumber,
                 UserName = model.Username,
                 Address = model.Address,
-                
+
             };
-            
+
 
             var identityResult = await _userManager.CreateAsync(user, model.ConfirmPassword);
-            
+
             if (identityResult.Succeeded)
             {
                 await _cartService.CreateCartForUserAsync(user.Id);
                 var cart = await _cartService.GetCartByUserId(user.Id);
                 user.CartId = cart.Id;
                 await _userManager.UpdateAsync(user);
-                
+
                 message = "OK";
             }
             else
@@ -122,23 +126,50 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             return msg;
         }
 
-		public async Task<UserViewModel> Find(string username)
-		{
-			var user = await _userManager.FindByNameAsync(username);
-			return _mapper.Map<UserViewModel>(user);
-		}
+        public async Task<UserViewModel> Find(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            return _mapper.Map<UserViewModel>(user);
+        }
+        public async Task Update(UserViewModel model)
+        {
+            var user = _mapper.Map<AppUser>(model);
+            user.SecurityStamp = Guid.NewGuid().ToString();            
+            await _userManager.UpdateAsync(user);
+        }
 
-		public async Task<RoleViewModel> FindRoleByIdAsync(string id)
+        public async Task<RoleViewModel> FindRoleByIdAsync(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
             return _mapper.Map<RoleViewModel>(role);
         }
-        
+
         public async Task<UserViewModel> FindByIdAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             return _mapper.Map<UserViewModel>(user);
         }
+        public async Task<UserViewModel> FindUserAsync(int id)
+        {
+            var user = await _uow.GetRepository<AppUser>().GetByIdAsync(u => u.Id == id);
+            return _mapper.Map<UserViewModel>(user);
+        }
+
+        //public void UpdateBalance(int id, decimal profit)
+        //{            
+        //    var user =  _uow.GetRepository<AppUser>().GetByIdSync(u => u.Id == id);
+        //    user.Balance += profit;
+        //     _uow.GetRepository<AppUser>().UpdateProperty(user, "Balance");
+        //     _uow.Commit();
+
+
+        //    //var user = await _userManager.FindByIdAsync(id.ToString());
+        //    //if(user == null)
+        //    //{
+        //    //    user.Balance += profit;
+        //    //    await _userManager.UpdateAsync(user);
+        //    //}
+        //}
 
 
         public async Task<string> FindByNameAsync(LoginViewModel model)

@@ -17,13 +17,13 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
-        
+
 
         public OrderService(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
             _mapper = mapper;
-            
+
         }
 
         public async Task CreateOrder(OrderViewModel model)
@@ -45,9 +45,9 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
 
         }
 
-        public async Task<OrderViewModel> GetOrder(int id)
+        public async Task<OrderViewModel> GetOrder(string orderNumber)
         {
-            var order = await _uow.GetRepository<Order>().GetByIdAsync(o => o.BuyerId == id);
+            var order = await _uow.GetRepository<Order>().Get(o => o.OrderNumber == orderNumber);
             return _mapper.Map<OrderViewModel>(order);
         }
 
@@ -57,39 +57,36 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             return _mapper.Map<List<OrderDetailViewModel>>(orderDetails);
         }
 
-        public async Task UpdateOrder(OrderViewModel model)
+        public async Task UpdateOrder(int orderId)
         {
-            var order = _mapper.Map<Order>(model);
+            var order = await _uow.GetRepository<Order>().Get(o => o.Id == orderId);            
             _uow.GetRepository<Order>().Update(order);
             await _uow.CommitAsync();
 
 
         }
 
-        public async Task CreateOrderActivity(int orderId, string activity, int buyerId, int sellerId, decimal price)
+        public async Task CreateOrderActivity(OrderActivityViewModel model)
         {
-
-            var orderActivity = new OrderActivityViewModel()
-            {
-                OrderId = orderId,
-                Activity = activity,
-                BuyerId = buyerId,
-                SellerId = sellerId,
-                TotalPrice = price
-
-            };
-
-            var oActivity = _mapper.Map<OrderActivity>(orderActivity);
+            var oActivity = _mapper.Map<OrderActivity>(model);
             await _uow.GetRepository<OrderActivity>().Add(oActivity);
             await _uow.CommitAsync();
         }
 
+        public async Task<List<OrderActivityViewModel>> GetOrderActivityByOrderId(int id)
+        {
+            var oActivities = await _uow.GetRepository<OrderActivity>().GetAll(o => o.OrderId == id);
+            var activities = _mapper.Map<List<OrderActivityViewModel>>(oActivities);
+            return activities;
+        }
+
         public async Task<List<OrderActivityViewModel>> GetAllBuyerActivityByUserId(int id)
         {
-            var list = await _uow.GetRepository<OrderActivity>().GetAll(o => o.BuyerId == id);            
+            var list = await _uow.GetRepository<OrderActivity>().GetAll(o => o.BuyerId == id);
             var activityList = _mapper.Map<List<OrderActivityViewModel>>(list);
             return activityList;
         }
+        
 
         public async Task<List<OrderActivityViewModel>> GetAllSellerActivityByUserId(int id)
         {

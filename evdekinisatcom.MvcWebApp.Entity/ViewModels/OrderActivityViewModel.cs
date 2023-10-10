@@ -9,12 +9,21 @@ namespace evdekinisatcom.MvcWebApp.Entity.ViewModels
 {
     public class OrderActivityViewModel
     {
-        public int OrderId { get; set; }
         public string Activity { get; set; }
+        public int OrderId { get; set; }
+        public string OrderNumber { get; set; }
         public int BuyerId { get; set; }
-        //public string BuyerUsername { get; set; }
+        public string BuyerName { get; set; }
+        public string BuyerSurname { get; set; }
+        public string BuyerAddress { get; set; }
+        public int ProductId { get; set; }
+        public string ProductTitle { get; set; }
         public int SellerId { get; set; }
-        //public string SellerUsername { get; set; }
-        public decimal TotalPrice { get; set; }        
+        public string SellerName { get; set; }
+        public string SellerSurname { get; set; }
+        public decimal TotalAmount { get; set; }
+        public decimal FeeAmount { get; set; }
+        public decimal NetAmount { get; set; }
+        
     }
 }

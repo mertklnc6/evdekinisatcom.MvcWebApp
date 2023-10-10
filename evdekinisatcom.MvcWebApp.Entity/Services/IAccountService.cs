@@ -11,7 +11,12 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
     public interface IAccountService
     {
 		Task<string> CreateUserAsync(RegisterViewModel model);
-		Task<string> FindByNameAsync(LoginViewModel model);
+
+		Task Update(UserViewModel model);
+
+		//void UpdateBalance(int id, decimal profit);
+
+        Task<string> FindByNameAsync(LoginViewModel model);
 
 		Task<string> CreateRoleAsync(RoleViewModel model);
 
@@ -20,7 +25,10 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
 		Task<RoleViewModel> FindRoleByIdAsync(string id);
 		Task<UserViewModel> FindByIdAsync(string id);
 
-		Task<List<UserViewModel>> GetAllUsersAsync();
+		Task<UserViewModel> FindUserAsync(int id);
+
+
+        Task<List<UserViewModel>> GetAllUsersAsync();
 
 
         Task<UsersInOrOutViewModel> GetAllUsersWithRole(string id);

@@ -1,6 +1,8 @@
 
 
 using evdekinisatcom.MvcWebApp.DataAccess.Data;
+using evdekinisatcom.MvcWebApp.DataAccess.Repositories;
+using evdekinisatcom.MvcWebApp.Entity.Repositories;
 using evdekinisatcom.MvcWebApp.Service.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +14,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr"))
 );
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddExtensions();
 builder.Services.AddSession(options =>

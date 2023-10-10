@@ -35,9 +35,9 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,10 +50,10 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ParentCategoryId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentCategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -214,12 +214,13 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    OrderNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BuyerId = table.Column<int>(type: "int", nullable: false),
                     TotalQuantity = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    AppUserId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    AppUserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -237,6 +238,8 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -252,9 +255,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                     IsSold = table.Column<bool>(type: "bit", nullable: false),
                     BuyerId = table.Column<int>(type: "int", nullable: true),
                     AppUserId = table.Column<int>(type: "int", nullable: true),
-                    AppUserId1 = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    AppUserId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -278,19 +279,54 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrderActivities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Activity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    OrderNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BuyerId = table.Column<int>(type: "int", nullable: false),
+                    BuyerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BuyerSurname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BuyerAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ProductTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SellerId = table.Column<int>(type: "int", nullable: false),
+                    SellerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SellerSurname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FeeAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    NetAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderActivities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderActivities_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CartItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     SellerUsername = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CartId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -315,14 +351,14 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserProfilePic = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    ReturnUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    ReturnUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -341,14 +377,14 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     ProductTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SellerId = table.Column<int>(type: "int", nullable: false),
-                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -373,10 +409,10 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -394,36 +430,36 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 columns: new[] { "Id", "CreatedDate", "IsDeleted", "Name", "ParentCategoryId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2564), false, "BaseCategory", 1 },
-                    { 2, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2577), false, "Elektronik", 1 },
-                    { 8, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2583), false, "Giyim & Aksesuar", 1 },
-                    { 14, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2588), false, "Ev & Yaşam", 1 },
-                    { 18, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2668), false, "Kitap & Müzik & Film", 1 },
-                    { 22, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2671), false, "Spor & Outdoor", 1 },
-                    { 26, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2675), false, "Kozmetik & Sağlık", 1 },
-                    { 3, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2578), false, "Bilgisayarlar & Tabletler", 2 },
-                    { 4, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2579), false, "Telefonlar", 2 },
-                    { 5, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2580), false, "Oyun & Konsollar", 2 },
-                    { 6, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2581), false, "TV & Ses Sistemleri", 2 },
-                    { 7, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2582), false, "Kamera & Fotoğraf Makineleri", 2 },
-                    { 9, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2583), false, "Erkek Giyim", 8 },
-                    { 10, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2584), false, "Kadın Giyim", 8 },
-                    { 11, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2585), false, "Çocuk Giyim", 8 },
-                    { 12, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2586), false, "Ayakkabılar", 8 },
-                    { 13, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2587), false, "Çantalar", 8 },
-                    { 15, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2665), false, "Mobilya", 14 },
-                    { 16, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2666), false, "Dekorasyon", 14 },
-                    { 17, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2667), false, "Ev Aletleri", 14 },
-                    { 19, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2669), false, "Kitaplar", 18 },
-                    { 20, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2669), false, "Müzik Albümleri", 18 },
-                    { 21, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2670), false, "Filmler & Diziler", 18 },
-                    { 23, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2672), false, "Spor Giyim", 22 },
-                    { 24, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2673), false, "Spor Aletleri", 22 },
-                    { 25, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2674), false, "Kamp & Outdoor", 22 },
-                    { 27, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2676), false, "Makyaj", 26 },
-                    { 28, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2677), false, "Cilt Bakımı", 26 },
-                    { 29, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2678), false, "Saç Bakımı", 26 },
-                    { 30, new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(2679), false, "Parfümler", 26 }
+                    { 1, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5431), false, "BaseCategory", 1 },
+                    { 2, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5441), false, "Elektronik", 1 },
+                    { 8, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5446), false, "Giyim & Aksesuar", 1 },
+                    { 14, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5451), false, "Ev & Yaşam", 1 },
+                    { 18, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5455), false, "Kitap & Müzik & Film", 1 },
+                    { 22, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5459), false, "Spor & Outdoor", 1 },
+                    { 26, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5462), false, "Kozmetik & Sağlık", 1 },
+                    { 3, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5442), false, "Bilgisayarlar & Tabletler", 2 },
+                    { 4, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5442), false, "Telefonlar", 2 },
+                    { 5, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5443), false, "Oyun & Konsollar", 2 },
+                    { 6, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5444), false, "TV & Ses Sistemleri", 2 },
+                    { 7, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5445), false, "Kamera & Fotoğraf Makineleri", 2 },
+                    { 9, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5447), false, "Erkek Giyim", 8 },
+                    { 10, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5448), false, "Kadın Giyim", 8 },
+                    { 11, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5449), false, "Çocuk Giyim", 8 },
+                    { 12, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5450), false, "Ayakkabılar", 8 },
+                    { 13, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5451), false, "Çantalar", 8 },
+                    { 15, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5452), false, "Mobilya", 14 },
+                    { 16, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5453), false, "Dekorasyon", 14 },
+                    { 17, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5454), false, "Ev Aletleri", 14 },
+                    { 19, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5456), false, "Kitaplar", 18 },
+                    { 20, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5457), false, "Müzik Albümleri", 18 },
+                    { 21, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5458), false, "Filmler & Diziler", 18 },
+                    { 23, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5459), false, "Spor Giyim", 22 },
+                    { 24, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5460), false, "Spor Aletleri", 22 },
+                    { 25, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5461), false, "Kamp & Outdoor", 22 },
+                    { 27, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5518), false, "Makyaj", 26 },
+                    { 28, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5519), false, "Cilt Bakımı", 26 },
+                    { 29, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5520), false, "Saç Bakımı", 26 },
+                    { 30, new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5521), false, "Parfümler", 26 }
                 });
 
             migrationBuilder.InsertData(
@@ -431,8 +467,8 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 columns: new[] { "Id", "AppUserId", "AppUserId1", "Brand", "BuyerId", "CategoryId", "Color", "Condition", "CreatedDate", "Description", "HeaderImageUrl", "IsDeleted", "IsOnSale", "IsSold", "Price", "SellerId", "SellerUsername", "StockQuantity", "Title" },
                 values: new object[,]
                 {
-                    { 1, null, null, "Apple", null, 4, "Siyah", "Yeni & Etiketli", new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(3007), "Kutusu Açılmadı", "/userUploads/users/ali/137425-1_large.webp", false, true, false, 100m, 1, "aliucar", 1, "Iphone 15" },
-                    { 2, null, null, "Samsung", null, 4, "Siyah", "Az Kullanılmış", new DateTime(2023, 10, 7, 23, 48, 30, 112, DateTimeKind.Local).AddTicks(3011), "Sıfıra yakın", "/userUploads/users/ali/137425-1_large.webp", false, true, false, 150m, 1, "aliucar", 1, "S23 Ultra" }
+                    { 1, null, null, "Apple", null, 4, "Siyah", "Yeni & Etiketli", new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5844), "Kutusu Açılmadı", "/userUploads/users/ali/137425-1_large.webp", false, true, false, 100m, 1, "aliucar", 1, "Iphone 15" },
+                    { 2, null, null, "Samsung", null, 4, "Siyah", "Az Kullanılmış", new DateTime(2023, 10, 9, 23, 40, 33, 482, DateTimeKind.Local).AddTicks(5847), "Sıfıra yakın", "/userUploads/users/ali/137425-1_large.webp", false, true, false, 150m, 1, "aliucar", 1, "S23 Ultra" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -500,6 +536,11 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderActivities_OrderId",
+                table: "OrderActivities",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderId",
                 table: "OrderDetails",
                 column: "OrderId");
@@ -558,6 +599,9 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "OrderActivities");
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");

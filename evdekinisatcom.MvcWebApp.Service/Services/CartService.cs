@@ -60,7 +60,7 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
                 throw new InvalidOperationException("Stokta yeterli miktarda ürün bulunmamaktadır.");
             }
 
-            var cart = await _uow.GetRepository<Cart>().GetById(model.CartId);
+            var cart = await _uow.GetRepository<Cart>().GetByIdAsync(c => c.Id == model.CartId);
             if (cart == null)
             {
                 throw new InvalidOperationException("Sepet bulunamadı.");
@@ -109,7 +109,7 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
 
         public async Task ClearCartAsync(int cartId)
         {
-            await _uow.GetRepository<Cart>().GetById(cartId);
+            await _uow.GetRepository<Cart>().GetByIdAsync(c => c.Id == cartId);
             var cartItemList = await _uow.GetRepository<CartItem>().GetAll(c => c.CartId == cartId);
             foreach (var cartItem in cartItemList)
             {

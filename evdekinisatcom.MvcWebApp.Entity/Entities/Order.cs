@@ -10,6 +10,7 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
     public class Order : BaseEntity
     {
         
+        public string OrderNumber { get; set; }
         public int BuyerId { get; set; } //Buyer Id        
         public int TotalQuantity { get; set; } 
         public decimal TotalPrice { get; set; }

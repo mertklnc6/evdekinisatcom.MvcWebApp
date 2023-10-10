@@ -23,11 +23,11 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Adres boş geçilemez")]
-        public string Address { get; set; }
-
-        public decimal Balance { get; set; }
+        public string Address { get; set; }        
 
         public string ProfilePicUrl { get; set; }
+
+        public decimal Balance { get; set; }
 
         public int? CartId { get; set; }
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using evdekinisatcom.MvcWebApp_App.Entity.Entities;
+using evdekinisatcom.MvcWebApp.Entity.Entities;
 
 namespace evdekinisatcom.MvcWebApp.DataAccess.Identity.Models
 {
@@ -17,16 +18,22 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Identity.Models
 
         public string ProfilePicUrl { get; set; }
 
-        public decimal Balance { get; set; }
+        public decimal Balance { get; set; } = 0;
 
-        public int? CartId { get; set; }
+        public int? CartId { get; set; }        
+
         //Navigation Property (Relation)
 
         public virtual Cart Cart { get; set; }
 
+
+        
+
         public virtual List<Order> Orders { get; set; }
         public virtual List<Product> ProductsToSell { get; set; }
         public virtual List<Product> PurchasedProducts { get; set; }
+
+        
 
 
     }

@@ -11,15 +11,16 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
     public interface IOrderService
     {
         Task CreateOrder(OrderViewModel model);
-        Task UpdateOrder(OrderViewModel model);
-        Task<OrderViewModel> GetOrder(int userId);
+        Task UpdateOrder(int orderId);
+        Task<OrderViewModel> GetOrder(string orderNumber);
         Task CreateOrderDetail(OrderDetailViewModel model);
 
         Task<List<OrderDetailViewModel>> GetAllOrderDetails(int id);
 
-        Task CreateOrderActivity(int orderId, string activity, int buyerId, int sellerId, decimal price);
+        Task CreateOrderActivity(OrderActivityViewModel model);
 
         Task<List<OrderActivityViewModel>> GetAllBuyerActivityByUserId(int id);
+        Task<List<OrderActivityViewModel>> GetOrderActivityByOrderId(int id);
         Task<List<OrderActivityViewModel>> GetAllSellerActivityByUserId(int id);
     }
 }

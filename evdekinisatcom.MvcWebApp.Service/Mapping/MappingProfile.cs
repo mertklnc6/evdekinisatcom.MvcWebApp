@@ -28,7 +28,7 @@ namespace evdekinisatcom.MvcWebApp_App.Service.Mapping
             CreateMap<CartItem, CartItemViewModel>().ReverseMap();
             CreateMap<Order, OrderViewModel>().ReverseMap();
             CreateMap<OrderDetail, OrderDetailViewModel>().ReverseMap();
-            CreateMap<OrderActivity, OrderActivityViewModel>().ReverseMap();
+            CreateMap<OrderActivity, OrderActivityViewModel>().ReverseMap();            
             
         }
 

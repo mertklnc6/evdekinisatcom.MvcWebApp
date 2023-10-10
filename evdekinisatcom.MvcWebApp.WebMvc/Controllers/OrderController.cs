@@ -1,8 +1,12 @@
-﻿using evdekinisatcom.MvcWebApp.Entity.Services;
+﻿using evdekinisatcom.MvcWebApp.Entity.Entities;
+using evdekinisatcom.MvcWebApp.Entity.Services;
 using evdekinisatcom.MvcWebApp.Entity.ViewModels;
 using evdekinisatcom.MvcWebApp.Service.Services;
 using evdekinisatcom.MvcWebApp_App.Entity.Entities;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Plugins;
+using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
 {
@@ -31,18 +35,11 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
                 Address = user.Address
             };
 
-            OrderViewModel order = new OrderViewModel()
-            {
-                BuyerId = user.Id,
-                TotalPrice = 0,
-                TotalQuantity = 0
-            };
-            await _orderService.CreateOrder(order);            
 
             return View(model);
         }
 
-        
+
 
         [HttpGet]
         public async Task<IActionResult> Checkout()
@@ -52,13 +49,29 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
             var cartItemList = await _cartService.GetAllCartItems(cart.Id);
             var cartItems = new List<CartItemViewModel>();
             decimal totalPrice = 0;
+            //cart item idlernin toplamı order number için
+            int number = 0;
+            
             foreach (var cartItem in cartItemList)
             {
+                number += cartItem.Id;
                 totalPrice += cartItem.Price;
                 cartItems.Add(cartItem);
             }
 
-            // Sipariş özeti için modeli hazırla
+            var orderNumber = GenerateOrderNumber(cart.Id,number);
+
+            // Siparişi oluştur
+            OrderViewModel order = new OrderViewModel()
+            {
+                BuyerId = user.Id,
+                TotalPrice = totalPrice,
+                TotalQuantity = 0,
+                OrderNumber = orderNumber // Sipariş numarasını burada oluştur
+            };
+            await _orderService.CreateOrder(order);
+
+            // Sipariş özeti için model
             CheckoutViewModel model = new CheckoutViewModel
             {
                 CartItems = cartItems,
@@ -70,15 +83,10 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Checkout(CheckoutViewModel model)
-        {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(model);
-            //}
+        {            
 
             // Ödeme işlemleri simüle edilmesi          
 
-            // Siparişin oluşturulması
             bool paymentSuccess = SimulatePaymentProcess(model);
 
             if (paymentSuccess)
@@ -88,84 +96,100 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
                 decimal totalPrice = 0;
                 int totalQuantity = 0;
                 var cartItemList = await _cartService.GetAllCartItems(cart.Id);
-                // Sepetin Doğrulanması                
-                var createdOrder = await _orderService.GetOrder(user.Id);
+                
+                int number = 0;
                 foreach (var item in cartItemList)
                 {
+                    number += item.Id;
+                }
+                var orderNumber = GenerateOrderNumber(cart.Id, number);
+                var createdOrder = await _orderService.GetOrder(orderNumber);
 
+                foreach (var item in cartItemList)
+                {
+                    
                     var product = await _productService.GetById(item.ProductId);
                     if (product.StockQuantity < item.Quantity)
                     {
                         TempData["ErrorMessage"] = "Ürün Satışta Değil!";
                         await _cartService.RemoveFromCartAsync(cart.Id, product.Id);
-                        return RedirectToAction("Index","Cart",cart); // Sepet görüntüsüne geri dön
+                        return RedirectToAction("Index", "Cart", cart);
                     }
-                    else
+
+                    totalQuantity += item.Quantity;
+                    totalPrice += item.Price;
+
+                    // Sipariş detayını oluştur
+                    OrderDetailViewModel orderDetail = new OrderDetailViewModel
                     {
+                        OrderId = createdOrder.Id,
+                        ProductId = item.ProductId,
+                        Quantity = item.Quantity,
+                        UnitPrice = item.Price,
+                        SellerId = product.SellerId,
+                        ProductTitle = product.Title,
+                    };
+                    await _orderService.CreateOrderDetail(orderDetail);
 
-                        totalQuantity += item.Quantity;
-                        totalPrice += item.Price;
+                    // Sipariş aktivitesini oluştur
+                    decimal feePercentage = DetermineFeePercentage(orderDetail.UnitPrice);
+                    decimal feeAmount = orderDetail.UnitPrice * feePercentage;
+                    var seller = await _accountService.FindUserAsync(product.SellerId);
+                    var orderActivity = new OrderActivityViewModel()
+                    {
+                        Activity = "Sipariş İşlemi",
+                        OrderId = createdOrder.Id,
+                        OrderNumber = createdOrder.OrderNumber,
+                        BuyerId = user.Id,
+                        BuyerName = user.Name,
+                        BuyerSurname = user.Surname,
+                        BuyerAddress = user.Address,
+                        ProductId = product.Id,
+                        ProductTitle = product.Title,
+                        SellerId = product.SellerId,
+                        SellerName = seller.Name,
+                        SellerSurname = seller.Surname,
+                        TotalAmount = orderDetail.UnitPrice,
+                        FeeAmount = feeAmount,
+                        NetAmount = orderDetail.UnitPrice - feeAmount
+                    };
+                    await _orderService.CreateOrderActivity(orderActivity);
+                    
 
-                        OrderDetailViewModel orderDetail = new OrderDetailViewModel
-                        {
-                            OrderId = createdOrder.Id,
-                            ProductId = item.ProductId,
-                            Quantity = item.Quantity,
-                            UnitPrice = item.Price,
-                            SellerId = product.SellerId,
-                            ProductTitle = product.Title,
-                        };
-
-                        await _orderService.CreateOrderDetail(orderDetail);
-                        //product içerisine alıcı id kaydedilmesi
-
-                        product.BuyerId = createdOrder.BuyerId;
-
-                        // Stok Güncellemesi
-
-                        product.StockQuantity -= item.Quantity;
-                        if (product.StockQuantity == 0)
-                        {
-                            product.IsSold = true;
-                        }
-                        await _productService.Update(product);
-
-                        await _orderService.CreateOrderActivity(createdOrder.Id, "Sipariş Oluşturuldu", createdOrder.BuyerId, product.SellerId,item.Price);
-
-
+                    // Ürünü güncelle
+                    product.BuyerId = user.Id;
+                    product.StockQuantity -= item.Quantity;
+                    if (product.StockQuantity == 0)
+                    {
+                        product.IsSold = true;
                     }
+                    await _productService.Update(product);
+
                 }
 
-                           
+                // Siparişi güncelle
 
-                // Siparişin Güncellenmesi
-
-                createdOrder.TotalQuantity = totalQuantity;
+                createdOrder.TotalQuantity += totalQuantity;                
                 createdOrder.TotalPrice = totalPrice;
+                await _orderService.UpdateOrder(createdOrder.Id);
 
-                await _orderService.UpdateOrder(createdOrder);
+                
 
-                // Sepetin Temizlenmesi
+                // Sepeti temizle
                 await _cartService.ClearCartAsync(cart.Id);
-                return RedirectToAction("OrderConfirmation", createdOrder.Id);
+
+                return RedirectToAction("OrderConfirmation");
+
             }
+
+
+
             return View();
         }
 
-        public async Task<IActionResult> OrderConfirmation(int orderId)
-        {
-            //var order = await _orderService.GetOrder(orderId);
-            //var orderDetailList = await _orderService.GetAllOrderDetails(order.Id);
-            //foreach(var orderDetail in orderDetailList)
-            //{
-                
-            //}
-            //var orderActivity = new OrderActivityViewModel 
-            //{
-            //    OrderId = order.Id,
-            //    BuyerId = order
-            //};
-            return View();
+        public async Task<IActionResult> OrderConfirmation()
+        {         
+           return View();
         }
 
         private bool SimulatePaymentProcess(CheckoutViewModel model)
@@ -173,6 +197,25 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
             // Ödeme işleminin başarılı olduğunu varsayıyoruz.
             return true;
         }
+        public string GenerateOrderNumber(int cartId,int number)
+        {
+            // Tarihi ve saati al
+            var now = DateTime.Now;
+
+            // Sipariş numarasını oluştur            
+            string orderNumber = now.ToString("yyyyMMdd") + cartId.ToString() + number.ToString();
+
+            return orderNumber;
+        }
+
+        private decimal DetermineFeePercentage(decimal unitPrice)
+        {
+            if (unitPrice <= 500) return 0.3m;
+            if (unitPrice <= 2000) return 0.2m;
+            if (unitPrice <= 8000) return 0.1m;
+            return 0.05m; // 8000'den büyük için varsayılan değer
+        }
+
     }
 
 }

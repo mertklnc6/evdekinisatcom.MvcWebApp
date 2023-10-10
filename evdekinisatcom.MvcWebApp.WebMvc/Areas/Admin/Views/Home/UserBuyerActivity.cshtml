@@ -9,11 +9,14 @@
 
 @foreach(var activity in Model)
 {
-    <div>
-        <p>@activity.OrderId</p>
-        <p>@activity.SellerId</p>
-        <p>@activity.Activity</p>
-        <p>@activity.TotalPrice</p>
+    <div>        
+        <p>@activity.OrderNumber</p>
+        <p>@activity.SellerName @activity.SellerSurname</p>
+        <p>@activity.BuyerName @activity.BuyerSurname</p>        
+        <p>@activity.BuyerAddress</p>
+        <p>@activity.TotalAmount</p>
+        <p>@activity.FeeAmount</p>        
+        <p>@activity.NetAmount</p>        
     </div>
 }
 

@@ -86,6 +86,20 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Repositories
 		{
 			_dbSet.Update(entity);
 		}
+
+		public async Task<IQueryable<T>> GetAllAsNoTracking()
+		{
+
+            return _dbSet.AsNoTracking();
+        }
+
+        public async Task UpdateProperty(T entity, string propertyName)
+        {
+			
+            _dbSet.Entry(entity).Reload();
+           _dbSet.Entry(entity).Property(propertyName).IsModified = true;
+        }
+
         public async Task<T> GetByIdAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _dbSet;  //tabloyu alır filtreleri uygulayarak filtrelenmiş verileri dödürür
@@ -103,7 +117,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Repositories
             }
 
             return await query.AsNoTracking().FirstOrDefaultAsync();
-        }
+        }		
 
         public void DeletePermanently(int id)
         {
@@ -113,6 +127,8 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Repositories
 				_dbSet.Remove(entity);
 			}
         }
+
+        
     }
 }
 
