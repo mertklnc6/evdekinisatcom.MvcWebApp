@@ -2,42 +2,52 @@
     Layout = "_LayoutBase";
     ViewData["Title"] = "Index";
 }
-
+@model List<ProductViewModel>
 <!-- Home Slider -->
 <section class="pt-0 padding-bottom-cls">
     <div class="slide-1 home-slider">
         <div>
             <div class="home">
-                <img src="~/images/site/Hair-1920x718-1.webp" alt="" class="bg-img blur-up lazyload">
+                <img src="~/images/site/kitap2.jpg" alt="" class="bg-img blur-up lazyload">
                 <div class="container">
                     <div class="row">
                         <div class="col">
+                            </br>
                             <div class="slider-contain">
                                 <div>
-                                    <h4>save 30%</h4>
-                                    <h1>electronic</h1><a href="#" class="btn btn-outline btn-classic">
-                                        shop
-                                        now
+                                    <h4></h4>
+                                    <h2 class="text-warning text-center">KİTAP</h2>
+                                    <p></p>
+                                    <a asp-controller="Product" asp-action="Index" asp-route-id="19" class="btn  btn-solid btn-classic">
+                                       Satın Al@*btn-outline*@
                                     </a>
                                 </div>
                             </div>
                         </div>
+                        <style>
+                        .slider-contain {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        }
+                        </style>
                     </div>
                 </div>
             </div>
         </div>
         <div>
             <div class="home">
-                <img src="~/images/site/versand-1920x718-c.jpg" alt="" class="bg-img blur-up lazyload">
+                <img src="~/images/site/laptop.jpg" alt="" class="bg-img blur-up lazyload">
                 <div class="container">
                     <div class="row">
                         <div class="col">
                             <div class="slider-contain">
                                 <div>
-                                    <h4>save upto 30%</h4>
-                                    <h1>headphone</h1><a href="#" class="btn btn-outline btn-classic">
-                                        shop
-                                        now
+                                    <h4></h4>
+                                    <h2 class="text-warning text-center">BİLGİSAYAR & TABLET</h2>
+                                    <a asp-controller="Product" asp-action="Index" asp-route-id="3" class="btn  btn-solid btn-classic">
+                                        Satın Al
                                     </a>
                                 </div>
                             </div>
@@ -59,48 +69,56 @@
         <div class="container-fluid">
             <div class="row partition3">
                 <div class="col-md-4">
-                    <a href="#">
+                    <a asp-action="Index" asp-controller="Product" asp-route-id="10">
+
                         <div class="collection-banner">
                             <div class="img-part">
-                                <img src="~/themes/assets/images/electronics/sub1.jpg"
+ 
+                                <img src="~/images/site/model5.webp"
                                      class="img-fluid blur-up lazyload bg-img" alt="">
+                                
                             </div>
                             <div class="contain-banner banner-3">
                                 <div>
-                                    <h4>10% off</h4>
-                                    <h2>speaker</h2>
+                                    <h4></h4>
+                                    <h2>kadın giyim</h2>
                                 </div>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="#">
+                    <a asp-action ="Index" asp-controller="Product" asp-route-id="9">
                         <div class="collection-banner">
                             <div class="img-part">
-                                <img src="~/themes/assets/images/electronics/sub2.jpg"
+
+                                <img src="~/images/site/model8.jpg"
                                      class="img-fluid blur-up lazyload bg-img" alt="">
+                      
                             </div>
                             <div class="contain-banner banner-3">
                                 <div>
-                                    <h4>10% off</h4>
-                                    <h2>earplug</h2>
+                                    <h4></h4>
+                                    <h2>erkek giyim</h2>
                                 </div>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="#">
+                    <a asp-action="Index" asp-controller="Product" asp-route-id="4">
+
                         <div class="collection-banner">
                             <div class="img-part">
-                                <img src="~/themes/assets/images/electronics/sub3.jpg"
+                           
+                                    <img src="~/images/site/model7.jpg"
                                      class="img-fluid blur-up lazyload bg-img" alt="">
+                                
                             </div>
                             <div class="contain-banner banner-3">
                                 <div>
-                                    <h4>50% off</h4>
-                                    <h2>best deal</h2>
+                                    <h4></h4>
+                                    <h2>telefon</h2>
                                 </div>
                             </div>
                         </div>
@@ -114,816 +132,67 @@
     <section class="section-b-space ratio_square">
         <div class="container-fluid">
             <div class="title2">
-                <h4>new collection</h4>
-                <h2 class="title-inner2">trending products</h2>
+                <h2 class="title-inner2">TREND ÜRÜNLER</h2>
             </div>
             <div class="row">
                 <div class="col">
                     <div class="theme-tab layout7-product">
                         <ul class="tabs tab-title">
-                            <li class="current"><a href="tab-1">new arrival</a></li>
-                            <li class=""><a href="tab-2">featured</a></li>
-                            <li class=""><a href="tab-3">special</a></li>
+                            <li class="current"><a href="tab-1">Reklam</a></li>
+                            <li class=""><a href="tab-2">Yeni Gelenler</a></li>
                         </ul>
                         <div class="tab-content-cls">
                             <div id="tab-1" class="tab-content active default">
                                 <div class="row no-slider">
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/1.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
+                                    @foreach (var urun in Model.Skip(Math.Max(0, Model.Count - 8)).Take(8))
+                                    {
+                                        <div class="product-box">
+                                            <div class="img-wrapper">
+                                                <div class="front">                                                   
+                                                    <a asp-action="Details" asp-controller="Product" asp-route-id="@urun.Id">
+                                                        <img src="@urun.HeaderImageUrl"
+                                                             class="img-fluid blur-up lazyload bg-img"
+                                                             alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="cart-info cart-wrap">
+                                                    <button data-bs-toggle="modal" data-bs-target="#addtocart"
+                                                            title="Add to cart">
+                                                        <i class="ti-shopping-cart"></i>
+                                                    </button> <a href="javascript:void(0)" title="Add to Wishlist">
+                                                        <i class="ti-heart" aria-hidden="true"></i>
+                                                    </a> <a href="#"
+                                                            data-bs-toggle="modal" data-bs-target="#quick-view"
+                                                            title="Quick View">
+                                                        <i class="ti-search"
+                                                           aria-hidden="true"></i>
+                                                    </a> <a href="compare.html"
+                                                            title="Compare">
+                                                        <i class="ti-reload"
+                                                           aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
+                                            <div class="details-product">
+                                                <a asp-action="Details" asp-controller="Product" asp-route-id="@urun.Id">
+                                                    <h6>@urun.Title</h6>
                                                 </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00 <del>$600.00</del></h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/2.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
+                                                <h4>@urun.Price</h4>
                                             </div>
                                         </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/3.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/4.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/5.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/6.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/7.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/8.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00 <del>$600.00</del></h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/9.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/10.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/11.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/12.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
+                                    }
+
                                 </div>
                             </div>
                             <div id="tab-2" class="tab-content">
                                 <div class="row no-slider">
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/13.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/14.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/15.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/16.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/17.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/1.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/2.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00 <del>$600.00</del></h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/3.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/4.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/5.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/6.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/7.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
+
+
+                                    @await Component.InvokeAsync("Siralama", new { showAll = true })
+                                    
+
+                                    
+                                    
                                 </div>
                             </div>
                             <div id="tab-3" class="tab-content">
@@ -959,369 +228,6 @@
                                                 <h6>Slim Fit Shirt</h6>
                                             </a>
                                             <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/9.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/10.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/11.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/12.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/13.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/14.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/15.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/16.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/17.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/1.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00</h4>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="img-wrapper">
-                                            <div class="front">
-                                                <a href="product-page(no-sidebar).html">
-                                                    <img src="~/themes/assets/images/electronics/pro/2.jpg"
-                                                         class="img-fluid blur-up lazyload bg-img" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-info cart-wrap">
-                                                <button data-bs-toggle="modal" data-bs-target="#addtocart"
-                                                        title="Add to cart">
-                                                    <i class="ti-shopping-cart"></i>
-                                                </button> <a href="javascript:void(0)" title="Add to Wishlist">
-                                                    <i class="ti-heart" aria-hidden="true"></i>
-                                                </a> <a href="#"
-                                                        data-bs-toggle="modal" data-bs-target="#quick-view"
-                                                        title="Quick View">
-                                                    <i class="ti-search"
-                                                       aria-hidden="true"></i>
-                                                </a> <a href="compare.html"
-                                                        title="Compare">
-                                                    <i class="ti-reload"
-                                                       aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="details-product">
-                                            <a href="product-page(no-sidebar).html">
-                                                <h6>Slim Fit Shirt</h6>
-                                            </a>
-                                            <h4>$500.00 <del>$600.00</del></h4>
                                         </div>
                                     </div>
                                 </div>

@@ -22,8 +22,10 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
         private readonly ICommentService _commentService;
+        private readonly IUnitOfWork _uow;
 
-        public ProductController(IMapper mapper, IProductService productService, IAccountService accountService, ICategoryService categoryService, ICommentService commentService)
+
+        public ProductController(IMapper mapper, IProductService productService, IAccountService accountService, ICategoryService categoryService, ICommentService commentService, IUnitOfWork uow)
         {
 
             _mapper = mapper;
@@ -31,11 +33,22 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
             _accountService = accountService;
             _categoryService = categoryService;
             _commentService = commentService;
+            _uow = uow;
         }
 
         public async Task<IActionResult> Index(string? id)
         {
-            
+
+            string oneCikanParametre = HttpContext.Request.Query["onecikan"];
+            if (!string.IsNullOrEmpty(oneCikanParametre) && oneCikanParametre == "true")
+            {
+                //var list = new List<ProductViewModel>();
+                var list = await _uow.GetRepository<Product>().GetAll(c => c.isBoosted == "Evet");
+
+                return View(_mapper.Map<List<ProductViewModel>>(list));
+
+            }
+
             if (id == null)
             {
                 var list = await _productService.GetAll();
@@ -51,7 +64,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                     if (product.CategoryId.ToString() == id)
                     {
                         list.Add(product);
-                        
+
                     }
                 }
                 foreach (var category in categories)
@@ -60,18 +73,18 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                     {
                         foreach (var subCategory in categories)
                         {
-                            if(subCategory.ParentCategoryId == category.Id)
+                            if (subCategory.ParentCategoryId == category.Id)
                             {
-                                foreach(var product in products)
+                                foreach (var product in products)
                                 {
-                                    if(product.CategoryId == subCategory.Id)
+                                    if (product.CategoryId == subCategory.Id)
                                     {
                                         list.Add(product);
                                     }
                                 }
                             }
                         }
-                                
+
                     }
                 }
 
@@ -79,10 +92,72 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
             }
 
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> Index(string selectedColor, string search)
+        {
 
+            var list = await _productService.GetAll();
+
+            list = list.Where(a => a.Brand.ToLower().Contains(search.ToLower())).ToList();
+            var allColor = list.Where(p => p.Color == selectedColor).ToList();
+            return View(_mapper.Map<List<ProductViewModel>>(allColor));
 
         }
+
+        [HttpPost]
+
+        public async Task<IActionResult> Siralama(ProductViewModel model, string? search, string? sortOrder)
+        {
+            var list = await _productService.GetAll();
+
+            if (search != null)
+            {
+
+
+                list = list.Where(a => a.Title.ToLower().Contains(search.ToLower())).ToList();
+                return View("Index", _mapper.Map<List<ProductViewModel>>(list));
+
+            }
+
+            else
+            {
+
+                if (sortOrder == "asc")
+                {
+                    //list = await _uow.GetRepository<Product>().GetAll(orderby: query => query.OrderBy(p => p.Price));
+                    //list = await _productService.GetAll(orderby: query => query.OrderBy(p => p.Price));
+                    list = list.OrderBy(p => p.Price);
+                    return View("Index", _mapper.Map<List<ProductViewModel>>(list));
+
+
+                }
+                if (sortOrder == "desc")
+                {
+                    //list = await _uow.GetRepository<Product>().GetAll(orderby: query => query.OrderByDescending(p => p.Price));
+                    list = list.OrderByDescending(p => p.Price);
+                    return View("Index", _mapper.Map<List<ProductViewModel>>(list));
+
+                }
+                return View("Index", _mapper.Map<List<ProductViewModel>>(list));
+
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [Authorize]
         public async Task<IActionResult> Create()

@@ -110,11 +110,9 @@
                                                 <li>
                                                     <a asp-action="Index" asp-controller="Product">Tüm Ürünler</a>
                                                 </li>
+                                      
                                                 <li>
-                                                    <a href="#">Fiyatı Düşenler!<div class="lable-nav">İndirim!</div></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Öne Çıkanlar!</a>
+                                                    <a asp-action="Index" asp-controller="Home">Öne Çıkanlar!</a>
                                                 </li>
                                                 
                                             </ul>
@@ -378,13 +376,11 @@
                                             <li><a asp-action="Index" asp-controller="Home">Anasayfa</a></li>
                                             
                                             <li><a asp-action="Index" asp-controller="Product">Tüm Ürünler</a></li>
-                                           
-                                            <li class="mega" id="hover-cls">
-                                                <a href="#">Fiyatı Düşenler!</a>
 
-                                            </li>
                                             <li>
-                                                <a href="#">Öne Çıkanlar</a>                                                
+                                                
+                                                <a @*asp-action="Index" asp-controller="Product" *@href="/Product/Index?onecikan=true">Öne Çıkanlar</a>
+
                                             </li>
                                             
                                            
@@ -408,17 +404,18 @@
                                                             <div class="container">
                                                                 <div class="row">
                                                                     <div class="col-xl-12">
-                                                                        <form>
+                                                                        <form asp-controller="Product" asp-action="Siralama">
                                                                             <div class="form-group">
                                                                                 <input type="text" class="form-control"
                                                                                        id="exampleInputPassword1"
-                                                                                       placeholder="Ürünlerde Ara...">
+                                                                                       placeholder="Ürünlerde Ara..." name="search">
                                                                             </div>
                                                                             <button type="submit"
                                                                                     class="btn btn-primary">
                                                                                 <i class="fa fa-search"></i>
                                                                             </button>
                                                                         </form>
+                                                                       @* @await Component.InvokeAsync("Arama");*@
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -438,10 +435,8 @@
                                             </li>
                                             <li class="onhover-div mobile-cart">
                                                 <div>
-                                                    
                                                     <img src="~/themes/assets/images/icon/cart.png"
-                                                             class="img-fluid blur-up lazyload" alt=""> <i class="ti-shopping-cart"></i>
-                                                    
+                                                         class="img-fluid blur-up lazyload" alt=""> <i class="ti-shopping-cart"></i>
                                                 </div>
                                                 <ul class="show-div shopping-cart">
                                                     <li>
@@ -493,9 +488,9 @@
                                                     </li>
                                                     <li>
                                                         <div class="buttons">
-
-                                                            <a  asp-action="Index" asp-controller="Cart" class="view-cart">
-                                                                Sepeti Görüntüle
+                                                            <a href="cart.html" class="view-cart">
+                                                                view
+                                                                cart
                                                             </a> <a href="#" class="checkout">checkout</a>
                                                         </div>
                                                     </li>
@@ -647,10 +642,11 @@
                                 <div class="footer-contant">
                                     <ul>
 
-                                        <li><a href="#">Giyim & Aksesuar</a></li>
-                                        <li><a href="#">Elektronik</a></li>
-                                        <li><a href="#">Ev & Yaşam</a></li>
-                                        <li><a href="#">Zirvedekiler!</a></li>
+                                        <li><a asp-controller="Product" asp-action="Index" asp-route-id="8">Giyim & Aksesuar</a></li>
+                                        <li><a asp-controller="Product" asp-action="Index" asp-route-id="2">Elektronik</a></li>
+                                        <li><a asp-controller="Product" asp-action="Index" asp-route-id="14">Ev & Yaşam</a></li>
+                                        <li><a href="/Product/Index?onecikan=true">Öne Çıkanlar!</a></li>
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -662,9 +658,10 @@
                                 </div>
                                 <div class="footer-contant">
                                     <ul>
-                                        <li><a href="#">Sipariş & İade</a></li>
-                                        <li><a href="#">Güvenli ALışveriş</a></li>
-                                        <li><a href="#">İletişim</a></li>
+                                        <li><a asp-controller="Home" asp-action="Hakkimizda">Biz Kimiz</a></li>
+                                        <li><a asp-controller="Home" asp-action="SSS">Sık Sorulan Sorular</a></li>
+                                        <li><a asp-controller="Home" asp-action="iletisim">İletişim</a></li>    
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -679,9 +676,20 @@
                                         <li>
                                             <i class="fa fa-map-bullhorn"></i>Al, Sat, Evdekine Değer Kat!
                                         </li>
-                                        <li><i class="fa fa-envelope"></i>Email: info@evdekinisat.com</li>
+                                        <li>
+                                            <html>
+                                            <head>
+                                                <title>E-posta Linki Örneği</title>
+                                            </head>
+                                            <body>
+                                                <p><i class="fa fa-envelope"></i>Mail için <a href="mailto:destek@example.com">buraya tıklayın</a>.</p>
+                                            </body>
+                                        </html>
+                                    </li>
                                     </ul>
                                 </div>
+                                @*<a href="mailto:destek@example.com"><i class="fa fa-envelope"></i>Email: info@evdekinisat.com</a>*@
+                                
                             </div>
                         </div>
                     </div>

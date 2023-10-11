@@ -1,0 +1,13 @@
+﻿@*@model List<Product>
+
+<div class="filtered-products">
+    @foreach (var product in Model)
+    {
+        <div class="product">
+            <h3>@product.Name</h3>
+            <p>Renk: @product.Color</p>
+            <p>Marka: @product.Brand</p>
+            <!-- Diğer ürün bilgileri -->
+        </div>
+    }
+</div>*@

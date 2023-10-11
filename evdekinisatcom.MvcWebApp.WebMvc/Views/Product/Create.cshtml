@@ -24,6 +24,18 @@
                         <div class="form-row row">
                             <div class="col-md-6">
                                 <div class="form-group">
+
+                                    <div class="form-group">
+                                        <label asp-for="Color" class="control-label">Renk</label>
+                                        <select class="form-control" asp-for="isBoosted">
+                                            <option value="">Reklam için</option>
+                                            <option>Evet</option>
+                                            <option>Hayır</option>
+
+                                        </select>
+                                        <span asp-validation-for="isBoosted" class="text-danger"></span>
+                                    </div>
+
                                     <label asp-for="Title" class="control-label">Başlık :</label>
                                     <input asp-for="Title" class="form-control" placeholder="Başlık giriniz" />
                                     <span asp-validation-for="Title" class="text-danger"></span>
@@ -46,7 +58,7 @@
                                         <option>Altın</option>
                                         <option>Bej</option>
                                         <option>Beyaz</option>
-                                        <option>Bordo</option>                                       
+                                        <option>Bordo</option>
                                         <option>Gri</option>
                                         <option>Gümüş</option>
                                         <option>Kahverengi</option>
@@ -59,7 +71,7 @@
                                         <option>Siyah</option>
                                         <option>Turkuaz</option>
                                         <option>Turuncu</option>
-                                        <option>Yeşil</option>                                        
+                                        <option>Yeşil</option>
                                     </select>
                                     <span asp-validation-for="Color" class="text-danger"></span>
                                 </div>
@@ -93,7 +105,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-row row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -103,7 +114,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="text-center col-md-12">
                             <input type="submit" value="Kaydet" class="btn btn-primary" />
                             <div class="mt-3">
