@@ -49,8 +49,6 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
 
             var list = await _uow.GetRepository<Product>().GetAll(null, null, x => x.Images);
 
-            //var list = await _uow.GetRepository<Product>().GetAllAsync();
-            //var list = await _uow.GetRepository<Product>().GetAll();
 
             return _mapper.Map<IEnumerable<ProductViewModel>>(list);
 

@@ -50,7 +50,6 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
 
         public List<Comment> Comments { get; set; }
 
-        public string? isBoosted { get; set; }
 
 
 
