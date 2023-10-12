@@ -1,6 +1,8 @@
-﻿using evdekinisatcom.MvcWebApp.Entity.ViewModels;
+﻿using evdekinisatcom.MvcWebApp.Entity.Entities;
+using evdekinisatcom.MvcWebApp.Entity.ViewModels;
 using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,12 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
 
 		Task Update(UserViewModel model);
 
-		Task<IdentityResult> ChangePasswordAsync(string userId, string oldPassword, string newPassword);
+        Task Withdraw(int userId, decimal amount, string iban, string recipientName);
+		Task<IEnumerable<WithdrawViewModel>> GetWithdrawalsByUserId(int userId);
+
+
+
+        Task<IdentityResult> ChangePasswordAsync(string userId, string oldPassword, string newPassword);
 
         Task<string> FindByNameAsync(LoginViewModel model);
 
@@ -40,4 +47,6 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
 
 		Task LogoutAsync();
 	}
+
+   
 }

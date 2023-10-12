@@ -25,6 +25,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
         public DbSet<Cart> Carts { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<OrderActivity> OrderActivities { get; set; }        
+        public DbSet<Withdrawal> Withdrawals { get; set; }        
 
 
 

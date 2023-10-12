@@ -63,15 +63,16 @@
                                 <label asp-for="Password">Şifre :</label>
                                 <input asp-for="Password" type="password" class="form-control" placeholder="Şifrenizi Girin...">
                                 <span asp-validation-for="Password" class="text-danger"></span>
-                                <div class="col-md-6">
-                                    <label asp-for="ConfirmPassword" class="control-label">Şifre Tekrar :</label>
-                                    <input asp-for="ConfirmPassword" class="form-control" class="form-control" id="review"
-                                           placeholder="Şifrenizi Onaylayın" />
-                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="ConfirmPassword" class="control-label">Şifre Tekrar :</label>
+                                <input asp-for="ConfirmPassword" class="form-control" class="form-control" id="review"
+                                       placeholder="Şifrenizi Onaylayın" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
                             </div>
                             <div class="text-center">
-                                <input type="submit" value="Kayıt Ol" class="btn btn-solid w-auto" />                                
+                                <input type="submit" value="Kayıt Ol" class="btn btn-solid w-auto" />
                             </div>
                         </div>
                     </form>

@@ -40,12 +40,12 @@
                                 <a data-bs-toggle="tab" data-bs-target="#orders"
                                    class="nav-link">Sattıklarım</a>
                             </li>
-                            
+
                             <li class="nav-item">
                                 <a data-bs-toggle="tab" data-bs-target="#profile"
                                    class="nav-link">Satıcı Profili</a>
                             </li>
-                            
+
                             <li class="nav-item"><a href="/Account/Logout" class="nav-link">Çıkış Yap</a> </li>
                         </ul>
                     </div>
@@ -61,7 +61,7 @@
                                     Hesap Kontrol Panelinizden, Bakiye ve hesap aktivitelerinizi görüntüleme, hesap bilgilerinizi güncelleme işlemleri yapabilirsiniz.
                                 </p>
                             </div>
-                          
+
                             <div class="box-account box-info">
                                 <div class="box-head">
                                     <h4>Hesap Bilgileri</h4>
@@ -74,24 +74,19 @@
                                             </div>
                                             <div class="box-content">
                                                 <h6>@Model.Name @Model.Surname</h6>
-                                                <h6>@Model.Email</h6>                                                
+                                                <h6>@Model.Email</h6>
                                             </div>
                                         </div>
                                         <div class="box">
                                             <div class="box-title">
                                                 <h3>Şifre Değişikliği</h3>
                                             </div>
-                                            <div class="box-content">                                                
-                                                <h6><button class="btn btn-solid btn-xs" asp-action="ChangePassword" asp-controller="Account">Değiştir</button></h6>
+                                            <div class="box-content">
+                                                <button type="submit" class="btn btn-solid btn-xs" asp-action="ChangePassword" asp-controller="Account">Değiştir</button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="box mt-3">
-                                    <div class="box-title">
-                                        <h3>Adresim</h3>
-                                    </div>
-                                </div>
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -102,7 +97,7 @@
                                     <div class="card-body">
                                         <div class="top-sec">
                                             <h3>Adresim</h3>
-                                            <a href="#" class="btn btn-sm btn-solid">Yeni Ekle</a>
+                                            
                                         </div>
                                         <div class="address-book-section">
                                             <div class="row g-4">
@@ -121,7 +116,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="bottom">
-                                                            <button class="btn btn-solid btn-xs" asp-action="EditAddress" asp-controller="Account" asp-route-id="@Model.Id">Düzenle</button>
+                                                            <button type="submit" class="btn btn-solid btn-xs" asp-action="EditAddress" asp-controller="Account" asp-route-id="@Model.Id">Düzenle</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -152,35 +147,29 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach(var activity in ViewBag.BuyerActivity)
+                                                    @foreach (var activity in ViewBag.BuyerActivity)
                                                     {
-                                                    <tr>
-
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <img src="../assets/images/pro3/1.jpg"
-                                                                     class="blur-up lazyloaded" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <span class="mt-0">@activity.OrderNumber</span>
-                                                        </td>
-                                                        <td>
+                                                        <tr>
+                                                            
+                                                            <td>
+                                                                <span class="mt-0">@activity.OrderNumber</span>
+                                                            </td>
+                                                            <td>
                                                                 <span class="fs-6">@activity.ProductTitle</span>
-                                                        </td>
-                                                        <td>
+                                                            </td>
+                                                            <td>
                                                                 <span class="fs-6">@activity.SellerName</span>
                                                                 <span class="fs-6">@activity.SellerSurname</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="theme-color fs-6">@activity.TotalAmount</span>
-                                                        </td>
-                                                        <td>
-                                                                <button asp-action="OrderDetail" asp-controller="Order" asp-route-id="@activity.Id">
-                                                                <i class="fa fa-eye text-theme"></i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
+                                                            </td>
+                                                            <td>
+                                                                <span class="theme-color fs-6">@activity.TotalAmount</span>
+                                                            </td>
+                                                            <td>
+                                                                <button type="submit" asp-action="OrderDetail" asp-controller="Order" asp-route-id="@activity.Id">
+                                                                    <i class="fa fa-eye text-theme"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
                                                     }
                                                 </tbody>
                                             </table>
@@ -204,7 +193,7 @@
                                                     <tr class="table-head">
                                                         <th scope="col">Sipariş Numarası</th>
                                                         <th scope="col">Ürün Adı</th>
-                                                        <th scope="col">Satıcı</th>                                       
+                                                        <th scope="col">Satıcı</th>
                                                         <th scope="col">Net Kazanç</th>
                                                         <th scope="col">Detay</th>
                                                     </tr>
@@ -212,14 +201,7 @@
                                                 <tbody>
                                                     @foreach (var activity in ViewBag.SellerActivity)
                                                     {
-                                                        <tr>
-
-                                                            <td>
-                                                                <a href="javascript:void(0)">
-                                                                    <img src="../assets/images/pro3/1.jpg"
-                                                                         class="blur-up lazyloaded" alt="">
-                                                                </a>
-                                                            </td>
+                                                        <tr>                                                            
                                                             <td>
                                                                 <span class="mt-0">@activity.OrderNumber</span>
                                                             </td>
@@ -247,10 +229,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                   
+                    </div>
 
 
-                    
+
                     <div class="tab-pane fade" id="profile">
                         <div class="row">
                             <div class="col-12">
@@ -266,23 +248,57 @@
                                                     <table class="table cart-table wishlist-table">
                                                         <thead>
                                                             <tr class="table-head">
-                                                                
+
                                                                 <th scope="col">Bakiye</th>
                                                                 <th scope="col">İşlem</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>                                                                
+                                                            <tr>
                                                                 <td>
                                                                     <span>@Model.Balance</span>
                                                                 </td>
                                                                 <td>
-                                                                    <button class="btn btn-solid btn-xs" asp-action="Withdraw" asp-controller="Account" asp-route-id="@Model.Id">Para Çek</button>
+                                                                    <button type="submit" class="btn btn-solid btn-xs" asp-action="Withdraw" asp-controller="Account" asp-route-id="@Model.Id">Para Çek</button>
                                                                 </td>
+
                                                             </tr>
 
                                                         </tbody>
                                                     </table>
+                                                    <!-- Diğer HTML kodları... -->
+                                                    @if (ViewBag.Withdrawals != null)
+                                                    {
+                                                        <h3>Para Çekme İşlemleri</h3>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Miktar</th>
+                                                                    <th>IBAN</th>
+                                                                    <th>Alıcı Adı Soyadı</th>
+                                                                    <th>Tarih</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var withdrawal in ViewBag.Withdrawals)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@withdrawal.Amount</td>
+                                                                        <td>@withdrawal.IBAN</td>
+                                                                        <td>@withdrawal.RecipientName</td>
+                                                                        <td>@withdrawal.Date</td> <!-- Eğer 'Date' adında bir özellik eklediyseniz -->
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }<br />
+                                                    else
+                                                    {
+                                                        <p>Henüz bir para çekme işleminiz bulunmamaktadır.</p>
+                                                    }
+
+                                                    <!-- Diğer HTML kodları... -->
+
                                                 </div>
                                             </div>
                                             <div class="dashboard-detail">
@@ -296,13 +312,13 @@
                                                 </div>
                                             </div>
 
-                                        </div>                                       
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>               
+                </div>
             </div>
         </div>
     </div>
@@ -324,8 +340,9 @@
             </div>
             <div class="modal-footer">
                 <a href="/Account/Index" class="btn btn-dark btn-custom" data-bs-dismiss="modal">Hayır</a>
-                <a href="/Account/Logout" class="btn btn-solid btn-custom">Evet
-                </a>                
+                <a href="/Account/Logout" class="btn btn-solid btn-custom">
+                    Evet
+                </a>
             </div>
         </div>
     </div>

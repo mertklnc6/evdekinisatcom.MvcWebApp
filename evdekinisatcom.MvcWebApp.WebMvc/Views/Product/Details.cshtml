@@ -124,21 +124,7 @@
                     </div>
                     <div class="tab-pane fade" id="top-review" role="tabpanel" aria-labelledby="review-top-tab">
                         <div class="product-tab-discription">
-                            <div class="part">
-                                @foreach (var item in ViewBag.Comments)
-                                {
-                                    <div class="media">
-                                        <img src="@item.UserProfilePic" alt="" class="img-fluid" />
-                                        <div class="media-body">
-                                            <h5 class="mt-0">@item.Username</h5>
-                                            <p>
-                                                @item.Content
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                }
-
+                            <div class="part">                               
                                 <!-- section start -->
                                 <section class="section-b-space blog-detail-page review-page">
                                     <div class="container">
@@ -149,16 +135,19 @@
                                                     {
                                                         <li>
                                                             <div class="media">
-                                                                <img src="@item.UserProfilePic" alt="Generic placeholder image">
+                                                                <img src="@item.UserProfilePic" alt="">
                                                                 <div class="media-body">
                                                                     <h6>@item.Username <span>@item.CreatedDate</span></h6>
                                                                     <p>
                                                                         @item.Content
                                                                     </p>
+                                                                    
 
                                                                 </div>
                                                             </div>
                                                         </li>
+                                                        <br />
+                                                        <br />
                                                     }
                                                 </ul>
                                             </div>

@@ -8,6 +8,8 @@ using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
 using evdekinisatcom.MvcWebApp.Entity.Services;
 using evdekinisatcom.MvcWebApp.Service.Services;
 using evdekinisatcom.MvcWebApp.Entity.ViewModels;
+using Microsoft.Identity.Client;
+using Microsoft.Exchange.WebServices.Data;
 
 namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 {
@@ -15,16 +17,22 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
     {
         private readonly IAccountService _service;
         private readonly ICartService _cartService;
+        private readonly IOrderService _orderService;
 
-        public AccountController(IAccountService service, ICartService cartService)
+        public AccountController(IAccountService service, ICartService cartService, IOrderService orderService)
         {
             _service = service;
             _cartService = cartService;
+            _orderService = orderService;
         }
         [Authorize]
         public async Task< IActionResult> Index()
         {
+            
             var currentUser = await _service.Find(User.Identity.Name);
+            ViewBag.SellerActivity = await _orderService.GetAllSellerActivityByUserId(currentUser.Id);
+            ViewBag.BuyerActivity = await _orderService.GetAllBuyerActivityByUserId(currentUser.Id);
+            ViewBag.WithDrawals = await _service.GetWithdrawalsByUserId(currentUser.Id);
             return View(currentUser);
         }
         public IActionResult Register()
@@ -138,6 +146,79 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = await _service.ChangePasswordAsync(User.Identity.Name, model.OldPassword, model.NewPassword);
+
+            if (result.Succeeded)
+            {
+                await _service.LogoutAsync();
+                return RedirectToAction("PasswordChangedSuccessfully");
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return View(model);
+            }
+        }
+
+
+        public IActionResult PasswordChangedSuccessfully()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Withdraw()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Withdraw(WithdrawViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _service.Find(User.Identity.Name);
+                if (user == null)
+                {
+                    return NotFound($"'{user.Id}' ID'li kullanıcı bulunamadı.");
+                }
+
+                try
+                {
+                    await _service.Withdraw(user.Id, model.Amount, model.IBAN, model.RecipientName);
+                    TempData["SuccessMessage"] = "Para çekme işlemi başarıyla gerçekleştirildi.";
+                    return RedirectToAction("Index", "Home"); // Başarılı işlem sonrası yönlendirilecek sayfa
+                }
+                catch (Exception ex)
+                {
+                    
+                    ModelState.AddModelError("", "Para çekme işlemi sırasında bir hata oluştu.");
+                }
+            }
+
+            return View(model);
+        }
+
+        public IActionResult WithdrawSuccess()
+        {
+            return View(); // Bakiye çekme işleminin başarılı olduğunu gösteren bir view döndürebilirsiniz.
+        }
+
 
         public async Task<IActionResult> Logout()
         {

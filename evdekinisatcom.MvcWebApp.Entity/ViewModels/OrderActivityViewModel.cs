@@ -9,6 +9,7 @@ namespace evdekinisatcom.MvcWebApp.Entity.ViewModels
 {
     public class OrderActivityViewModel
     {
+        public int Id { get; set; }
         public string Activity { get; set; }
         public int OrderId { get; set; }
         public string OrderNumber { get; set; }

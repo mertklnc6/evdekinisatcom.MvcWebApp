@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using evdekinisatcom.MvcWebApp.DataAccess.Identity.Models;
 using evdekinisatcom.MvcWebApp.DataAccess.UnitOfWorks;
+using evdekinisatcom.MvcWebApp.Entity.Entities;
 using evdekinisatcom.MvcWebApp.Entity.Services;
 using evdekinisatcom.MvcWebApp.Entity.UnitOfWorks;
 using evdekinisatcom.MvcWebApp.Entity.ViewModels;
@@ -227,10 +228,46 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             };
             return model;
         }
+        public async Task Withdraw(int userId, decimal amount, string iban, string recipientName)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            // Bakiyeyi güncelle
+            user.Balance -= amount;
+            await _userManager.UpdateAsync(user);
+
+            // Çekme işlemini kaydet
+            var withdrawal = new Withdrawal
+            {
+                UserId = user.Id.ToString(),
+                Amount = amount,
+                IBAN = iban,
+                RecipientName = recipientName
+            };
+            await _uow.GetRepository<Withdrawal>().Add(withdrawal);
+
+            await _uow.CommitAsync();
+        }
+
+
+        public async Task<IEnumerable<WithdrawViewModel>> GetWithdrawalsByUserId(int userId)
+        {
+            var withdrawals = await _uow.GetRepository<Withdrawal>().Get(w => w.UserId == userId.ToString());
+            return _mapper.Map<IEnumerable<WithdrawViewModel>>(withdrawals);
+        }
+
 
         public async Task LogoutAsync()
         {
-            await _signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();     
+        
         }
+        
+
+        
+
+
     }
+
+
 }
