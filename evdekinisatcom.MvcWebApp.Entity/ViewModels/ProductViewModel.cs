@@ -21,6 +21,8 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
         public bool IsSold { get; set; } = false;
         public bool IsDeleted { get; set; } = false;
 
+        public bool IsBoosted { get; set; } = false;
+
         public string SellerUsername { get; set; }
 
         [Required(ErrorMessage = "Ürün Başlığı Yazmalısınız! ")]

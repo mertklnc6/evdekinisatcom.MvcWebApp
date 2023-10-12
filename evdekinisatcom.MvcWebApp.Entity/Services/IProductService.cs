@@ -12,6 +12,9 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
     {
         Task<IEnumerable<ProductViewModel>> GetAll();
         Task<IEnumerable<ProductViewModel>> GetAllByUserId(int id);
+        Task<IEnumerable<ProductViewModel>> GetAllBoosted();
+
+        Task<IEnumerable<ProductViewModel>> GetAllOrderBy(Func<IQueryable<Product>, IOrderedQueryable<Product>> orderby);
 
         Task<ProductViewModel> GetByUserId(int id);
 

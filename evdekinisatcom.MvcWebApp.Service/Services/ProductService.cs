@@ -54,11 +54,32 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
 
 
         }
+        
+        public async Task<IEnumerable<ProductViewModel>> GetAllOrderBy(Func<IQueryable<Product>, IOrderedQueryable<Product>> orderby)
+        {
+
+            var list = await _uow.GetRepository<Product>().GetAll(orderby: q => q.OrderByDescending(p => p.CreatedDate));
+
+
+            return _mapper.Map<IEnumerable<ProductViewModel>>(list);
+
+
+        }
 
         public async Task<IEnumerable<ProductViewModel>> GetAllByUserId(int id)
         {
 
             var list = await _uow.GetRepository<Product>().GetAll(p => p.SellerId == id);
+
+
+            return _mapper.Map<IEnumerable<ProductViewModel>>(list);
+
+
+        }
+        public async Task<IEnumerable<ProductViewModel>> GetAllBoosted()
+        {
+
+            var list = await _uow.GetRepository<Product>().GetAll(p => p.IsBoosted == true);
 
 
             return _mapper.Map<IEnumerable<ProductViewModel>>(list);
@@ -81,6 +102,7 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
                 if (model.HeaderImageUrl != null) { product.HeaderImageUrl = model.HeaderImageUrl; }
                 if (model.Images != null) { product.Images = model.Images; }
                 product.IsDeleted = model.IsDeleted;
+                product.IsBoosted = model.IsBoosted;
 
                 _uow.GetRepository<Product>().Update(product);
                 await _uow.CommitAsync();

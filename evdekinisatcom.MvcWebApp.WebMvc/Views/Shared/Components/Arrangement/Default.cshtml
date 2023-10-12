@@ -1,0 +1,41 @@
+﻿@model List<ProductViewModel>
+
+
+    @foreach (var urun in Model)
+    {
+        <div class="product-box">
+            <div class="img-wrapper">
+                <div class="front">
+                    <a asp-action="Details" asp-controller="Product" asp-route-id="@urun.Id">
+                        <img src="@urun.HeaderImageUrl"
+                             class="img-fluid blur-up lazyload bg-img"
+                             alt="">
+                    </a>
+                </div>
+                <div class="cart-info cart-wrap">
+                    <button data-bs-toggle="modal" data-bs-target="#addtocart"
+                            title="Add to cart">
+                        <i class="ti-shopping-cart"></i>
+                    </button> <a href="javascript:void(0)" title="Add to Wishlist">
+                        <i class="ti-heart" aria-hidden="true"></i>
+                    </a> <a href="#"
+                            data-bs-toggle="modal" data-bs-target="#quick-view"
+                            title="Quick View">
+                        <i class="ti-search"
+                           aria-hidden="true"></i>
+                    </a> <a href="compare.html"
+                            title="Compare">
+                        <i class="ti-reload"
+                           aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="details-product">
+                <a asp-action="Details" asp-controller="Product" asp-route-id="@urun.Id">
+                    <h6>@urun.Title</h6>
+                </a>
+                <h4>@urun.Price</h4>
+            </div>
+
+        </div>
+    }

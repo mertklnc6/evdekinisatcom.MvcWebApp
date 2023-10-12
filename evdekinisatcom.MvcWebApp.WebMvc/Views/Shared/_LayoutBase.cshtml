@@ -110,7 +110,7 @@
                                                     <a asp-action="Index" asp-controller="Product">Tüm Ürünler</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">Öne Çıkanlar!</a>
+                                                    <a asp-action="Index" asp-controller="Home">Öne Çıkanlar!</a>
                                                 </li>
 
                                             </ul>
@@ -377,7 +377,7 @@
                                             <li><a asp-action="Index" asp-controller="Product">Tüm Ürünler</a></li>
 
                                             <li>
-                                                <a href="#">Öne Çıkanlar</a>
+                                                <a href="/Product/Index?onecikan=true">Öne Çıkanlar</a>
                                             </li>
 
 
@@ -401,11 +401,11 @@
                                                             <div class="container">
                                                                 <div class="row">
                                                                     <div class="col-xl-12">
-                                                                        <form>
+                                                                        <form asp-controller="Product" asp-action="Siralama">
                                                                             <div class="form-group">
                                                                                 <input type="text" class="form-control"
                                                                                        id="exampleInputPassword1"
-                                                                                       placeholder="Ürünlerde Ara...">
+                                                                                       placeholder="Ürünlerde Ara..." name="search">
                                                                             </div>
                                                                             <button type="submit"
                                                                                     class="btn btn-primary">
@@ -584,10 +584,10 @@
                                 <div class="footer-contant">
                                     <ul>
 
-                                        <li><a href="#">Giyim & Aksesuar</a></li>
-                                        <li><a href="#">Elektronik</a></li>
-                                        <li><a href="#">Ev & Yaşam</a></li>
-                                        <li><a href="#">Zirvedekiler!</a></li>
+                                        <li><a asp-controller="Product" asp-action="Index" asp-route-id="8">Giyim & Aksesuar</a></li>
+                                        <li><a asp-controller="Product" asp-action="Index" asp-route-id="2">Elektronik</a></li>
+                                        <li><a asp-controller="Product" asp-action="Index" asp-route-id="14">Ev & Yaşam</a></li>
+                                        <li><a href="/Product/Index?onecikan=true">Öne Çıkanlar!</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -600,9 +600,9 @@
                                 <div class="footer-contant">
                                     <ul>
                                         <li><a asp-action="Fees" asp-controller="Home">Komisyon Oranları</a></li>
-                                        <li><a href="#">Sipariş & İade</a></li>
-                                        <li><a href="#">Güvenli ALışveriş</a></li>
-                                        <li><a href="#">İletişim</a></li>
+                                        <li><a asp-controller="Home" asp-action="AboutUs">Biz Kimiz</a></li>
+                                        <li><a asp-controller="Home" asp-action="Faw">Sık Sorulan Sorular</a></li>
+                                        <li><a asp-controller="Home" asp-action="Contact">İletişim</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -617,7 +617,7 @@
                                         <li>
                                             <i class="fa fa-map-bullhorn"></i>Al, Sat, Evdekine Değer Kat!
                                         </li>
-                                        <li><i class="fa fa-envelope"></i>Email: info@evdekinisat.com</li>
+                                        <li><i class="fa fa-envelope"></i><a href="mailto:Email: info@evdekinisat.com">info@evdekinisat.com</a></li>
                                     </ul>
                                 </div>
                             </div>

@@ -31,6 +31,8 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
 
         public int SellerId { get; set; } //Seller
         public string SellerUsername { get; set; }
+
+        public bool IsBoosted { get; set; } = false;
         public bool IsOnSale { get; set; } = true;
 
         public bool IsSold { get; set; } = false;

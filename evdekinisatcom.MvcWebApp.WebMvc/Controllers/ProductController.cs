@@ -35,6 +35,15 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
         public async Task<IActionResult> Index(string? id)
         {
+            string oneCikanParametre = HttpContext.Request.Query["onecikan"];
+            if (!string.IsNullOrEmpty(oneCikanParametre) && oneCikanParametre == "true")
+            {
+
+                var list = await _productService.GetAllBoosted();
+
+                return View(list);
+
+            }
 
             if (id == null)
             {
@@ -82,6 +91,55 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
 
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(string selectedColor, string search)
+        {
+
+            var list = await _productService.GetAll();
+
+            list = list.Where(a => a.Brand.ToLower().Contains(search.ToLower())).ToList();
+            var allColor = list.Where(p => p.Color == selectedColor).ToList();
+            return View(_mapper.Map<List<ProductViewModel>>(allColor));
+
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult>Arrangement(ProductViewModel model, string? search, string? sortOrder)
+        {
+            var list = await _productService.GetAll();
+
+            if (search != null)
+            {
+
+
+                list = list.Where(a => a.Title.ToLower().Contains(search.ToLower())).ToList();
+                return View("Index", list);
+
+            }
+
+            else
+            {
+
+                if (sortOrder == "asc")
+                {                    
+                    list = list.OrderBy(p => p.Price);
+                    return View("Index", list);
+
+
+                }
+                if (sortOrder == "desc")
+                {
+                    
+                    list = list.OrderByDescending(p => p.Price);
+                    return View("Index", list);
+
+                }
+                return View("Index", list);
+
+            }
         }
 
         [Authorize]

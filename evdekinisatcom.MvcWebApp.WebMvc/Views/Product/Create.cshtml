@@ -84,6 +84,14 @@
                                     <span asp-validation-for="Condition" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
+                                    <label asp-for="IsBoosted" class="control-label">Yalnızca +%1 Komisyon Karşılığında</label>
+                                    <select class="form-control" asp-for="IsBoosted">
+                                        <option value="">Ürününü hızlı satmak mı?</option>
+                                        <option value="true">Evet</option>
+                                        <option value="false">Hayır</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="headerImage" class="control-label">Kapak Fotoğrafı</label>
                                     <input name="headerImage" class="form-control" type="file" placeholder="Kapak fotoğrafı seçiniz" />
                                 </div>
