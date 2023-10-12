@@ -7,6 +7,7 @@ using evdekinisatcom.MvcWebApp.DataAccess.Identity.Models;
 using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
 using evdekinisatcom.MvcWebApp.Entity.Services;
 using evdekinisatcom.MvcWebApp.Service.Services;
+using evdekinisatcom.MvcWebApp.Entity.ViewModels;
 
 namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 {
@@ -77,6 +78,67 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditAddress()
+        {
+            var user = await _service.Find(User.Identity.Name);
+            var model = new AddressEditViewModel
+            {
+                Address = user.Address
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAddress(AddressEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _service.Find(User.Identity.Name);
+                user.Address = model.Address;
+                await _service.Update(user);
+                return RedirectToAction("Index","Account");
+            }
+            return View(model);
+        }
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> UpdatePhone()
+        {
+            var currentUser = await _service.Find(User.Identity.Name);
+            var model = new UpdatePhoneViewModel
+            {
+                PhoneNumber = currentUser.PhoneNumber
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdatePhone(UpdatePhoneViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var currentUser = await _service.Find(User.Identity.Name);
+            currentUser.PhoneNumber = model.PhoneNumber;
+
+            await _service.Update(currentUser);
+
+            TempData["SuccessMessage"] = "Telefon numaranız başarıyla güncellendi!";
+            return RedirectToAction("Profile"); // Varsayılan profil sayfasına yönlendirme
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Logout()
         {
             await _service.LogoutAsync();

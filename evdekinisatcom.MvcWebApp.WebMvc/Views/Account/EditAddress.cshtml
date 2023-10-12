@@ -1,0 +1,15 @@
+﻿@using evdekinisatcom.MvcWebApp.Entity.ViewModels;
+@model AddressEditViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_LayoutBase";
+}
+
+<form asp-action="EditAddress" method="post">
+    <div class="text-center col-md-8 form-group">
+        <label for="Address">Adres</label>
+        <textarea asp-for="Address" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-solid">Adresi Güncelle</button>
+</form>

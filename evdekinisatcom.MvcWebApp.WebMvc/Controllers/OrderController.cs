@@ -181,7 +181,7 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
                 // Sepeti temizle
                 await _cartService.ClearCartAsync(cart.Id);
 
-                return RedirectToAction("OrderConfirmation");
+                return RedirectToAction("OrderConfirmation", new { orderId = createdOrder.Id });
 
             }
 
@@ -190,9 +190,12 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
             return View();
         }
 
-        public async Task<IActionResult> OrderConfirmation()
-        {         
-           return View();
+        public async Task<IActionResult> OrderConfirmation(int orderId)
+        {
+             
+            var orderActivities = await _orderService.GetOrderActivityByOrderId(orderId);
+            ViewBag.Order = await _orderService.GetOrderById(orderId);
+            return View(orderActivities);
         }
 
         private bool SimulatePaymentProcess(CheckoutViewModel model)

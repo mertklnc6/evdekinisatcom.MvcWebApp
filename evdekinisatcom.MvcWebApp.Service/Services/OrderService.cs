@@ -50,6 +50,11 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             var order = await _uow.GetRepository<Order>().Get(o => o.OrderNumber == orderNumber);
             return _mapper.Map<OrderViewModel>(order);
         }
+        public async Task<OrderViewModel> GetOrderById(int id)
+        {
+            var order = await _uow.GetRepository<Order>().Get(o => o.Id == id);
+            return _mapper.Map<OrderViewModel>(order);
+        }
 
         public async Task<List<OrderDetailViewModel>> GetAllOrderDetails(int id)
         {

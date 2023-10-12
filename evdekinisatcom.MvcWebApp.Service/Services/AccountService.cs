@@ -157,21 +157,17 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             return _mapper.Map<UserViewModel>(user);
         }
 
-        //public void UpdateBalance(int id, decimal profit)
-        //{            
-        //    var user =  _uow.GetRepository<AppUser>().GetByIdSync(u => u.Id == id);
-        //    user.Balance += profit;
-        //     _uow.GetRepository<AppUser>().UpdateProperty(user, "Balance");
-        //     _uow.Commit();
+        public async Task<IdentityResult> ChangePasswordAsync(string userId, string oldPassword, string newPassword)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new InvalidOperationException("Kullanıcı bulunamadı.");
+            }
 
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+        }
 
-        //    //var user = await _userManager.FindByIdAsync(id.ToString());
-        //    //if(user == null)
-        //    //{
-        //    //    user.Balance += profit;
-        //    //    await _userManager.UpdateAsync(user);
-        //    //}
-        //}
 
 
         public async Task<string> FindByNameAsync(LoginViewModel model)

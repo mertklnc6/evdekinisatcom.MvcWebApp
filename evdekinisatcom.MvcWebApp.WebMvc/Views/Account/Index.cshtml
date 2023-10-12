@@ -15,7 +15,7 @@
                 <div class="dashboard-sidebar">
                     <div class="profile-top">
                         <div class="profile-image">
-                            <img src="../assets/images/avtar.jpg" alt="" class="img-fluid">
+                            <img src="@Model.ProfilePicUrl" alt="" class="img-fluid">
                         </div>
                         <div class="profile-detail">
                             <h5>@Model.Name</h5>
@@ -30,28 +30,22 @@
                             </li>
                             <li class="nav-item">
                                 <a data-bs-toggle="tab" data-bs-target="#address"
-                                   class="nav-link">Adres</a>
+                                   class="nav-link">Adresim</a>
                             </li>
                             <li class="nav-item">
                                 <a data-bs-toggle="tab" data-bs-target="#orders"
-                                   class="nav-link">Aldılarım</a>
+                                   class="nav-link">Aldıklarım</a>
                             </li>
                             <li class="nav-item">
                                 <a data-bs-toggle="tab" data-bs-target="#orders"
                                    class="nav-link">Sattıklarım</a>
                             </li>
-                            <li class="nav-item">
-                                <a data-bs-toggle="tab" data-bs-target="#wishlist"
-                                   class="nav-link">İstek Listem</a>
-                            </li>
+                            
                             <li class="nav-item">
                                 <a data-bs-toggle="tab" data-bs-target="#profile"
-                                   class="nav-link">Satıştakiler</a>
+                                   class="nav-link">Satıcı Profili</a>
                             </li>
-                            <li class="nav-item">
-                                <a data-bs-toggle="tab" data-bs-target="#security"
-                                   class="nav-link">Güvenlik</a>
-                            </li>
+                            
                             <li class="nav-item"><a href="/Account/Logout" class="nav-link">Çıkış Yap</a> </li>
                         </ul>
                     </div>
@@ -67,35 +61,7 @@
                                     Hesap Kontrol Panelinizden, Bakiye ve hesap aktivitelerinizi görüntüleme, hesap bilgilerinizi güncelleme işlemleri yapabilirsiniz.
                                 </p>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="counter-box">
-                                        <img src="../assets/images/icon/dashboard/sale.png" class="img-fluid">
-                                        <div>
-                                            <h3>25</h3>
-                                            <h5>Total Order</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="counter-box">
-                                        <img src="../assets/images/icon/dashboard/homework.png" class="img-fluid">
-                                        <div>
-                                            <h3>5</h3>
-                                            <h5>Pending Orders</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="counter-box">
-                                        <img src="../assets/images/icon/dashboard/order.png" class="img-fluid">
-                                        <div>
-                                            <h3>50</h3>
-                                            <h5>Wishlist</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                          
                             <div class="box-account box-info">
                                 <div class="box-head">
                                     <h4>Hesap Bilgileri</h4>
@@ -104,19 +70,26 @@
                                     <div class="col-sm-6">
                                         <div class="box">
                                             <div class="box-title">
-                                                <h3>İletişim Bilgileri</h3><a href="#">Düzenle</a>
+                                                <h3>İletişim Bilgileri</h3>
                                             </div>
                                             <div class="box-content">
                                                 <h6>@Model.Name @Model.Surname</h6>
-                                                <h6>@Model.Email</h6>
-                                                <h6><a href="#">Şifre Değişikliği</a></h6>
+                                                <h6>@Model.Email</h6>                                                
+                                            </div>
+                                        </div>
+                                        <div class="box">
+                                            <div class="box-title">
+                                                <h3>Şifre Değişikliği</h3>
+                                            </div>
+                                            <div class="box-content">                                                
+                                                <h6><button class="btn btn-solid btn-xs" asp-action="ChangePassword" asp-controller="Account">Değiştir</button></h6>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="box mt-3">
                                     <div class="box-title">
-                                        <h3>Adreslerim</h3><a href="#">Adreslerimi Yönet</a>
+                                        <h3>Adresim</h3>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +101,7 @@
                                 <div class="card mt-0">
                                     <div class="card-body">
                                         <div class="top-sec">
-                                            <h3>Adreslerim</h3>
+                                            <h3>Adresim</h3>
                                             <a href="#" class="btn btn-sm btn-solid">Yeni Ekle</a>
                                         </div>
                                         <div class="address-book-section">
@@ -136,7 +109,7 @@
                                                 <div class="select-box active col-xl-4 col-md-6">
                                                     <div class="address-box">
                                                         <div class="top">
-                                                            <h6>@Model.Name <span>home</span></h6>
+                                                            <h6>@Model.Name</h6>
                                                         </div>
                                                         <div class="middle">
                                                             <div class="address">
@@ -148,10 +121,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="bottom">
-                                                            <a href="javascript:void(0)"
-                                                               data-bs-target="#edit-address"
-                                                               data-bs-toggle="modal" class="bottom_btn">edit</a>
-                                                            <a href="#" class="bottom_btn">Kaldır</a>
+                                                            <button class="btn btn-solid btn-xs" asp-action="EditAddress" asp-controller="Account" asp-route-id="@Model.Id">Düzenle</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -174,15 +144,18 @@
                                             <table class="table cart-table order-table">
                                                 <thead>
                                                     <tr class="table-head">
-                                                        <th scope="col">Order Id</th>
-                                                        <th scope="col">Product Details</th>
-                                                        <th scope="col">Status</th>
-                                                        <th scope="col">Price</th>
-                                                        <th scope="col">View</th>
+                                                        <th scope="col">Sipariş Numarası</th>
+                                                        <th scope="col">Ürün Adı</th>
+                                                        <th scope="col">Satıcı</th>
+                                                        <th scope="col">Fiyat</th>
+                                                        <th scope="col">Detay</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @foreach(var activity in ViewBag.BuyerActivity)
+                                                    {
                                                     <tr>
+
                                                         <td>
                                                             <a href="javascript:void(0)">
                                                                 <img src="../assets/images/pro3/1.jpg"
@@ -190,24 +163,25 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <span class="mt-0">#125021</span>
+                                                            <span class="mt-0">@activity.OrderNumber</span>
                                                         </td>
                                                         <td>
-                                                            <span class="fs-6">Purple polo tshirt</span>
+                                                                <span class="fs-6">@activity.ProductTitle</span>
                                                         </td>
                                                         <td>
-                                                            <span class="badge rounded-pill bg-success custom-badge">Shipped</span>
+                                                                <span class="fs-6">@activity.SellerName</span>
+                                                                <span class="fs-6">@activity.SellerSurname</span>
                                                         </td>
                                                         <td>
-                                                            <span class="theme-color fs-6">$49.54</span>
+                                                            <span class="theme-color fs-6">@activity.TotalAmount</span>
                                                         </td>
                                                         <td>
-                                                            <a href="javascript:void(0)">
+                                                                <button asp-action="OrderDetail" asp-controller="Order" asp-route-id="@activity.Id">
                                                                 <i class="fa fa-eye text-theme"></i>
-                                                            </a>
+                                                            </button>
                                                         </td>
                                                     </tr>
-
+                                                    }
                                                 </tbody>
                                             </table>
                                         </div>
@@ -228,40 +202,44 @@
                                             <table class="table cart-table order-table">
                                                 <thead>
                                                     <tr class="table-head">
-                                                        <th scope="col">Order Id</th>
-                                                        <th scope="col">Product Details</th>
-                                                        <th scope="col">Status</th>
-                                                        <th scope="col">Price</th>
-                                                        <th scope="col">View</th>
+                                                        <th scope="col">Sipariş Numarası</th>
+                                                        <th scope="col">Ürün Adı</th>
+                                                        <th scope="col">Satıcı</th>                                       
+                                                        <th scope="col">Net Kazanç</th>
+                                                        <th scope="col">Detay</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <img src="../assets/images/pro3/1.jpg"
-                                                                     class="blur-up lazyloaded" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <span class="mt-0">#125021</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="fs-6">Purple polo tshirt</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge rounded-pill bg-success custom-badge">Shipped</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="theme-color fs-6">$49.54</span>
-                                                        </td>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <i class="fa fa-eye text-theme"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                    @foreach (var activity in ViewBag.SellerActivity)
+                                                    {
+                                                        <tr>
 
+                                                            <td>
+                                                                <a href="javascript:void(0)">
+                                                                    <img src="../assets/images/pro3/1.jpg"
+                                                                         class="blur-up lazyloaded" alt="">
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <span class="mt-0">@activity.OrderNumber</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="fs-6">@activity.ProductTitle</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="fs-6">@activity.BuyerName</span>
+                                                                <span class="fs-6">@activity.BuyerSurname</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="theme-color fs-6">@activity.NetAmount</span>
+                                                            </td>
+                                                            <td>
+                                                                <button asp-action="OrderDetail" asp-controller="Order" asp-route-id="@activity.Id">
+                                                                    <i class="fa fa-eye text-theme"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    }
                                                 </tbody>
                                             </table>
                                         </div>
@@ -269,61 +247,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                   
 
 
-                    <div class="tab-pane fade" id="wishlist">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card dashboard-table mt-0">
-                                    <div class="card-body table-responsive-sm">
-                                        <div class="top-sec">
-                                            <h3>İstek Listem</h3>
-                                        </div>
-                                        <div class="table-responsive-xl">
-                                            <table class="table cart-table wishlist-table">
-                                                <thead>
-                                                    <tr class="table-head">
-                                                        <th scope="col">image</th>
-                                                        <th scope="col">Order Id</th>
-                                                        <th scope="col">Product Details</th>
-                                                        <th scope="col">Price</th>
-                                                        <th scope="col">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <img src="../assets/images/pro3/1.jpg"
-                                                                     class="blur-up lazyloaded" alt="">
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <span class="mt-0">#125021</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>Purple polo tshirt</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="theme-color fs-6">$49.54</span>
-                                                        </td>
-                                                        <td>
-                                                            <a href="javascript:void(0)"
-                                                               class="btn btn-xs btn-solid">
-                                                                Move to Cart
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="tab-pane fade" id="profile">
                         <div class="row">
                             <div class="col-12">
@@ -339,25 +266,18 @@
                                                     <table class="table cart-table wishlist-table">
                                                         <thead>
                                                             <tr class="table-head">
-                                                                <th scope="col">Toplam Satış</th>
-                                                                <th scope="col">Toplam Kazanç</th>
+                                                                
                                                                 <th scope="col">Bakiye</th>
-                                                                <th scope="col">Son Yapılan Ödeme</th>
+                                                                <th scope="col">İşlem</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    1(test)
-                                                                </td>
-                                                                <td>
-                                                                    <span class="mt-0">300(test)</span>
-                                                                </td>
+                                                            <tr>                                                                
                                                                 <td>
                                                                     <span>@Model.Balance</span>
                                                                 </td>
                                                                 <td>
-                                                                    <span class="theme-color fs-6">28.09.2023(test)</span>
+                                                                    <button class="btn btn-solid btn-xs" asp-action="Withdraw" asp-controller="Account" asp-route-id="@Model.Id">Para Çek</button>
                                                                 </td>
                                                             </tr>
 
@@ -376,89 +296,13 @@
                                                 </div>
                                             </div>
 
-                                        </div>
-                                        <div class="dashboard-title mt-lg-5 mt-3">
-                                            <h4>Giriş Detayları</h4>
-                                            <a class="edit-link" href="#">edit</a>
-                                        </div>
-                                        <div class="dashboard-detail">
-                                            <ul>
-                                                <li>
-                                                    <div class="details">
-                                                        <div class="left">
-                                                            <h6>Email</h6>
-                                                        </div>
-                                                        <div class="right">
-                                                            <h6>
-                                                                @Model.Email <a class="edit-link"
-                                                                                href="#">Değiştir</a>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="details">
-                                                        <div class="left">
-                                                            <h6>Telefon</h6>
-                                                        </div>
-                                                        <div class="right">
-                                                            <h6>
-                                                                @Model.PhoneNumber<a class="edit-link"
-                                                                                     href="#">Değiştir</a>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="details">
-                                                        <div class="left">
-                                                            <h6>Şifre</h6>
-                                                        </div>
-                                                        <div class="right">
-                                                            <h6>
-                                                                ******* <a class="edit-link" href="#">Değiştir</a>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        </div>                                       
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="security">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card mt-0">
-                                <div class="card-body">
-                                    <div class="dashboard-box">
-                                        <div class="dashboard-title">
-                                            <h4>settings</h4>
-                                        </div>
-                                        <div class="dashboard-detail">
-
-                                            <div class="account-setting">
-                                                <h5>Hesabı Sil</h5>
-                                                <div class="row">
-                                                    <div class="col">
-
-                                                        <button type="button"
-                                                                class="btn btn-solid btn-xs">
-                                                            Kalıcı Olarak Sil
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div>               
             </div>
         </div>
     </div>

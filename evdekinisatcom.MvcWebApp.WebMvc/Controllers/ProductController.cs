@@ -119,8 +119,6 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                 {
                     model.SellerId = currentUser.Id;
                     model.SellerUsername = currentUser.Username;
-
-
                 }
 
                 var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\userUploads\\users");
@@ -132,55 +130,46 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                     Directory.CreateDirectory(uploadPath);
                 }
 
-                var headerPath = Path.Combine(uploadPath, headerImage.FileName);
-                var stream1 = new FileStream(headerPath, FileMode.Create);
-                headerImage.CopyTo(stream1);
-
-                model.HeaderImageUrl = "/userUploads/users/" + currentUser.Username + "/" + headerImage.FileName;
+                // Header Image için
+                string headerFileExtension = Path.GetExtension(headerImage.FileName);
+                string uniqueHeaderFileName = $"{Guid.NewGuid()}{headerFileExtension}";
+                var headerPath = Path.Combine(uploadPath, uniqueHeaderFileName);
+                using (var stream1 = new FileStream(headerPath, FileMode.Create))
+                {
+                    await headerImage.CopyToAsync(stream1);
+                }
+                model.HeaderImageUrl = "/userUploads/users/" + currentUser.Username + "/" + uniqueHeaderFileName;
 
                 List<string> imagePaths = new List<string>();
+
+                // Diğer resimler için
                 foreach (var image in images)
                 {
-
-
-                    var imagePath = Path.Combine(uploadPath, image.FileName);
-                    imagePaths.Add(imagePath);
-                    if (imagePath != null)
+                    string fileExtension = Path.GetExtension(image.FileName);
+                    string uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
+                    var imagePath = Path.Combine(uploadPath, uniqueFileName);
+                    using (var stream = new FileStream(imagePath, FileMode.Create))
                     {
-                        List<ProductImage> productImages = new List<ProductImage>();
-                        foreach (var imageUrl in imagePaths)
-                        {
-                            productImages.Add(new ProductImage { ImageUrl = imageUrl });
-                        }
-                        model.Images = productImages;
-                    }
-                    else
-                    {
-                        var stream = new FileStream(imagePath, FileMode.Create);
                         await image.CopyToAsync(stream);
-
-                        imagePaths.Add("/userUploads/users/" + currentUser.Username + "/" + image.FileName);
-                        List<ProductImage> productImages = new List<ProductImage>();
-                        foreach (var imageUrl in imagePaths)
-                        {
-                            productImages.Add(new ProductImage { ImageUrl = imageUrl });
-                        }
-                        model.Images = productImages;
-
                     }
-
+                    imagePaths.Add("/userUploads/users/" + currentUser.Username + "/" + uniqueFileName);
                 }
 
-
+                List<ProductImage> productImages = new List<ProductImage>();
+                foreach (var imageUrl in imagePaths)
+                {
+                    productImages.Add(new ProductImage { ImageUrl = imageUrl });
+                }
+                model.Images = productImages;
 
                 await _productService.CreateAsync(model);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-
                 ModelState.AddModelError("", "Bir hata oluştu.");
             }
+
             //}
 
             return View(model);

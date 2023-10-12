@@ -5,17 +5,34 @@
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
 
-
-
-<h2>Adres Onaylama</h2>
-
-<form asp-action="ConfirmAddress" method="post">
-    <div class="form-group">
-        <label for="Address">Adresiniz</label>
-        <p>@Model.Address</p>
-        
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2>Adres Onayı</h2>
     </div>
-    <a type="submit" class="btn btn-primary" asp-action="Checkout" asp-controller="Order">Adresi Onayla</a>
-</form>
 
-
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>Adresim</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!-- Sepete Dön Butonu -->
+                <div class="col-md-3 d-flex align-items-center justify-content-center">
+                    <a class="btn btn-outline-solid" asp-action="Index" asp-controller="Cart">Sepete Dön</a>
+                </div>
+                <!-- Adres Bilgisi ve Düzenle Butonu -->
+                <div class="col-md-6 text-center">
+                    <p class="mb-3">@Model.Address</p>
+                    <a class="btn btn-solid" asp-action="EditAddress" asp-controller="Account">Düzenle</a>
+                </div>
+                <!-- Alışverişe Dön Butonu -->
+                <div class="col-md-3 d-flex align-items-center justify-content-center">
+                    <a class="btn btn-outline-solid" asp-action="Index" asp-controller="Product">Alışverişe Dön</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <a class="btn btn-solid" asp-action="Checkout" asp-controller="Order">Onayla</a>
+        </div>
+    </div>
+</div>

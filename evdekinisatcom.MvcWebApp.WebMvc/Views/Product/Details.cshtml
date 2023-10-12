@@ -67,18 +67,18 @@
                         </div>
 
                         <div class="border-product">
-                            
+
                             <ul class="shipping-info">
                                 <li>evdekinisat.com Güvencesiyle!</li>
-                                <li>İster AL İster Sat Ücretsiz Kargo!</li>                                
+                                <li>İster AL İster Sat Ücretsiz Kargo!</li>
                             </ul>
                         </div>
                         <div class="border-product">
                             <h6 class="product-title">Paylaş</h6>
                             <div class="product-icon">
-                                <ul class="product-social">                                    
-                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>                                    
+                                <ul class="product-social">
+                                    <li><a href="#" onclick="shareOnTwitter();"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#" onclick="copyToClipboard();"><i class="fa fa-copy"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -139,6 +139,34 @@
                                     </div>
                                 }
 
+                                <!-- section start -->
+                                <section class="section-b-space blog-detail-page review-page">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <ul class="comment-section">
+                                                    @foreach (var item in ViewBag.Comments)
+                                                    {
+                                                        <li>
+                                                            <div class="media">
+                                                                <img src="@item.UserProfilePic" alt="Generic placeholder image">
+                                                                <div class="media-body">
+                                                                    <h6>@item.Username <span>@item.CreatedDate</span></h6>
+                                                                    <p>
+                                                                        @item.Content
+                                                                    </p>
+
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <!-- Section ends -->
+
                             </div>
                         </div>
                         @if (User.Identity!.IsAuthenticated)
@@ -159,7 +187,7 @@
                         }
                         else
                         {
-                            <a asp-action="Login" asp-controller="Account">Giriş Yap</a>
+                            <button class="btn btn-solid btn-xs" asp-action="Login" asp-controller="Account">Giriş Yap</button>
                         }
                     </div>
                 </div>
@@ -173,3 +201,31 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+<script>
+    function shareOnTwitter() {
+        var url = window.location.href;
+        window.open('https://twitter.com/share?url=' + encodeURIComponent(url));
+    }
+
+    function copyToClipboard() {
+        var dummy = document.createElement('input');
+        document.body.appendChild(dummy);
+        dummy.value = window.location.href;
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+
+        // SweetAlert2 ile uyarı mesajı gösterme
+        Swal.fire({
+            icon: 'success',
+            title: 'Başarılı!',
+            text: 'URL kopyalandı!',
+            timer: 1500
+        });
+    }
+</script>
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

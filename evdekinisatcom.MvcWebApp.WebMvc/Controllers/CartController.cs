@@ -67,6 +67,7 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
                         {
                             CartId = cart.Id,
                             ProductId = product.Id,
+                            ProductImg = product.HeaderImageUrl,
                             Price = product.Price,
                             Quantity = product.StockQuantity,
                             Title = product.Title,

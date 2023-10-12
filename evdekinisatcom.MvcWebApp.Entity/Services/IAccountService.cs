@@ -1,5 +1,6 @@
 ﻿using evdekinisatcom.MvcWebApp.Entity.ViewModels;
 using evdekinisatcom.MvcWebApp_App.Service.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
 
 		Task Update(UserViewModel model);
 
-		//void UpdateBalance(int id, decimal profit);
+		Task<IdentityResult> ChangePasswordAsync(string userId, string oldPassword, string newPassword);
 
         Task<string> FindByNameAsync(LoginViewModel model);
 

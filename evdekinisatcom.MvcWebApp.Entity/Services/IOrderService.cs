@@ -13,6 +13,7 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
         Task CreateOrder(OrderViewModel model);
         Task UpdateOrder(OrderViewModel model);
         Task<OrderViewModel> GetOrder(string orderNumber);
+        Task<OrderViewModel> GetOrderById(int id);
         Task CreateOrderDetail(OrderDetailViewModel model);
 
         Task<List<OrderDetailViewModel>> GetAllOrderDetails(int id);

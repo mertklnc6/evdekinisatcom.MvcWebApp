@@ -1,0 +1,19 @@
+﻿@using evdekinisatcom.MvcWebApp.Entity.ViewModels;
+
+@{
+    ViewData["Title"] = "UpdatePhone";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+
+@model UpdatePhoneViewModel
+
+<h2>Telefon Numarası Güncelle</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="PhoneNumber">Telefon Numarası</label>
+        <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="@Model.PhoneNumber" required />
+    </div>
+    <button type="submit" class="btn btn-solid">Güncelle</button>
+</form>
+

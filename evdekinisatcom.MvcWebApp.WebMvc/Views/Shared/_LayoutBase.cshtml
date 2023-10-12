@@ -9,7 +9,7 @@
     <meta name="keywords" content="evdekinisat.com">
     <meta name="author" content="evdekinisat.com">
     <link rel="icon" href="~/images/site/letter-e.png" type="image/x-icon">
-    <link rel="shortcut icon" href="~/images/site/letter-e.png" type="image/x-icon" >
+    <link rel="shortcut icon" href="~/images/site/letter-e.png" type="image/x-icon">
     <title>evdekinisat.com</title>
 
     <!--Google font-->
@@ -52,7 +52,6 @@
                             <div class="col-lg-6">
                                 <div class="header-contact">
                                     <ul>
-                                        
                                     </ul>
                                 </div>
                             </div>
@@ -109,11 +108,11 @@
                                                 </li>
                                                 <li>
                                                     <a asp-action="Index" asp-controller="Product">Tüm Ürünler</a>
-                                                </li>                                                
+                                                </li>
                                                 <li>
                                                     <a href="#">Öne Çıkanlar!</a>
                                                 </li>
-                                                
+
                                             </ul>
                                         </nav>
                                     </div>
@@ -129,14 +128,16 @@
                                                 </li>
                                                 <li class="onhover-div mobile-setting">
                                                     <div>
-                                                        <img src="~/themes/assets/images/icon/setting.png"
-                                                             class="img-fluid blur-up lazyload" alt=""> <i class="ti-settings"></i>
+                                                        <img src="~/themes/assets/images/icon/icons8-plus-23.png"
+                                                             class="img-fluid blur-up lazyload" alt=""> <i class="ti-plus"></i>
                                                     </div>
                                                 </li>
                                                 <li class="onhover-div mobile-cart">
                                                     <div>
-                                                        <img src="~/themes/assets/images/icon/cart.png"
-                                                             class="img-fluid blur-up lazyload" alt=""> <i class="ti-shopping-cart"></i>
+                                                        <a asp-action="Index" asp-controller="Cart">
+                                                            <img src="~/themes/assets/images/icon/cart.png"
+                                                                 class="img-fluid blur-up lazyload" alt=""> <i class="ti-shopping-cart"></i>
+                                                        </a>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -298,7 +299,6 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="header-contact">
-                                
                             </div>
                         </div>
                         <div class="col-lg-6 text-end">
@@ -345,9 +345,9 @@
                                             </div>
                                             <!-- Sample menu definition -->
                                             <ul id="sub-menu" class="sm pixelstrap sm-vertical">
-                                               
+
                                                 @await Component.InvokeAsync("Category");
-                                                
+
                                             </ul>
                                         </nav>
                                     </div>
@@ -370,17 +370,17 @@
                                                     Geri<i class="fa fa-angle-right ps-2"
                                                            aria-hidden="true"></i>
                                                 </div>
-                                            </li>                                            
-                                            
-                                            <li><a asp-action="Index" asp-controller="Home">Anasayfa</a></li>
-                                            
-                                            <li><a asp-action="Index" asp-controller="Product">Tüm Ürünler</a></li>                                           
-                                            
-                                            <li>
-                                                <a href="#">Öne Çıkanlar</a>                                                
                                             </li>
-                                            
-                                           
+
+                                            <li><a asp-action="Index" asp-controller="Home">Anasayfa</a></li>
+
+                                            <li><a asp-action="Index" asp-controller="Product">Tüm Ürünler</a></li>
+
+                                            <li>
+                                                <a href="#">Öne Çıkanlar</a>
+                                            </li>
+
+
                                         </ul>
                                     </nav>
                                 </div>
@@ -425,17 +425,18 @@
                                                         <img src="~/themes/assets/images/icon/icons8-plus-23.png"
                                                              class="img-fluid blur-up lazyload" alt=""> <i class="ti-plus"></i>
                                                     </a>
-                                                    
+
                                                 </div>
-                                                
+
                                             </li>
                                             <li class="onhover-div mobile-cart">
                                                 <div>
-                                                    
-                                                    <img src="~/themes/assets/images/icon/cart.png"
+                                                    <a asp-action="Index" asp-controller="Cart">
+                                                        <img src="~/themes/assets/images/icon/cart.png"
                                                              class="img-fluid blur-up lazyload" alt=""> <i class="ti-shopping-cart"></i>
-                                                    
-                                                </div>                                               
+                                                    </a>
+
+                                                </div>
                                             </li>
                                         </ul>
                                     </div>
@@ -447,7 +448,7 @@
             </div>
         </header>
         <!-- header end -->
-    @RenderBody()
+        @RenderBody()
         <!-- service section start -->
         <section class="mt-2 banner-padding absolute-banner pb-0 tools-service">
             <div class="container absolute-bg">
@@ -563,7 +564,7 @@
                             </div>
                             <div class="footer-contant">
                                 <div class="footer-logo"><img width="400px" src="~/images/site/logo2.png" alt=""></div>
-                                <br/>
+                                <br />
                                 <div class="mt-2 footer-social">
                                     <ul>
                                         <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
@@ -661,122 +662,9 @@
         <!-- footer end -->
     </div>
 
-    
-    
-    <!-- Add to cart modal popup start-->
-    <div class="modal fade bd-example-modal-lg theme-modal cart-modal" id="addtocart" tabindex="-1" role="dialog"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body modal1">
-                    <div class="container-fluid p-0">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="modal-bg addtocart">
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <div class="media">
-                                        <a href="#">
-                                            <img class="img-fluid blur-up lazyload pro-img"
-                                                 src="~/themes/assets/images/fashion/product/43.jpg" alt="">
-                                        </a>
-                                        <div class="media-body align-self-center text-center">
-                                            <a href="#">
-                                                <h6>
-                                                    <i class="fa fa-check"></i>Item
-                                                    <span>men full sleeves</span>
-                                                    <span> Başarıyla Sepete Eklendi</span>
-                                                </h6>
-                                            </a>
-                                            <div class="buttons">
-                                                <a href="#" class="view-cart btn btn-solid">Your cart</a>
-                                                <a href="#" class="checkout btn btn-solid">Check out</a>
-                                                <a href="#" class="continue btn btn-solid">Continue shopping</a>
-                                            </div>
 
-                                            <div class="upsell_payment">
-                                                <img src="~/themes/assets/images/payment_cart.png"
-                                                     class="img-fluid blur-up lazyload" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-section">
-                                        <div class="col-12 product-upsell text-center">
-                                            <h4>Customers who bought this item also.</h4>
-                                        </div>
-                                        <div class="row" id="upsell_product">
-                                            <div class="product-box col-sm-3 col-6">
-                                                <div class="img-wrapper">
-                                                    <div class="front">
-                                                        <a href="#">
-                                                            <img src="~/themes/assets/images/fashion/product/1.jpg"
-                                                                 class="img-fluid blur-up lazyload mb-1"
-                                                                 alt="cotton top">
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-detail">
-                                                        <h6><a href="#"><span>cotton top</span></a></h6>
-                                                        <h4><span>$25</span></h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="product-box col-sm-3 col-6">
-                                                <div class="img-wrapper">
-                                                    <div class="front">
-                                                        <a href="#">
-                                                            <img src="~/themes/assets/images/fashion/product/34.jpg"
-                                                                 class="img-fluid blur-up lazyload mb-1"
-                                                                 alt="cotton top">
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-detail">
-                                                        <h6><a href="#"><span>cotton top</span></a></h6>
-                                                        <h4><span>$25</span></h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="product-box col-sm-3 col-6">
-                                                <div class="img-wrapper">
-                                                    <div class="front">
-                                                        <a href="#">
-                                                            <img src="~/themes/assets/images/fashion/product/13.jpg"
-                                                                 class="img-fluid blur-up lazyload mb-1"
-                                                                 alt="cotton top">
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-detail">
-                                                        <h6><a href="#"><span>cotton top</span></a></h6>
-                                                        <h4><span>$25</span></h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="product-box col-sm-3 col-6">
-                                                <div class="img-wrapper">
-                                                    <div class="front">
-                                                        <a href="#">
-                                                            <img src="~/themes/assets/images/fashion/product/19.jpg"
-                                                                 class="img-fluid blur-up lazyload mb-1"
-                                                                 alt="cotton top">
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-detail">
-                                                        <h6><a href="#"><span>cotton top</span></a></h6>
-                                                        <h4><span>$25</span></h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Add to cart modal popup end-->
+
+
     <!-- tap to top start -->
     <div class="tap-top">
         <div><i class="fa fa-angle-double-up"></i></div>
