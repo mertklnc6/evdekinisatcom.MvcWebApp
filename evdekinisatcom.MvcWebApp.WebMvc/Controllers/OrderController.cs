@@ -146,6 +146,7 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
                         BuyerAddress = user.Address,
                         ProductId = product.Id,
                         ProductTitle = product.Title,
+                        ProductImg = product.HeaderImageUrl,
                         SellerId = product.SellerId,
                         SellerName = seller.Name,
                         SellerSurname = seller.Surname,
@@ -154,7 +155,9 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
                         NetAmount = orderDetail.UnitPrice - feeAmount
                     };
                     await _orderService.CreateOrderActivity(orderActivity);
-                    
+
+                    seller.Balance = orderActivity.NetAmount;
+                    await _accountService.Update(seller);
 
                     // Ürünü güncelle
                     product.BuyerId = user.Id;
@@ -169,9 +172,9 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
 
                 // Siparişi güncelle
 
-                createdOrder.TotalQuantity += totalQuantity;                
+                createdOrder.TotalQuantity = totalQuantity;                
                 createdOrder.TotalPrice = totalPrice;
-                await _orderService.UpdateOrder(createdOrder.Id);
+                await _orderService.UpdateOrder(createdOrder);
 
                 
 

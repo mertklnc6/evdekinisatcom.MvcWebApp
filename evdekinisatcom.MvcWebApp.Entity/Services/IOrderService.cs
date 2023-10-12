@@ -11,7 +11,7 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
     public interface IOrderService
     {
         Task CreateOrder(OrderViewModel model);
-        Task UpdateOrder(int orderId);
+        Task UpdateOrder(OrderViewModel model);
         Task<OrderViewModel> GetOrder(string orderNumber);
         Task CreateOrderDetail(OrderDetailViewModel model);
 

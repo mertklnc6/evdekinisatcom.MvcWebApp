@@ -52,10 +52,10 @@ else
                         </td>
                         <td>
                             <form asp-action="RemoveFromCart" asp-controller="Cart" method="post">
-                <input type="hidden" name="cartId" value="@item.CartId" />
-                <input type="hidden" name="productId" value="@item.ProductId" />
-                <input type="submit" value="Sepetten Çıkar" class="btn btn-danger" />
-                </form>
+                                <input type="hidden" name="cartId" value="@item.CartId" />
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <input type="submit" value="Sepetten Çıkar" class="btn btn-danger" />
+                            </form>
                         </td>
                     </tr>
                 }
@@ -70,11 +70,88 @@ else
         <p>Sepetinizde ürün bulunmamaktadır.</p>
     }
 }
+<!--section start-->
+<section class="cart-section section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 table-responsive-xs">
+                <table class="table cart-table">
+                    <thead>
+                        <tr class="table-head">
+                            <th scope="col">Fotoğraf</th>
+                            <th scope="col">Ürün Başlığı</th>
+                            <th scope="col">Fiyat</th>
+                            <th scope="col">Miktar</th>
+                            <th scope="col">Toplam</th>
+                            <th scope="col">Ürünü Çıkar</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
 
 
-
-
-
-
-
-
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a asp-action="Details" asp-controller="Product" asp-route-id="@item.ProductId"><img src="@item.ProductImg" alt=""></a>
+                                </td>
+                                <td>
+                                    <a asp-action="Details" asp-controller="Product" asp-route-id="@item.ProductId">@item.Title</a>
+                                    <div class="mobile-cart-content row">
+                                        <div class="col">
+                                            @item.Quantity
+                                        </div>
+                                        <div class="col">
+                                            <h2 class="td-color">₺@item.Price</h2>
+                                        </div>
+                                        <div class="col">
+                                            <h2 class="td-color">
+                                                <form asp-action="RemoveFromCart" asp-controller="Cart" method="post">
+                                                    <input type="hidden" name="cartId" value="@item.CartId" />
+                                                    <input type="hidden" name="productId" value="@item.ProductId" />
+                                                    <button type="submit" value="Sepetten Çıkar" class="btn btn-danger"><i class="ti-close"></i></button>
+                                                </form>                                                
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h2>@item.Price</h2>
+                                </td>
+                                <td>
+                                    <div class="qty-box">
+                                        <div class="input-group">
+                                            <input type="number" name="quantity" class="form-control input-number"
+                                                   value="1">
+                                        </div>
+                                    </div>
+                                </td>
+                                @*<td><a href="#" class="icon"><i class="ti-close"></i></a></td>
+                                <td>
+                                    <h2 class="td-color">$4539.00</h2>
+                                </td>*@
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+                <div class="table-responsive-md">
+                    <table class="table cart-table ">
+                        <tfoot>
+                            <tr>
+                                <td>total price :</td>
+                                <td>
+                                    <h2>₺6935.00</h2>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row cart-buttons">
+            <div class="col-6"><a asp-action="Index" asp-controller="Product" class="btn btn-solid">Alışverişe Devam Et</a></div>
+            <div class="col-6"><a asp-action="ConfirmAddress" asp-controller="Order" class="btn btn-solid">Adres Onayı</a></div>
+        </div>
+    </div>
+</section>
+<!--section end-->

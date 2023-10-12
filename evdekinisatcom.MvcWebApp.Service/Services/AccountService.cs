@@ -133,8 +133,10 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
         }
         public async Task Update(UserViewModel model)
         {
-            var user = _mapper.Map<AppUser>(model);
-            user.SecurityStamp = Guid.NewGuid().ToString();            
+            var user = await _userManager.FindByIdAsync(model.Id.ToString());
+            user.Balance = model.Balance;
+            user.PhoneNumber = model.PhoneNumber;
+            user.Address = model.Address;
             await _userManager.UpdateAsync(user);
         }
 

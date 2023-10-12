@@ -57,9 +57,11 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             return _mapper.Map<List<OrderDetailViewModel>>(orderDetails);
         }
 
-        public async Task UpdateOrder(int orderId)
+        public async Task UpdateOrder(OrderViewModel model)
         {
-            var order = await _uow.GetRepository<Order>().Get(o => o.Id == orderId);            
+            var order = await _uow.GetRepository<Order>().Get(o => o.Id == model.Id);
+            order.TotalQuantity = model.TotalQuantity;
+            order.TotalPrice = model.TotalPrice;
             _uow.GetRepository<Order>().Update(order);
             await _uow.CommitAsync();
 

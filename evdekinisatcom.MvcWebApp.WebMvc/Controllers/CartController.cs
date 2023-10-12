@@ -37,7 +37,7 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
         }
 
         //Sepete ürün ekle
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddToCart(int id)
         {

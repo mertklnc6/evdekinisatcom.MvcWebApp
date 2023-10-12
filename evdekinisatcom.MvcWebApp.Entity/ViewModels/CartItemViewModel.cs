@@ -10,7 +10,8 @@ namespace evdekinisatcom.MvcWebApp.Entity.ViewModels
     {
         public int Id { get; set; }
         public int CartId { get; set; }
-        public int ProductId { get; set; }        
+        public int ProductId { get; set; }
+        public string ProductImg { get; set; }
         public string SellerUsername { get; set; }        
         public string Title { get; set; }
         public int Quantity { get; set; }

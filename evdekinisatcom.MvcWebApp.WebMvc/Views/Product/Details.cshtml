@@ -24,13 +24,13 @@
                             <img src="@Model.HeaderImageUrl" alt="@Model.Title"
                                  class="img-fluid blur-up lazyload image_zoom_cls-0">
                         </div>
-                        @*@foreach (var img in Model.Images)
+                        @foreach (var img in Model.Images)
                         {
-                        <div>
-                        <img src="@img.ImageUrl" alt="@Model.Title"
-                        class="img-fluid blur-up lazyload image_zoom_cls-1">
-                        </div>
-                        }*@
+                            <div>
+                                <img width="400px" src="@img.ImageUrl" alt="@Model.Title"
+                                     class="img-fluid blur-up lazyload image_zoom_cls-1">
+                            </div>
+                        }
 
                     </div>
                     <div class="row">
@@ -41,7 +41,7 @@
                                     @foreach (var img in Model.Images)
                                     {
                                         <div>
-                                            <img src="@img.ImageUrl" class="img-fluid blur-up lazyload">
+                                            <img width="150px" src="@img.ImageUrl" class="img-fluid blur-up lazyload">
                                         </div>
                                     }
                                 }
@@ -55,36 +55,30 @@
                         <div class="label-section">
                             <span class="badge badge-grey-color">Satıcı</span>
                         </div>
-                        <h6>@Model.SellerUsername</h6>
-                        <h3 class="price-detail">@Model.Price</h3>
+                        <h5>@Model.SellerUsername</h5>
+                        <h3 class="price-detail">₺@Model.Price</h3>
                         <ul class="color-variant">
-                            <li>@Model.Color</li>
+                            Renk: @Model.Color
                         </ul>
                         <div class="product-buttons">
                             <form asp-action="AddToCart" asp-controller="Cart" method="post" asp-route-id="@Model.Id">
-                                <input type="submit" value="Sepete Ekle" class="btn btn-primary" />
-                            </form> <a href="#" class="btn btn-solid">
-                                <i class="fa fa-bookmark fz-16 me-2" aria-hidden="true"></i>İstek Listesi
-                            </a>
+                                <input type="submit" value="Sepete Ekle" class="btn btn-solid" />
+                            </form>
                         </div>
 
                         <div class="border-product">
-                            <h6 class="product-title">shipping info</h6>
+                            
                             <ul class="shipping-info">
                                 <li>evdekinisat.com Güvencesiyle!</li>
-                                <li>İster AL İster Sat Ücretsiz Kargo!</li>
-                                <li>Ürünü Teslim Aldıktan Sonra Onayla!</li>
+                                <li>İster AL İster Sat Ücretsiz Kargo!</li>                                
                             </ul>
                         </div>
                         <div class="border-product">
                             <h6 class="product-title">Paylaş</h6>
                             <div class="product-icon">
-                                <ul class="product-social">
-                                    <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+                                <ul class="product-social">                                    
                                     <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>                                    
                                 </ul>
                             </div>
                         </div>

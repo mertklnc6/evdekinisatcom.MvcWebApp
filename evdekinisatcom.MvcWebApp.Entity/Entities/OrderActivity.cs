@@ -19,6 +19,7 @@ namespace evdekinisatcom.MvcWebApp.Entity.Entities
         public string BuyerAddress { get; set; }
         public int ProductId { get; set; }
         public string ProductTitle { get; set; }
+        public string ProductImg { get; set; }
         public int SellerId { get; set; }
         public string SellerName { get; set; }
         public string SellerSurname { get; set; }

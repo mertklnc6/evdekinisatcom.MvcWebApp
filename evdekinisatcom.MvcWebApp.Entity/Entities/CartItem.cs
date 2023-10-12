@@ -21,6 +21,7 @@ namespace evdekinisatcom.MvcWebApp_App.Entity.Entities
         public int CartId { get; set; }        
 
         public int ProductId { get; set; }
+        public string ProductImg { get; set; }
 
         //Navigation Property
         public virtual Product Product { get; set; }
