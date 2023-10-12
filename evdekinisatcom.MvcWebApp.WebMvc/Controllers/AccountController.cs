@@ -200,9 +200,21 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
                 try
                 {
-                    await _service.Withdraw(user.Id, model.Amount, model.IBAN, model.RecipientName);
-                    TempData["SuccessMessage"] = "Para çekme işlemi başarıyla gerçekleştirildi.";
-                    return RedirectToAction("Index", "Home"); // Başarılı işlem sonrası yönlendirilecek sayfa
+                    
+                    var message = await _service.Withdraw(user.Id, model.Amount, model.IBAN, model.RecipientName);                    
+                    
+                    if (message == "NO")
+                    {
+                        ModelState.AddModelError("", "Yetersiz Bakiye!");
+                        return RedirectToAction("Withdraw", "Account");
+                    }
+
+                    if(message == "OK")
+                    {
+                        
+                        return RedirectToAction("WithdrawSuccess");
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -216,7 +228,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
         public IActionResult WithdrawSuccess()
         {
-            return View(); // Bakiye çekme işleminin başarılı olduğunu gösteren bir view döndürebilirsiniz.
+            return View();
         }
 
 

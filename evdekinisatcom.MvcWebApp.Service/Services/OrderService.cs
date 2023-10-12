@@ -93,7 +93,13 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             var activityList = _mapper.Map<List<OrderActivityViewModel>>(list);
             return activityList;
         }
-        
+
+        public async Task<OrderActivityViewModel> GetOrderActivity(int id)
+        {
+            var oActivity = await _uow.GetRepository<OrderActivity>().Get(o => o.Id == id);
+            var activity = _mapper.Map<OrderActivityViewModel>(oActivity);
+            return activity;
+        }
 
         public async Task<List<OrderActivityViewModel>> GetAllSellerActivityByUserId(int id)
         {

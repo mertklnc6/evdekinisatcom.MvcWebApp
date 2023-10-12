@@ -23,5 +23,7 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
         Task<List<OrderActivityViewModel>> GetAllBuyerActivityByUserId(int id);
         Task<List<OrderActivityViewModel>> GetOrderActivityByOrderId(int id);
         Task<List<OrderActivityViewModel>> GetAllSellerActivityByUserId(int id);
+
+        Task<OrderActivityViewModel> GetOrderActivity(int id);
     }
 }

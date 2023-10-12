@@ -37,7 +37,7 @@
                                    class="nav-link">Aldıklarım</a>
                             </li>
                             <li class="nav-item">
-                                <a data-bs-toggle="tab" data-bs-target="#orders"
+                                <a data-bs-toggle="tab" data-bs-target="#sold"
                                    class="nav-link">Sattıklarım</a>
                             </li>
 
@@ -82,11 +82,16 @@
                                                 <h3>Şifre Değişikliği</h3>
                                             </div>
                                             <div class="box-content">
-                                                <button type="submit" class="btn btn-solid btn-xs" asp-action="ChangePassword" asp-controller="Account">Değiştir</button>
+                                                <a asp-action="ChangePassword" asp-controller="Account">
+                                                    <button type="button"
+                                                            class="btn btn-solid btn-xs">
+                                                        Değiştir
+                                                    </button>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,7 +102,7 @@
                                     <div class="card-body">
                                         <div class="top-sec">
                                             <h3>Adresim</h3>
-                                            
+
                                         </div>
                                         <div class="address-book-section">
                                             <div class="row g-4">
@@ -116,7 +121,12 @@
                                                             </div>
                                                         </div>
                                                         <div class="bottom">
-                                                            <button type="submit" class="btn btn-solid btn-xs" asp-action="EditAddress" asp-controller="Account" asp-route-id="@Model.Id">Düzenle</button>
+                                                            <a asp-action="EditAddress" asp-controller="Account" asp-route-id="@Model.Id">
+                                                                <button type="button"
+                                                                        class="btn btn-solid btn-xs">
+                                                                    Düzenle
+                                                                </button>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -150,7 +160,7 @@
                                                     @foreach (var activity in ViewBag.BuyerActivity)
                                                     {
                                                         <tr>
-                                                            
+
                                                             <td>
                                                                 <span class="mt-0">@activity.OrderNumber</span>
                                                             </td>
@@ -165,9 +175,9 @@
                                                                 <span class="theme-color fs-6">@activity.TotalAmount</span>
                                                             </td>
                                                             <td>
-                                                                <button type="submit" asp-action="OrderDetail" asp-controller="Order" asp-route-id="@activity.Id">
+                                                                <a type="submit" asp-action="OrderDetail" asp-controller="Order" asp-route-id="@activity.Id">
                                                                     <i class="fa fa-eye text-theme"></i>
-                                                                </button>
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     }
@@ -179,7 +189,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="orders">
+                    <div class="tab-pane fade" id="sold">
                         <div class="row">
                             <div class="col-12">
                                 <div class="card dashboard-table mt-0">
@@ -201,7 +211,7 @@
                                                 <tbody>
                                                     @foreach (var activity in ViewBag.SellerActivity)
                                                     {
-                                                        <tr>                                                            
+                                                        <tr>
                                                             <td>
                                                                 <span class="mt-0">@activity.OrderNumber</span>
                                                             </td>
@@ -216,9 +226,11 @@
                                                                 <span class="theme-color fs-6">@activity.NetAmount</span>
                                                             </td>
                                                             <td>
-                                                                <button asp-action="OrderDetail" asp-controller="Order" asp-route-id="@activity.Id">
-                                                                    <i class="fa fa-eye text-theme"></i>
-                                                                </button>
+                                                                <a asp-action="ActivityDetail" asp-controller="Order" asp-route-id="@activity.Id">
+                                                                    <button>
+                                                                        <i class="fa fa-eye text-theme"></i>
+                                                                    </button>
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     }
@@ -256,10 +268,15 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td>
-                                                                    <span>@Model.Balance</span>
+                                                                    <span>₺@Model.Balance</span>
                                                                 </td>
                                                                 <td>
-                                                                    <button type="submit" class="btn btn-solid btn-xs" asp-action="Withdraw" asp-controller="Account" asp-route-id="@Model.Id">Para Çek</button>
+                                                                    <a asp-action="Withdraw" asp-controller="Account" asp-route-id="@Model.Id">
+                                                                        <button type="button"
+                                                                                class="btn btn-solid btn-xs">
+                                                                            Para Çek
+                                                                        </button>
+                                                                    </a>
                                                                 </td>
 
                                                             </tr>
@@ -283,15 +300,16 @@
                                                                 @foreach (var withdrawal in ViewBag.Withdrawals)
                                                                 {
                                                                     <tr>
-                                                                        <td>@withdrawal.Amount</td>
+                                                                        <td>₺@withdrawal.Amount</td>
                                                                         <td>@withdrawal.IBAN</td>
                                                                         <td>@withdrawal.RecipientName</td>
-                                                                        <td>@withdrawal.Date</td> <!-- Eğer 'Date' adında bir özellik eklediyseniz -->
+                                                                        <td>@withdrawal.CreatedDate</td>
                                                                     </tr>
                                                                 }
                                                             </tbody>
                                                         </table>
-                                                    }<br />
+                                                        <br />
+                                                    }
                                                     else
                                                     {
                                                         <p>Henüz bir para çekme işleminiz bulunmamaktadır.</p>

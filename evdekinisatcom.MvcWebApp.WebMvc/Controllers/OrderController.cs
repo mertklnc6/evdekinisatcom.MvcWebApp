@@ -198,11 +198,25 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Controllers
             return View(orderActivities);
         }
 
+
+        public async Task<ActionResult> ActivityDetail(int id)
+        {
+            var activity = await _orderService.GetOrderActivity(id);
+            return View(activity);
+        }
+
+
+
+
+        //controllera özel methodlar
+
         private bool SimulatePaymentProcess(CheckoutViewModel model)
         {
             // Ödeme işleminin başarılı olduğunu varsayıyoruz.
             return true;
         }
+
+
         public string GenerateOrderNumber(int cartId,int number)
         {
             // Tarihi ve saati al

@@ -10,6 +10,12 @@ namespace evdekinisatcom.MvcWebApp.Entity.ViewModels
 {
     public class WithdrawViewModel
     {
+        public int Id { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+
+        public bool IsDeleted { get; set; }
+        public int UserId { get; set; }
         [Required]
         [DataType(DataType.Currency)]
         [Display(Name = "Çekilecek Miktar")]
@@ -20,8 +26,7 @@ namespace evdekinisatcom.MvcWebApp.Entity.ViewModels
         public string RecipientName { get; set; }
 
         [Required]
-        [Display(Name = "IBAN")]
-        [RegularExpression(@"^TR\d{2}\s?(\w{4}\s?){4}\w{2}$", ErrorMessage = "Geçerli bir IBAN numarası girin.")]
+        [Display(Name = "IBAN")]        
         public string IBAN { get; set; }
 
         // Diğer gerekli alanlar eklenebilir.

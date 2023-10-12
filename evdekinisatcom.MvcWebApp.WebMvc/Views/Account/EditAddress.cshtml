@@ -5,7 +5,15 @@
     ViewData["Title"] = "Login";
     Layout = "_LayoutBase";
 }
-
+@if (!ViewData.ModelState.IsValid)
+{
+    foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+    {
+        <div class="alert alert-danger">
+            @error.ErrorMessage
+        </div>
+    }
+}
 <form asp-action="EditAddress" method="post">
     <div class="text-center col-md-8 form-group">
         <label for="Address">Adres</label>
@@ -13,3 +21,8 @@
     </div>
     <button type="submit" class="btn btn-solid">Adresi Güncelle</button>
 </form>
+@section Scripts {
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

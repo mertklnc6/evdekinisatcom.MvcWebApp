@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace evdekinisatcom.MvcWebApp.Entity.Entities
 {
-    public class Withdrawal : BaseEntity
+    public class Withdraw : BaseEntity
     {
         
         public string UserId { get; set; }        

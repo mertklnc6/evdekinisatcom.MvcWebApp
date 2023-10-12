@@ -17,8 +17,8 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
 
 		Task Update(UserViewModel model);
 
-        Task Withdraw(int userId, decimal amount, string iban, string recipientName);
-		Task<IEnumerable<WithdrawViewModel>> GetWithdrawalsByUserId(int userId);
+        Task<string> Withdraw(int userId, decimal amount, string iban, string recipientName);
+		Task<List<WithdrawViewModel>> GetWithdrawalsByUserId(int userId);
 
 
 

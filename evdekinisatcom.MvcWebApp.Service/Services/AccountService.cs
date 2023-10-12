@@ -228,32 +228,50 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             };
             return model;
         }
-        public async Task Withdraw(int userId, decimal amount, string iban, string recipientName)
+        public async Task<string> Withdraw(int userId, decimal amount, string iban, string recipientName)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
-
-            // Bakiyeyi güncelle
-            user.Balance -= amount;
-            await _userManager.UpdateAsync(user);
-
-            // Çekme işlemini kaydet
-            var withdrawal = new Withdrawal
+            var message = string.Empty;
+            if (user.Balance < amount)
             {
-                UserId = user.Id.ToString(),
-                Amount = amount,
-                IBAN = iban,
-                RecipientName = recipientName
-            };
-            await _uow.GetRepository<Withdrawal>().Add(withdrawal);
 
-            await _uow.CommitAsync();
+                message = "NO";
+                
+            }
+            else
+            {
+                message = "OK";
+                // Bakiyeyi güncelle
+                user.Balance -= amount;
+                await _userManager.UpdateAsync(user);
+
+                // Çekme işlemini kaydet
+                var withdrawal = new Withdraw
+                {
+                    UserId = user.Id.ToString(),
+                    Amount = amount,
+                    IBAN = iban,
+                    RecipientName = recipientName
+                };
+                await _uow.GetRepository<Withdraw>().Add(withdrawal);
+
+                await _uow.CommitAsync();
+
+                
+            }
+
+            return message;
+
+
         }
 
 
-        public async Task<IEnumerable<WithdrawViewModel>> GetWithdrawalsByUserId(int userId)
+
+        public async Task<List<WithdrawViewModel>> GetWithdrawalsByUserId(int userId)
         {
-            var withdrawals = await _uow.GetRepository<Withdrawal>().Get(w => w.UserId == userId.ToString());
-            return _mapper.Map<IEnumerable<WithdrawViewModel>>(withdrawals);
+            var list = await _uow.GetRepository<Withdraw>().GetAll(w => w.UserId == userId.ToString());
+            var modelList = _mapper.Map<List<WithdrawViewModel>>(list);
+            return modelList;
         }
 
 

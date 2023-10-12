@@ -10,7 +10,6 @@ namespace evdekinisatcom.MvcWebApp.Entity.ViewModels
     public class OrderViewModel
     {
         public string OrderNumber { get; set; }
-
         public DateTime CreatedDate { get; set; }
         public int Id { get; set; }
         public int BuyerId { get; set; }        

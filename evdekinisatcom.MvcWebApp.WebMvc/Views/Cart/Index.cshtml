@@ -57,12 +57,6 @@ else
                                                 </div>
                                                 <div class="col">
                                                     <h2 class="td-color">
-                                                        <form asp-action="RemoveFromCart" asp-controller="Cart" method="post">
-                                                            <input type="hidden" name="cartId" value="@item.CartId" />
-                                                            <input type="hidden" name="productId" value="@item.ProductId" />
-                                                            <input type="submit" class="btn btn-solid btn-xs" />
-                                                            
-                                                        </form>
                                                     </h2>
                                                 </div>
                                             </div>
@@ -70,14 +64,22 @@ else
                                         <td>
                                             <h2>
                                                 ₺@(
-                                                    item.Quantity * item.Price
-                                                    )
+                                                   item.Quantity * item.Price
+                                                   )
                                             </h2>
                                         </td>
                                         <td>
                                             @item.Quantity
                                         </td>
-                                        <td><a href="#" class="icon"><i class="ti-close"></i></a></td>
+                                        <td>
+                                            <form asp-action="RemoveFromCart" asp-controller="Cart" method="post">
+                                                <input type="hidden" name="cartId" value="@item.CartId" />
+                                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                                <button type="submit"><i class="ti-close"></i></button>
+                                            </form>
+
+
+                                        </td>
                                         <td>
                                             <h2 class="td-color">
                                                 ₺@(
@@ -116,7 +118,7 @@ else
         <div class="text-center alert-danger">
             <p>Sepetinizde ürün bulunmamaktadır!</p>
         </div>
-        
+
     }
 }
 

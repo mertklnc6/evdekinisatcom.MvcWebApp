@@ -1,0 +1,84 @@
+﻿@using evdekinisatcom.MvcWebApp.Entity.ViewModels;
+@model OrderActivityViewModel
+
+@{
+    ViewData["Title"] = "Sipariş Aktivite Detayları";
+    Layout = "_LayoutBase";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Sipariş Detayları</h2>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            Sipariş Bilgileri
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Sipariş Numarası:</dt>
+                <dd class="col-sm-8">@Model.OrderNumber</dd>
+
+                <dt class="col-sm-4">Aktivite:</dt>
+                <dd class="col-sm-8">@Model.Activity</dd>
+
+                <dt class="col-sm-4">Toplam Tutar:</dt>
+                <dd class="col-sm-8">₺@Model.TotalAmount</dd>
+
+                <dt class="col-sm-4">Ücret Tutarı:</dt>
+                <dd class="col-sm-8">₺@Model.FeeAmount</dd>
+
+                <dt class="col-sm-4">Net Tutar:</dt>
+                <dd class="col-sm-8">₺@Model.NetAmount</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            Ürün Bilgileri
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Ürün Başlığı:</dt>
+                <dd class="col-sm-8">@Model.ProductTitle</dd>
+
+                <dt class="col-sm-4">Ürün Resmi:</dt>
+                <dd class="col-sm-8"><img width="100px" src="@Model.ProductImg" alt="@Model.ProductTitle" class="img-fluid" /></dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            Alıcı Bilgileri
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Adı:</dt>
+                <dd class="col-sm-8">@Model.BuyerName</dd>
+
+                <dt class="col-sm-4">Soyadı:</dt>
+                <dd class="col-sm-8">@Model.BuyerSurname</dd>
+
+                <dt class="col-sm-4">Adres:</dt>
+                <dd class="col-sm-8">@Model.BuyerAddress</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            Satıcı Bilgileri
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Adı:</dt>
+                <dd class="col-sm-8">@Model.SellerName</dd>
+
+                <dt class="col-sm-4">Soyadı:</dt>
+                <dd class="col-sm-8">@Model.SellerSurname</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
