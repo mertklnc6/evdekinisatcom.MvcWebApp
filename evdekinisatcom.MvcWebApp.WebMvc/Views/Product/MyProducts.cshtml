@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ProductViewModel>
+
+@{
+    ViewData["Title"] = "Benim Ürünlerim";
+    Layout = "_LayoutBase";
+}
+
+<div class="container mt-5">
+    <h2>Benim Ürünlerim</h2>
+
+    <table class="table table-bordered table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Ürün Adı</th>
+                <th>Fiyat</th>
+                <th>Marka</th>
+                <th>Durum</th>
+                <th>Yayında</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Title</td>
+                    <td>@product.Price</td>
+                    <td>@product.Brand</td>
+                    <td>@product.Condition</td>
+                    <td>@(product.IsDeleted ? "Hayır" : "Evet")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning">Düzenle</a>
+                        @if (product.IsDeleted)
+                        {
+                            <a asp-action="Publish" asp-route-id="@product.Id" class="btn btn-success">Yayına Al</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">Yayından Kaldır</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -16,6 +16,7 @@ namespace evdekinisatcom.MvcWebApp.Entity.Services
 		Task<string> CreateUserAsync(RegisterViewModel model);
 
 		Task Update(UserViewModel model);
+		Task UpdatePP(ProfileImageViewModel model);
 
         Task<string> Withdraw(int userId, decimal amount, string iban, string recipientName);
 		Task<List<WithdrawViewModel>> GetWithdrawalsByUserId(int userId);

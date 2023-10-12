@@ -50,7 +50,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Repositories
 
 		public async Task<T> Get(Expression<Func<T, bool>> predicate)
 		{
-			return await _dbSet.AsNoTracking().FirstOrDefaultAsync(predicate);
+			return await _dbSet.FirstOrDefaultAsync(predicate);
 		}
 
 		public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null, params Expression<Func<T, object>>[] includes)

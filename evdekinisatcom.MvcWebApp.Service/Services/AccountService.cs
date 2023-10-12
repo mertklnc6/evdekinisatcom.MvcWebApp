@@ -141,6 +141,14 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             await _userManager.UpdateAsync(user);
         }
 
+        public async Task UpdatePP(ProfileImageViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId.ToString());
+            user.ProfilePicUrl = model.ProfileImageUrl;            
+            await _userManager.UpdateAsync(user);
+        }
+
+
         public async Task<RoleViewModel> FindRoleByIdAsync(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);

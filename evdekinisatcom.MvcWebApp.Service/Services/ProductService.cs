@@ -55,12 +55,33 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
 
         }
 
+        public async Task<IEnumerable<ProductViewModel>> GetAllByUserId(int id)
+        {
+
+            var list = await _uow.GetRepository<Product>().GetAll(p => p.SellerId == id);
+
+
+            return _mapper.Map<IEnumerable<ProductViewModel>>(list);
+
+
+        }
+
 
         public async Task Update(ProductViewModel model)
         {
             try
             {
-                var product = _mapper.Map<Product>(model);
+                var product = await _uow.GetRepository<Product>().Get(p => p.Id == model.Id);
+                if (model.Brand != null) { product.Brand = model.Brand; }
+                if (model.Title != null) { product.Title = model.Title; }
+                if (model.Description != null) { product.Description = model.Description; }
+                if (model.Price != 0) { product.Price = model.Price; }
+                if (model.CategoryId != 0) { product.CategoryId = model.CategoryId; }
+                if (model.Color != null) { product.Color = model.Color; }
+                if (model.HeaderImageUrl != null) { product.HeaderImageUrl = model.HeaderImageUrl; }
+                if (model.Images != null) { product.Images = model.Images; }
+                product.IsDeleted = model.IsDeleted;
+
                 _uow.GetRepository<Product>().Update(product);
                 await _uow.CommitAsync();
             }
@@ -68,7 +89,7 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             {
                 string hata = ex.Message;
             }
-           
+
 
         }
 
@@ -82,6 +103,13 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
         public async Task<ProductViewModel> GetById(int id)
         {
             var product = await _uow.GetRepository<Product>().GetByIdAsync(p => p.Id == id);
+
+            return _mapper.Map<ProductViewModel>(product);
+        }
+
+        public async Task<ProductViewModel> GetByUserId(int id)
+        {
+            var product = await _uow.GetRepository<Product>().GetByIdAsync(p => p.SellerId == id);
 
             return _mapper.Map<ProductViewModel>(product);
         }

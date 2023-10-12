@@ -276,8 +276,9 @@
                                     </div>
                                     <div class="product-wrapper-grid">
                                         <div class="row margin-res">
+
                                             @foreach (var product in Model)
-                                            { @if (product.IsSold == false)
+                                            { @if (product.IsSold == false && product.IsDeleted == false)
                                                 {
                                                     <div class="col-xl-3 col-6 col-grid-box">
                                                         <div class="product-box">

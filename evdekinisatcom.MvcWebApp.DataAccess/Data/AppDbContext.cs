@@ -62,7 +62,7 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
             modelBuilder.Entity<IdentityUserToken<int>>().HasKey(p => new { p.UserId, p.LoginProvider, p.Name });
 
             modelBuilder.Entity<AppUser>().Property(p => p.Balance).HasDefaultValue(0);
-            modelBuilder.Entity<AppUser>().Property(p => p.ProfilePicUrl).HasDefaultValue("/userImages/defaultProfilePic.webp"); //default profil fotoğrafı
+            modelBuilder.Entity<AppUser>().Property(p => p.ProfilePicUrl).HasDefaultValue("/images/default/defaultProfilePic.webp"); //default profil fotoğrafı
                                                                                                                                  //Seed Data          
 
 

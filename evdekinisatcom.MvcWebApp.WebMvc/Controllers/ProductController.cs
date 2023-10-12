@@ -35,7 +35,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
 
         public async Task<IActionResult> Index(string? id)
         {
-            
+
             if (id == null)
             {
                 var list = await _productService.GetAll();
@@ -51,7 +51,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                     if (product.CategoryId.ToString() == id)
                     {
                         list.Add(product);
-                        
+
                     }
                 }
                 foreach (var category in categories)
@@ -60,18 +60,18 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
                     {
                         foreach (var subCategory in categories)
                         {
-                            if(subCategory.ParentCategoryId == category.Id)
+                            if (subCategory.ParentCategoryId == category.Id)
                             {
-                                foreach(var product in products)
+                                foreach (var product in products)
                                 {
-                                    if(product.CategoryId == subCategory.Id)
+                                    if (product.CategoryId == subCategory.Id)
                                     {
                                         list.Add(product);
                                     }
                                 }
                             }
                         }
-                                
+
                     }
                 }
 
@@ -87,16 +87,16 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
         [Authorize]
         public async Task<IActionResult> Create()
         {
-            
+
             var categoryList = await _categoryService.GetAll();
             var subCategoryList = new List<CategoryViewModel>();
             foreach (var sCategory in categoryList)
             {
-                
+
                 if (sCategory.ParentCategoryId != 1)
                 {
                     subCategoryList.Add(sCategory);
-                    
+
                 };
             }
             ViewBag.Categories = new SelectList(subCategoryList, "Id", "Name");
@@ -175,22 +175,134 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
             return View(model);
         }
 
+
+
         public async Task<IActionResult> Details(int id)
         {
             ViewBag.Comments = await _commentService.GetAllByProductId(id);
-            ProductViewModel product = await _productService.GetById(id);
+            ProductViewModel product = await _productService.GetByIdWithImages(id);
             return View(product);
         }
 
-        public async Task<IActionResult> Edit(ProductViewModel model)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var product = await _productService.GetById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var categoryList = await _categoryService.GetAll();
+            var subCategoryList = categoryList.Where(s => s.ParentCategoryId != 1).ToList();
+            ViewBag.Categories = new SelectList(subCategoryList, "Id", "Name");
+
+            return View(product);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> Edit(int id, ProductViewModel model, IFormFile headerImage, List<IFormFile> newImages)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
+
+            try
+            {
+                var currentUser = await _accountService.Find(User.Identity.Name);
+                if (currentUser != null)
+                {
+                    model.SellerId = currentUser.Id;
+                    model.SellerUsername = currentUser.Username;
+                }
+
+
+                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\userUploads\\users", currentUser.Username);
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath);
+                }
+
+                if (headerImage != null)
+                {
+                    string headerFileExtension = Path.GetExtension(headerImage.FileName);
+                    string uniqueHeaderFileName = $"{Guid.NewGuid()}{headerFileExtension}";
+                    var headerPath = Path.Combine(uploadPath, uniqueHeaderFileName);
+                    using (var stream = new FileStream(headerPath, FileMode.Create))
+                    {
+                        await headerImage.CopyToAsync(stream);
+                    }
+                    model.HeaderImageUrl = "/userUploads/users/" + currentUser.Username + "/" + uniqueHeaderFileName;
+                }
+
+                if (newImages != null && newImages.Count > 0)
+                {
+                    List<string> imagePaths = new List<string>();
+                    foreach (var image in newImages)
+                    {
+                        string fileExtension = Path.GetExtension(image.FileName);
+                        string uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
+                        var imagePath = Path.Combine(uploadPath, uniqueFileName);
+                        using (var stream = new FileStream(imagePath, FileMode.Create))
+                        {
+                            await image.CopyToAsync(stream);
+                        }
+                        imagePaths.Add("/userUploads/users/" + currentUser.Username + "/" + uniqueFileName);
+                    }
+
+                    List<ProductImage> productImages = new List<ProductImage>();
+                    foreach (var imageUrl in imagePaths)
+                    {
+                        productImages.Add(new ProductImage { ImageUrl = imageUrl });
+                    }
+                    model.Images = productImages;
+                }
+
+                await _productService.Update(model);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Bir hata oluştu.");
+            }
+
+
+            return View(model);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> MyProducts(int id)
+        {
+            var products = await _productService.GetAllByUserId(id);
+            return View(products);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var product = await _productService.GetById(id);
+            product.IsDeleted = true;
+            await _productService.Update(product);
+            return RedirectToAction("Index", "Account");
+        }
+
+        public async Task<IActionResult> Publish(int id)
+        {
+            var product = await _productService.GetById(id);
+            product.IsDeleted = false;
+            await _productService.Update(product);
+            return RedirectToAction("Index", "Account");
+        }
+
+
+
 
         [Authorize]
         public async Task<IActionResult> CreateComment(int Id, string Message)
         {
-            if(Message != null && Id != 0)
+            if (Message != null && Id != 0)
             {
                 var user = await _accountService.Find(User.Identity.Name);
                 CommentViewModel model = new CommentViewModel()
@@ -209,7 +321,7 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
             {
                 return RedirectToAction("Index");
             }
-            
+
 
 
 

@@ -87,6 +87,44 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
             return View(model);
         }
 
+        [Authorize]
+        [HttpGet]
+        public IActionResult UpdateProfilePic()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateProfilePic(ProfileImageViewModel model, IFormFile profilePic)
+        {
+            var currentUser = await _service.Find(User.Identity.Name);            
+            model.UserId = currentUser.Id;
+            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\userUploads\\users");
+            var userPath = Path.Combine(uploadPath, currentUser.Username);
+            uploadPath = userPath;
+
+            if (!Directory.Exists(uploadPath))
+            {
+                Directory.CreateDirectory(uploadPath);
+            }
+
+            // Profil fotoğrafı için
+            string profileFileExtension = Path.GetExtension(profilePic.FileName);
+            string uniqueProfileFileName = $"{Guid.NewGuid()}{profileFileExtension}";
+            var profilePath = Path.Combine(uploadPath, uniqueProfileFileName);
+            using (var stream = new FileStream(profilePath, FileMode.Create))
+            {
+                await profilePic.CopyToAsync(stream);
+            }
+            model.ProfileImageUrl = "/userUploads/users/" + currentUser.Username + "/" + uniqueProfileFileName;
+
+            
+            await _service.UpdatePP(model);
+            TempData["pictureMessage"] = "Profil fotoğrafınız başarıyla güncellendi!";
+            return View(model);
+        }
+
         [HttpGet]
         public async Task<IActionResult> EditAddress()
         {

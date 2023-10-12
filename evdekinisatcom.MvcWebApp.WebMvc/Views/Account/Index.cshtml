@@ -15,7 +15,9 @@
                 <div class="dashboard-sidebar">
                     <div class="profile-top">
                         <div class="profile-image">
-                            <img src="@Model.ProfilePicUrl" alt="" class="img-fluid">
+                            <a asp-action="UpdateProfilePic" asp-controller="Account">
+                                <img width="50" class="rounded-circle" src="@Model.ProfilePicUrl" alt="" class="img-fluid">
+                            </a>
                         </div>
                         <div class="profile-detail">
                             <h5>@Model.Name</h5>
@@ -175,7 +177,7 @@
                                                                 <span class="theme-color fs-6">@activity.TotalAmount</span>
                                                             </td>
                                                             <td>
-                                                                <a type="submit" asp-action="OrderDetail" asp-controller="Order" asp-route-id="@activity.Id">
+                                                                <a type="submit" asp-action="ActivityDetail" asp-controller="Order" asp-route-id="@activity.Id">
                                                                     <i class="fa fa-eye text-theme"></i>
                                                                 </a>
                                                             </td>
@@ -227,9 +229,9 @@
                                                             </td>
                                                             <td>
                                                                 <a asp-action="ActivityDetail" asp-controller="Order" asp-route-id="@activity.Id">
-                                                                    <button>
-                                                                        <i class="fa fa-eye text-theme"></i>
-                                                                    </button>
+
+                                                                    <i class="fa fa-eye text-theme"></i>
+
                                                                 </a>
                                                             </td>
                                                         </tr>
@@ -261,12 +263,25 @@
                                                         <thead>
                                                             <tr class="table-head">
 
+                                                                <th scope="col">Satıştakiler</th>
+                                                                <th scope="col">Ürün Oluştur</th>
                                                                 <th scope="col">Bakiye</th>
                                                                 <th scope="col">İşlem</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
+                                                                <td>
+                                                                    <a asp-action="MyProducts" asp-controller="Product" asp-route-id="@Model.Id"><button class="btn btn-solid btn-xs">Görüntüle</button></a>
+                                                                </td>
+                                                                <td>
+                                                                    <a asp-action="Create" asp-controller="Product">
+                                                                        <button type="button"
+                                                                                class="btn btn-solid btn-xs">
+                                                                            Yeni Ürün
+                                                                        </button>
+                                                                    </a>
+                                                                </td>
                                                                 <td>
                                                                     <span>₺@Model.Balance</span>
                                                                 </td>
@@ -319,17 +334,6 @@
 
                                                 </div>
                                             </div>
-                                            <div class="dashboard-detail">
-                                                <div class="details">
-                                                    <a asp-action="Create" asp-controller="Product">
-                                                        <button type="button"
-                                                                class="btn btn-solid btn-xs">
-                                                            Yeni Ürün Oluştur
-                                                        </button>
-                                                    </a>
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
                                 </div>
