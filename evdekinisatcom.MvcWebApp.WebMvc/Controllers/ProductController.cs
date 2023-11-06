@@ -98,10 +98,18 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
         {
 
             var list = await _productService.GetAll();
+            if (search != null)
+            {
+                list = list.Where(a => a.Brand.ToLower().Contains(search.ToLower())).ToList();
+            }
+                       
 
-            list = list.Where(a => a.Brand.ToLower().Contains(search.ToLower())).ToList();
-            var allColor = list.Where(p => p.Color == selectedColor).ToList();
-            return View(_mapper.Map<List<ProductViewModel>>(allColor));
+            if (selectedColor != null)
+            {
+                list = list.Where(p => p.Color == selectedColor).ToList();
+            }
+            
+            return View(list);
 
         }
 

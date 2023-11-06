@@ -65,6 +65,12 @@
                                 <input type="submit" value="Sepete Ekle" class="btn btn-solid" />
                             </form>
                         </div>
+                        
+                        <div class="product-buttons">
+                            <form asp-action="AddToWishlist" asp-controller="Wishlist" method="post" asp-route-id="@Model.Id">
+                                <input type="submit" value="İstek Listesine Ekle" class="btn btn-solid" />
+                            </form>
+                        </div>
 
                         <div class="border-product">
 

@@ -37,6 +37,7 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
         public string ConfirmPassword { get; set; }
 
         public int CartId { get; set; }
+        public int WishlistId { get; set; }
 
 
     }

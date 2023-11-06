@@ -24,8 +24,9 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IMapper _mapper;
         private readonly ICartService _cartService;
+        private readonly IWishlistService _wishlistService;
         private readonly IUnitOfWork _uow;
-        public AccountService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager, IMapper mapper, ICartService cartService, IUnitOfWork uow)
+        public AccountService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager, IMapper mapper, ICartService cartService, IUnitOfWork uow, IWishlistService wishlistService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -33,6 +34,7 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             _mapper = mapper;
             _cartService = cartService;
             _uow = uow;
+            _wishlistService = wishlistService;
         }
 
         public async Task<string> CreateRoleAsync(RoleViewModel model)
@@ -81,6 +83,9 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
                 await _cartService.CreateCartForUserAsync(user.Id);
                 var cart = await _cartService.GetCartByUserId(user.Id);
                 user.CartId = cart.Id;
+                await _wishlistService.CreateWishlistForUserAsync(user.Id);
+                var wishlist = await _wishlistService.GetWishlistByUserId(user.Id);
+                user.WishlistId = wishlist.Id;
                 await _userManager.UpdateAsync(user);
 
                 message = "OK";
@@ -288,11 +293,8 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             await _signInManager.SignOutAsync();     
         
         }
-        
 
         
-
-
     }
 
 

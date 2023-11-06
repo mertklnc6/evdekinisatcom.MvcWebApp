@@ -2,25 +2,43 @@
 @model List<UserViewModel>
 @{
     ViewData["Title"] = "UserList";
-    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>UserList</h1>
+<div class="row">
+    <div class="col-md-10 mx-auto">
 
-@foreach(var user in Model)
-{
-    <ul></ul>
-    <div>
-        <p>@user.Name</p>
-        <p>@user.Surname</p>
-        <p>@user.Username</p>
-        <p>@user.Email</p>
-        <p>@user.PhoneNumber</p>        
-        <p>@user.Address</p>
-        <p>@user.Balance</p>
-        <a href="~/Admin/Home/UserBuyerActivity/@user.Id" type="submit" class="btn btn-primary">Alıcı Hareketleri</a>
-        <a href="~/Admin/Home/UserSellerActivity/@user.Id" type="submit" class="btn btn-primary">Satıcı Hareketleri</a>
+<h1 class="mb-4">Kullanıcı Listesi</h1>
 
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            
+            <th>Ad Soyad</th>
+            <th>Kullanıcı Adı</th>
+            <th>Email</th>
+            <th>Telefon</th>
+            <th>Bakiye</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>                
+                <td>@user.Name @user.Surname</td>
+                <td>@user.Username</td>
+                <td>@user.Email</td>
+                <td>@user.PhoneNumber</td>
+                <td>@user.Balance</td>
+                <td>
+                    <a href="~/Admin/Home/UserBuyerActivity/@user.Id" class="btn btn-info btn-sm">Alıcı</a>
+                    <a href="~/Admin/Home/UserSellerActivity/@user.Id" class="btn btn-warning btn-sm">Satıcı</a>
+                    <a href="~/Admin/Home/UserSellerActivity/@user.Id" class="btn btn-solid btn-sm">Bakiye</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
     </div>
-}
-
+</div>

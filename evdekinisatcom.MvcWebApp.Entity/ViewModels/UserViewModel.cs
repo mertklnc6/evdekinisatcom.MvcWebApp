@@ -30,6 +30,7 @@ namespace evdekinisatcom.MvcWebApp_App.Service.ViewModels
         public decimal Balance { get; set; }
 
         public int? CartId { get; set; }
+        public int? WishlistId { get; set; }
 
 
     }

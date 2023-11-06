@@ -2,20 +2,37 @@
 @model List<OrderActivityViewModel>
 @{
     ViewData["Title"] = "UserBuyerActivity";
-    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>UserSellerActivity</h1>
 
-@foreach (var activity in Model)
-{
-    <div>
-        <p>@activity.OrderNumber</p>
-        <p>@activity.SellerName @activity.SellerSurname</p>
-        <p>@activity.BuyerName @activity.BuyerSurname</p>
-        <p>@activity.BuyerAddress</p>
-        <p>@activity.TotalAmount</p>
-        <p>@activity.FeeAmount</p>
-        <p>@activity.NetAmount</p>
-    </div>
-}
+
+<div class="row mx-auto">
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Sipariş Numarası</th>
+            <th>Satıcı</th>
+            <th>Alıcı</th>
+            <th>Alıcı Adresi</th>
+            <th>Toplam Tutar</th>
+            <th>Komisyon Tutarı</th>
+            <th>Net Tutar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var activity in Model)
+        {
+            <tr>
+                <td>@activity.OrderNumber</td>
+                <td>@activity.SellerName @activity.SellerSurname</td>
+                <td>@activity.BuyerName @activity.BuyerSurname</td>
+                <td>@activity.BuyerAddress</td>
+                <td>@activity.TotalAmount</td>
+                <td>@activity.FeeAmount</td>
+                <td>@activity.NetAmount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

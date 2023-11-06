@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<!DOCTYPE html>
 <html lang="tr">
 
 <head>
@@ -58,7 +62,7 @@
                             <div class="col-lg-6 text-end">
                                 <ul class="header-dropdown">
                                     <li class="mobile-wishlist">
-                                        <a href="#">
+                                        <a asp-action="Index" asp-controller="Wishlist">
                                             <i class="fa fa-heart"
                                                aria-hidden="true"></i>
                                         </a>
@@ -111,6 +115,12 @@
                                                 </li>
                                                 <li>
                                                     <a asp-action="Index" asp-controller="Home">Öne Çıkanlar!</a>
+                                                </li>
+                                                <li>
+                                                    @if (isAdmin)
+                                                    {
+                                                        <a href="/Admin/Home">Admin Girişi</a>
+                                                    }
                                                 </li>
 
                                             </ul>
@@ -304,7 +314,7 @@
                         <div class="col-lg-6 text-end">
                             <ul class="header-dropdown">
                                 <li class="mobile-wishlist">
-                                    <a href="#">
+                                    <a asp-action="Index" asp-controller="Wishlist">
                                         <i class="fa fa-heart"
                                            aria-hidden="true"></i>
                                     </a>
@@ -401,7 +411,7 @@
                                                             <div class="container">
                                                                 <div class="row">
                                                                     <div class="col-xl-12">
-                                                                        <form asp-controller="Product" asp-action="Siralama">
+                                                                        <form asp-controller="Product" asp-action="Arrangement">
                                                                             <div class="form-group">
                                                                                 <input type="text" class="form-control"
                                                                                        id="exampleInputPassword1"
@@ -601,7 +611,7 @@
                                     <ul>
                                         <li><a asp-action="Fees" asp-controller="Home">Komisyon Oranları</a></li>
                                         <li><a asp-controller="Home" asp-action="AboutUs">Biz Kimiz</a></li>
-                                        <li><a asp-controller="Home" asp-action="Faw">Sık Sorulan Sorular</a></li>
+                                        <li><a asp-controller="Home" asp-action="Faq">Sıkça Sorulan Sorular</a></li>
                                         <li><a asp-controller="Home" asp-action="Contact">İletişim</a></li>
                                     </ul>
                                 </div>

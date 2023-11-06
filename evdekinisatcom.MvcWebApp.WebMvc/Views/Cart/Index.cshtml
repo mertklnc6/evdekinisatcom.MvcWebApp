@@ -25,6 +25,7 @@ else
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 table-responsive-xs">
+                        <h3>Sepet</h3>
                         <table class="table cart-table">
                             <thead>
                                 <tr class="table-head">
@@ -44,7 +45,7 @@ else
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <a asp-action="Details" asp-controller="Product" asp-route-id="@item.ProductId"><img src="@item.ProductImg" alt=""></a>
+                                            <a asp-action="Details" asp-controller="Product" asp-route-id="@item.ProductId"><img width="100px" src="@item.ProductImg" alt=""></a>
                                         </td>
                                         <td>
                                             <a asp-action="Details" asp-controller="Product" asp-route-id="@item.ProductId">@item.Title</a>

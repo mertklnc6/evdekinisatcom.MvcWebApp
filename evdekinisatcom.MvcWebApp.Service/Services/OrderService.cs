@@ -61,6 +61,11 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             var orderDetails = await _uow.GetRepository<OrderDetail>().GetAll(o => o.OrderId == id);
             return _mapper.Map<List<OrderDetailViewModel>>(orderDetails);
         }
+        public async Task<List<OrderActivityViewModel>> GetAllOrderActivites()
+        {
+            var orderDetails = await _uow.GetRepository<OrderActivity>().GetAll();
+            return _mapper.Map<List<OrderActivityViewModel>>(orderDetails);
+        }
 
         public async Task UpdateOrder(OrderViewModel model)
         {

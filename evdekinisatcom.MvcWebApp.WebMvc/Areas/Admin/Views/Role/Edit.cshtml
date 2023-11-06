@@ -2,10 +2,10 @@
 @model UsersInOrOutViewModel
 @{
     ViewData["Title"] = "Edit";
-    Layout = "_Layout";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="row">
+<div class="mx-auto text-center row">
     <form asp-action="Edit" asp-controller="Role" asp-area="Admin" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" name="RoleId" value="@Model.Role.Id" />

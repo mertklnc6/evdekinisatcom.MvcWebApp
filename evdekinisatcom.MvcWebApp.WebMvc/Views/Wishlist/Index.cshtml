@@ -1,0 +1,103 @@
+﻿@using evdekinisatcom.MvcWebApp.Entity.ViewModels;
+@model List<WishlistItemViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+
+}
+else
+{
+
+
+
+    @if (Model.Count() > 0)
+    {
+        <!--section start-->
+        <section class="Wishlist-section section-b-space">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 table-responsive-xs">
+                        <h3>İstek Listesi</h3>
+                        <table class="table Wishlist-table">
+                            <thead>
+                                <tr class="table-head">
+                                    <th scope="col">Fotoğraf</th>
+                                    <th scope="col">Ürün Başlığı</th>
+                                    <th scope="col">Fiyat</th>
+                                    <th scope="col">Sepete Ekle</th>
+                                    <th scope="col">Listeden Çıkar</th>
+                                    
+
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model)
+                            {
+
+
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a asp-action="Details" asp-controller="Product" asp-route-id="@item.ProductId"><img width="100px" src="@item.ProductImg" alt=""></a>
+                                        </td>
+                                        <td>
+                                            <a asp-action="Details" asp-controller="Product" asp-route-id="@item.ProductId">@item.Title</a>                                            
+                                        </td>
+                                        <td>
+                                            <div class="col">
+                                                <h2 class="td-color">₺@item.Price</h2>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <form asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.ProductId">                                  
+                                                
+                                                <button type="submit"><i class="ti-shopping-cart"></i></button>
+                                            </form>
+                                        </td>                                        
+                                        <td>
+                                            <form asp-action="RemoveFromWishlist" asp-controller="Wishlist" method="post">
+                                                <input type="hidden" name="WishlistId" value="@item.WishlistId" />
+                                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                                <button type="submit"><i class="ti-close"></i></button>
+                                            </form>
+
+                                        </td>                                        
+                                    </tr>
+                                </tbody>
+                            }
+                        </table>
+                        <div class="table-responsive-md">
+                            <table class="table Wishlist-table ">
+                                <tfoot>
+                                    <tr>
+                                        
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row Wishlist-buttons">
+                    <div class="col-6"><a asp-action="Index" asp-controller="Product" class="btn btn-solid">Alışverişe Devam Et</a></div>
+                    
+                </div>
+            </div>
+        </section>
+        <!--section end-->
+    }
+    else
+    {
+        <div class="text-center alert-danger">
+            <p>İstek Listenizde ürün bulunmamaktadır!</p>
+        </div>
+
+    }
+}
+

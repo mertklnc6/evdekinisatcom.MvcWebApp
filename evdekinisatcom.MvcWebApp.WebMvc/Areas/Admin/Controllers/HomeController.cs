@@ -15,10 +15,11 @@ namespace evdekinisatcom.MvcWebApp.WebMvc.Areas.Admin.Controllers
             _accountService = accountService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
 		{
+            var activities = await _orderService.GetAllOrderActivites();
 
-			return View();
+			return View(activities);
 		}
 		public async Task<IActionResult> UserList()
 		{

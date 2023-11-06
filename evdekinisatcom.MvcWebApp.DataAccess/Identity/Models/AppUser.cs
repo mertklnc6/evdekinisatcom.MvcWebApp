@@ -21,10 +21,12 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Identity.Models
         public decimal Balance { get; set; } = 0;
 
         public int? CartId { get; set; }        
+        public int? WishlistId { get; set; }        
 
         //Navigation Property (Relation)
 
         public virtual Cart Cart { get; set; }
+        public virtual Wishlist Wishlist { get; set; }
 
 
         

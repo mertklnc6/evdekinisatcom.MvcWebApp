@@ -22,8 +22,8 @@
 
 
                         <form method="post" action="/Product/Index">
-                            <div class="collection-collapse-block open">
-                                <h3 class="collapse-block-title">Marka</h3>
+                            <div class="collection-collapse-block close">
+                                <h3 class="collapse-block-title">Ara</h3>
                                 <div class="collection-collapse-block-content">
 
                                     <div class="collection-brand-filter">
@@ -31,14 +31,14 @@
 
                                             <input type="text" class="form-control"
                                                    id="exampleInputPassword1"
-                                                   placeholder="Ürünlerde Ara..." name="search">
+                                                   placeholder="Ürün ara" name="search">
 
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                            <div class="collection-collapse-block open" style="margin-bottom: 0px;">
+                            <div class="collection-collapse-block close" style="margin-bottom: 0px;">
                                 <h3 class="collapse-block-title">Renk</h3>
                                 <div class="collection-collapse-block-content">
                                     <div class="collection-brand-filter" id="unique-filter" style="margin-top: 20px">
@@ -96,13 +96,13 @@
 
                                         </div>
 
-                                        <input class="btn btn-solid btn-xs" type="submit" value="Uygula">
-                                        <br>
+
 
                                     </div>
 
                                 </div>
-
+                                <input class="btn btn-solid btn-xs" type="submit" value="Uygula">
+                                <br>
                             </div>
 
                         </form>
@@ -111,7 +111,6 @@
                             <div class="collection-collapse-block open">
 
                                 <div class="collection-brand-filter" style="margin-bottom: 20px;" id="unique-filter">
-                                    @*<button class="btn text-muted" type="submit">Filtreyi sıfırla</button>*@
 
                                     <input type="submit" class="btn btn-solid btn-xs" value="Filtreyi sıfırla">
                                 </div>
@@ -179,28 +178,15 @@
                                 <div class="collection-product-wrapper">
                                     <div class="product-top-filter">
                                         <div class="row">
-                                            <div class="col-xl-12">
-                                                <div class="filter-main-btn">
-                                                    <span class="filter-btn btn btn-theme">
-                                                        <i class="fa fa-filter"
-                                                           aria-hidden="true"></i> Filtrele
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-12">
                                                 <div class="product-filter-content">
-                                                    <div class="search-count">
-                                                        <h5></h5>
-                                                    </div>
-                                                    <div class="collection-view">
+                                                    <div class="collection-view col-md-3">
                                                         <ul>
                                                             <li><i class="fa fa-th grid-layout-view"></i></li>
                                                             <li><i class="fa fa-list-ul list-layout-view"></i></li>
                                                         </ul>
                                                     </div>
-                                                    <div class="collection-grid-view">
+                                                    <div class="collection-grid-view col-md-3">
                                                         <ul>
                                                             <li>
                                                                 <img src="~/themes/assets/images/icon/2.png" alt=""
@@ -221,14 +207,17 @@
                                                         </ul>
                                                     </div>
 
-                                                    <div class="product-page-filter">
+                                                    <div class="col-md-6 product-page-filter m-auto">
 
                                                         <form method="post" action="/Product/Arrangement">
+
                                                             <select id="myList" name="sortOrder">
-                                                                <option value="asc">Artan Fiyat</option>
-                                                                <option value="desc">Azalan Fiyat</option>
+                                                                <option type="submit" value="asc">Artan Fiyat</option>
+                                                                <option type="submit" value="desc">Azalan Fiyat</option>
                                                             </select>
-                                                            <input type="submit" class="btn btn-solid btn-xs" value="Uygula">
+                                                            <i class="ti-filter"><input type="submit" /></i>
+
+
                                                         </form>
                                                     </div>
 
@@ -244,7 +233,7 @@
                                                 {
 
 
-                                                    <div class="col-xl-3 col-6 col-grid-box">
+                                                    <div class="col-xl-2 col-6">
                                                         <div class="product-box">
                                                             <div class="img-wrapper">
                                                                 <div class="front">
@@ -255,18 +244,21 @@
                                                                     </a>
                                                                 </div>
                                                                 <div class="cart-info cart-wrap">
-                                                                    <button data-bs-toggle="modal"
-                                                                            data-bs-target="#addtocart" title="Sepete Ekle">
-                                                                        <i class="ti-shopping-cart"></i>
-                                                                    </button> <a href="javascript:void(0)" title="İstek Listesine Ekle">
-                                                                        <i class="ti-heart" aria-hidden="true"></i>
-                                                                    </a> <a href="#" data-bs-toggle="modal"
-                                                                            data-bs-target="#quick-view" title="Hızlı Bakış">
-                                                                        <i class="ti-search" aria-hidden="true"></i>
-                                                                    </a> <a href="compare.html" title="Compare">
-                                                                        <i class="ti-reload" aria-hidden="true"></i>
-                                                                    </a>
+                                                                    <form asp-action="AddToCart" asp-controller="Cart" method="post" asp-route-id="@product.Id">
+                                                                        <button type="submit" class="btn-myBtn">
+                                                                            <i class="ti-shopping-cart" aria-hidden="true">
+
+                                                                            </i>
+                                                                        </button>
+
+                                                                    </form>
+                                                                    <form asp-action="AddToWishlist" asp-controller="Wishlist" method="post" asp-route-id="@product.Id">
+                                                                        <button type="submit" class="btn-myBtn">
+                                                                            <i class="heart" aria-hidden="true"></i>
+                                                                        </button>
+                                                                    </form>
                                                                 </div>
+
                                                             </div>
                                                             <div class="product-detail">
                                                                 <div>
@@ -277,7 +269,8 @@
                                                                     <p>
                                                                         @product.Description
                                                                     </p>
-                                                                    <h4>@product.Price</h4>
+                                                                    <h4>₺@product.Price</h4>
+                                                                    <br>
                                                                 </div>
                                                             </div>
                                                         </div>

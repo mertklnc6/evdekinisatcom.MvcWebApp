@@ -30,10 +30,18 @@ namespace evdekinisatcom.MvcWebApp_App.WebMvc.Controllers
         {
             
             var currentUser = await _service.Find(User.Identity.Name);
-            ViewBag.SellerActivity = await _orderService.GetAllSellerActivityByUserId(currentUser.Id);
-            ViewBag.BuyerActivity = await _orderService.GetAllBuyerActivityByUserId(currentUser.Id);
-            ViewBag.WithDrawals = await _service.GetWithdrawalsByUserId(currentUser.Id);
-            return View(currentUser);
+            if(currentUser != null)
+            {
+                ViewBag.SellerActivity = await _orderService.GetAllSellerActivityByUserId(currentUser.Id);
+                ViewBag.BuyerActivity = await _orderService.GetAllBuyerActivityByUserId(currentUser.Id);
+                ViewBag.WithDrawals = await _service.GetWithdrawalsByUserId(currentUser.Id);
+                return View(currentUser);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+            
         }
         public IActionResult Register()
         {

@@ -62,6 +62,7 @@ namespace evdekinisatcom.MvcWebApp.Service.Extensions
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ICartService, CartService>();
+            services.AddScoped<IWishlistService, WishlistService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped(typeof(IAccountService), typeof(AccountService));
 
