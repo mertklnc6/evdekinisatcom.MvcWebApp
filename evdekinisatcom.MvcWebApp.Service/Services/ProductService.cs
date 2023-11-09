@@ -98,11 +98,13 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
                 if (model.Description != null) { product.Description = model.Description; }
                 if (model.Price != 0) { product.Price = model.Price; }
                 if (model.CategoryId != 0) { product.CategoryId = model.CategoryId; }
+                if (model.BuyerId != 0) { product.BuyerId = model.BuyerId; }
                 if (model.Color != null) { product.Color = model.Color; }
                 if (model.HeaderImageUrl != null) { product.HeaderImageUrl = model.HeaderImageUrl; }
                 if (model.Images != null) { product.Images = model.Images; }
                 product.IsDeleted = model.IsDeleted;
                 product.IsBoosted = model.IsBoosted;
+                product.IsSold = model.IsSold;
 
                 _uow.GetRepository<Product>().Update(product);
                 await _uow.CommitAsync();

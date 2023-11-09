@@ -152,8 +152,8 @@
                     <!-- side-bar single product slider end -->
                     <!-- side-bar banner start here -->
                     <div class="collection-sidebar-banner">
-                        <a href="#">
-                            <img src="~/images/site/model4.jpg" width="370" height="220" class="img-fluid blur-up lazyload"
+                        <a href="Home/Index">
+                            <img src="~/images/site/model4.jpg" class="img-fluid blur-up lazyload"
                                  alt="">
                         </a>
                     </div>
@@ -207,15 +207,19 @@
                                                         </ul>
                                                     </div>
 
-                                                    <div class="col-md-6 product-page-filter m-auto">
+                                                    <div class="col-md-8 text-center m-auto">
 
                                                         <form method="post" action="/Product/Arrangement">
 
                                                             <select id="myList" name="sortOrder">
-                                                                <option type="submit" value="asc">Artan Fiyat</option>
-                                                                <option type="submit" value="desc">Azalan Fiyat</option>
+                                                                <option selected value="asc">Sırala</option>
+                                                                <option value="asc">Artan Fiyat</option>
+                                                                <option value="desc">Azalan Fiyat</option>
                                                             </select>
-                                                            <i class="ti-filter"><input type="submit" /></i>
+                                                            <button style="border:none">
+                                                                <i class="ti-filter"></i>
+                                                            </button>
+
 
 
                                                         </form>
@@ -245,17 +249,18 @@
                                                                 </div>
                                                                 <div class="cart-info cart-wrap">
                                                                     <form asp-action="AddToCart" asp-controller="Cart" method="post" asp-route-id="@product.Id">
-                                                                        <button type="submit" class="btn-myBtn">
-                                                                            <i class="ti-shopping-cart" aria-hidden="true">
 
-                                                                            </i>
+                                                                        <button value="">
+                                                                            <i class="ti-shopping-cart"></i>
                                                                         </button>
+
 
                                                                     </form>
                                                                     <form asp-action="AddToWishlist" asp-controller="Wishlist" method="post" asp-route-id="@product.Id">
-                                                                        <button type="submit" class="btn-myBtn">
-                                                                            <i class="heart" aria-hidden="true"></i>
+                                                                        <button>
+                                                                            <i class="ti-heart"></i>
                                                                         </button>
+
                                                                     </form>
                                                                 </div>
 
@@ -266,9 +271,6 @@
                                                                     <a asp-action="Details" asp-controller="Product" asp-route-id="@product.Id">
                                                                         <h6>@product.Title</h6>
                                                                     </a>
-                                                                    <p>
-                                                                        @product.Description
-                                                                    </p>
                                                                     <h4>₺@product.Price</h4>
                                                                     <br>
                                                                 </div>

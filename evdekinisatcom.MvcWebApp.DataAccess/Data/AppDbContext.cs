@@ -112,41 +112,41 @@ namespace evdekinisatcom.MvcWebApp.DataAccess.Data
             new Category { Id = 30, Name = "Parfümler", ParentCategoryId = 26 }
             );
 
-            modelBuilder.Entity<Product>().HasData(
+            //modelBuilder.Entity<Product>().HasData(
 
-                new()
-                {
-                    Id = 1,
-                    Title = "Iphone 15",
-                    Description = "Kutusu Açılmadı",
-                    Price = 100,
-                    Brand = "Apple",
-                    Color = "Siyah",
-                    Condition = "Yeni & Etiketli",
-                    HeaderImageUrl = "/userUploads/users/ali/137425-1_large.webp",
-                    CategoryId = 4,
-                    SellerId = 1,
-                    SellerUsername = "aliucar",
-                    BuyerId = null
-                },
-                new()
-                {
-                    Id = 2,
-                    Title = "S23 Ultra",
-                    Description = "Sıfıra yakın",
-                    Price = 150,
-                    Brand = "Samsung",
-                    Color = "Siyah",
-                    Condition = "Az Kullanılmış",
-                    HeaderImageUrl = "/userUploads/users/ali/137425-1_large.webp",
-                    CategoryId = 4,
-                    SellerId = 1,
-                    SellerUsername = "aliucar",
-                    BuyerId = null
-                }
+            //    new()
+            //    {
+            //        Id = 1,
+            //        Title = "Iphone 15",
+            //        Description = "Kutusu Açılmadı",
+            //        Price = 100,
+            //        Brand = "Apple",
+            //        Color = "Siyah",
+            //        Condition = "Yeni & Etiketli",
+            //        HeaderImageUrl = "/userUploads/users/ali/137425-1_large.webp",
+            //        CategoryId = 4,
+            //        SellerId = 1,
+            //        SellerUsername = "aliucar",
+            //        BuyerId = null
+            //    },
+            //    new()
+            //    {
+            //        Id = 2,
+            //        Title = "S23 Ultra",
+            //        Description = "Sıfıra yakın",
+            //        Price = 150,
+            //        Brand = "Samsung",
+            //        Color = "Siyah",
+            //        Condition = "Az Kullanılmış",
+            //        HeaderImageUrl = "/userUploads/users/ali/137425-1_large.webp",
+            //        CategoryId = 4,
+            //        SellerId = 1,
+            //        SellerUsername = "aliucar",
+            //        BuyerId = null
+            //    }
 
 
-                );
+            //    );
 
             base.OnModelCreating(modelBuilder);
 

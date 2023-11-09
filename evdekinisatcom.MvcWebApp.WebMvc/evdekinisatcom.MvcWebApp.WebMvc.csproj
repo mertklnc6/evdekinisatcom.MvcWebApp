@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -22,20 +22,13 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\userUploads\users\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\images\default\defaultProfilePic.webp" />
     <None Include="wwwroot\images\site\cat-header-vwt-bestellen-en-betalen-1920x718.webp" />
     <None Include="wwwroot\images\site\Hair-1920x718-1.webp" />
-    <None Include="wwwroot\userUploads\users\aliucar\85b079f4-fa7c-41d9-bdbe-63c5dc553bd3.webp" />
-    <None Include="wwwroot\userUploads\users\aliucar\PYL-cp3ccam265461800x800.webp" />
-    <None Include="wwwroot\userUploads\users\ali\137425-1_large.webp" />
-    <None Include="wwwroot\userUploads\users\ali\PYL-cp3ccam265461800x800.webp" />
-    <None Include="wwwroot\userUploads\users\mertklnc\137425-1_large.webp" />
-    <None Include="wwwroot\userUploads\users\nesesever\6b817272-a109-4f62-a1f5-9d3eb8c4bbd8.webp" />
-    <None Include="wwwroot\userUploads\users\nesesever\c474bb72-3ad3-49ed-82d0-2243fbfbc7db.webp" />
-    <None Include="wwwroot\userUploads\users\nesesever\PYL-cp3ccam265461800x800.webp" />
   </ItemGroup>
 
 </Project>
