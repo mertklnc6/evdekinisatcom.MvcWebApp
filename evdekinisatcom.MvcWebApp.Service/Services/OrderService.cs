@@ -41,7 +41,7 @@ namespace evdekinisatcom.MvcWebApp.Service.Services
             orderDetail = _mapper.Map<OrderDetail>(model);
             await _uow.GetRepository<OrderDetail>().Add(orderDetail);
             await _uow.CommitAsync();
-
+            //
 
         }
 
